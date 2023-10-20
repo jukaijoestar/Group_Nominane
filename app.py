@@ -442,13 +442,14 @@ def Horario():
         tipo_liquidacion = request.form["tipo_liquidacion"]
 
         # Obtener los valores de las variables del formulario
-        horas_diurnas = int(request.form["horas_diurnas"])
-        horas_extra_diurnas = int(request.form["horas_extra_diurnas"])
-        horas_nocturnas = int(request.form["horas_nocturnas"])
-        horas_extra_nocturnas = int(request.form["horas_extra_nocturnas"])
-        horas_dominicales = int(request.form["horas_dominicales"])
-        horas_extra_dominicales = int(request.form["horas_extra_dominicales"])
-        horas_extra_dom_nocturnas = int(request.form["horas_extra_dom_nocturnas"])
+        horas_diurnas = int(request.form["horas_diurnas"]) if request.form["horas_diurnas"].strip() else 0
+        horas_extra_diurnas = int(request.form["horas_extra_diurnas"]) if request.form["horas_extra_diurnas"].strip() else 0
+        horas_nocturnas = int(request.form["horas_nocturnas"]) if request.form["horas_nocturnas"].strip() else 0
+        horas_extra_nocturnas = int(request.form["horas_extra_nocturnas"]) if request.form["horas_extra_nocturnas"].strip() else 0
+        horas_dominicales = int(request.form["horas_dominicales"]) if request.form["horas_dominicales"].strip() else 0
+        horas_extra_dominicales = int(request.form["horas_extra_dominicales"]) if request.form["horas_extra_dominicales"].strip() else 0
+        horas_extra_dom_nocturnas = int(request.form["horas_extra_dom_nocturnas"]) if request.form["horas_extra_dom_nocturnas"].strip() else 0
+
         cursor = db.cursor()
 
         # Consulta para obtener datos del empleado
@@ -590,26 +591,32 @@ def realizar_pago():
     Total_Apropiado=Cesantias+Interes_C+Prima+Vacaciones+Aporte_PF+ARL
     Gran_Total=total_devengado+Total_DDSS+Total_Apropiado
 
+    cursor.execute("SELECT COUNT(*) FROM horario WHERE empleado_ID = %s AND MONTH(Fecha) = %s AND YEAR(Fecha) = %s",
+                (empleado_id, fecha_actual.month, fecha_actual.year))
+    existing_records = cursor.fetchone()
 
-    cursor.execute("INSERT INTO gran_total (ID_empleado, Total) VALUES (%s, %s)",
-                    (empleado_id, Gran_Total))
-    cursor.execute("INSERT INTO aporte_social (Aporte_Salud, Aporte_Pension, Total_Social, Fecha, ID_empleado) VALUES (%s, %s, %s, %s, %s)",
-                    (Aporte_Salud, Aporte_Pension, Total_DDSS, fecha_actual, empleado_id))
-    cursor.execute("INSERT INTO apropiaciones (Cesantia, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_Compensacion, ICBF, SENA, ARL, Total_Apropiado, Fecha, ID_Empleado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                    (Cesantias, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_C, ICBF, SENA, ARL, Total_Apropiado, fecha_actual, empleado_id))
-    cursor.execute("INSERT INTO deduccion (Empleado_ID, Salud, Pension, Fecha) VALUES (%s, %s, %s, %s)",
-                    (empleado_id, salud, pension, fecha_actual))
-    cursor.execute("INSERT INTO sueldo (Empleado_ID, Total_Dev, Total_Ded, Salario_Neto, Fecha) VALUES (%s, %s, %s, %s, %s)",
-                    (empleado_id, total_devengado, total_deducido, neto_pagado, fecha_actual))
-    cursor.execute("INSERT INTO horario (HorDiurna, HorExtDiurna, HorNocturna, HorExtNocturna, HorDominical, HorExtDominical, HorExtDomNoct, empleado_ID, Fecha) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                    (horas_diurnas_total, horas_extra_diurnas_total, horas_nocturnas_total, horas_extra_nocturnas_total, horas_dominicales_total, horas_extra_dominicales_total, horas_extra_dom_nocturnas_total, empleado_id, fecha_actual))
-    db.commit()
-    cursor.close()
-    generar_pdf(empleado_nombre, horas_extra_total, total_devengado, total_deducido, neto_pagado, fecha_actual)
+    if existing_records and existing_records[0] > 0:
+        return redirect(url_for("login"))
+    else:
+        cursor.execute("INSERT INTO gran_total (ID_empleado, Total) VALUES (%s, %s)",
+                        (empleado_id, Gran_Total))
+        cursor.execute("INSERT INTO aporte_social (Aporte_Salud, Aporte_Pension, Total_Social, Fecha, ID_empleado) VALUES (%s, %s, %s, %s, %s)",
+                        (Aporte_Salud, Aporte_Pension, Total_DDSS, fecha_actual, empleado_id))
+        cursor.execute("INSERT INTO apropiaciones (Cesantia, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_Compensacion, ICBF, SENA, ARL, Total_Apropiado, Fecha, ID_Empleado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                        (Cesantias, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_C, ICBF, SENA, ARL, Total_Apropiado, fecha_actual, empleado_id))
+        cursor.execute("INSERT INTO deduccion (Empleado_ID, Salud, Pension, Fecha) VALUES (%s, %s, %s, %s)",
+                        (empleado_id, salud, pension, fecha_actual))
+        cursor.execute("INSERT INTO sueldo (Empleado_ID, Total_Dev, Total_Ded, Salario_Neto, Fecha) VALUES (%s, %s, %s, %s, %s)",
+                        (empleado_id, total_devengado, total_deducido, neto_pagado, fecha_actual))
+        cursor.execute("INSERT INTO horario (HorDiurna, HorExtDiurna, HorNocturna, HorExtNocturna, HorDominical, HorExtDominical, HorExtDomNoct, empleado_ID, Fecha) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                        (horas_diurnas_total, horas_extra_diurnas_total, horas_nocturnas_total, horas_extra_nocturnas_total, horas_dominicales_total, horas_extra_dominicales_total, horas_extra_dom_nocturnas_total, empleado_id, fecha_actual))
+        db.commit()
+        cursor.close()
+        generar_pdf(empleado_nombre, horas_extra_total, total_devengado, total_deducido, neto_pagado, fecha_actual)
 
-    return render_template(
-        "ExitoPago.html",
-    )
+        return render_template(
+            "ExitoPago.html",
+        )
 
 def generar_pdf(empleado_nombre, horas_extra_total, total_devengado, total_deducido, neto_pagado, fecha_actual):
     # Obtener la ruta de la carpeta de descargas
