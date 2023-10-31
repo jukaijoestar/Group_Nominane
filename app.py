@@ -348,7 +348,7 @@ def editar(id_empleado):
         telefono = request.form["telefono"]
         email = request.form["email"]
         departamento = int(request.form["departamento"])
-        sueldo = float(request.form["sueldo"])  # Asegúrate de convertirlo a float si es un número decimal
+        sueldo = float(request.form["suldo"])  # Asegúrate de convertirlo a float si es un número decimal
         cargo = int(request.form["cargo"])  # Nuevo campo para el cargo
 
         query = "UPDATE empleados SET Nombres = %s, Apellido_Paterno = %s, Apellido_Materno = %s, Fecha_Nacimiento = %s, Direccion = %s, Barrio = %s, Telefono = %s, Email = %s, Departamento = %s, Sueldo = %s, Cargo_ID = %s WHERE ID = %s"
