@@ -12,116 +12,127 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
     <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="{{ url_for('static', filename='Recources/Styles/Estilodepa.css') }}"
     />
   </head>
   <body>
-    <div class="nav__container">
-      <a href="#menu" class="nav__menu">
-        <i class="fa-solid fa-grip nav__icon"></i>
-      </a>
-      <a href="#menu" class="nav__title" id="autotype">
-        Group| <span class="auto-type"></span>
-      </a>
-
-      <a href="#" class="nav__menu nav__menu--second">
-        <i class="nav__icon fa-solid fa-rectangle-xmark"></i>
-      </a>
-
-      <ul class="dropdown" id="menu">
-        <li class="dropdown__list">
-          <a href="{{url_for('index')}}" class="dropdown__link">
-            <img
-              src="{{ url_for('static', filename='/assets/dashboard.svg') }}"
-              class="dropdown__icon"
-            />
-            <span class="dropdown__span" data-inicio>Inicio</span>
-          </a>
-        </li>
-
-        <li class="dropdown__list">
-          <a href="#" class="dropdown__link">
-            <img
-              src="{{ url_for('static', filename='/assets/projects.svg') }}"
-              class="dropdown__icon"
-            />
-            <span class="dropdown__span">Listados</span>
-            <img
-              src="{{ url_for('static', filename='/assets/down.svg') }}"
-              class="dropdown__arrow"
-            />
-
-            <input type="checkbox" class="dropdown__check" />
+    <nav class="menu-admi" id="nav">
+      <!-- Tipo 1 -->
+      <div class="header">
+        <!-- INPUT SEARCH -->
+        <div class="input-search">
+          <i class="bx bx-search"></i>
+          <input
+            type="text"
+            class="input"
+            placeholder="Buscar"
+            id="search-input"
+          />
+        </div>
+        <!-- MENU -->
+        <div class="menu">
+          <a href="{{url_for('index')}}" class="enlace-lista">
+            <i class="bx bx-grid-alt"></i>
+            <span>Inicio</span>
           </a>
 
-          <div class="dropdown__content">
-            <ul class="dropdown__sub">
-              <li class="dropdown__li">
-                <a
-                  href="{{ url_for('trabajadores') }}"
-                  class="dropdown__anchor"
-                  >Lista Trabajadores</a
+          <a href="#" class="enlace-lista">
+            <i class="bx bx-user"></i>
+            <span>Usuarios</span>
+          </a>
+
+          <li class="lista">
+            <a href="#" class="enlace-lista">
+              <i class="bx bx-list-ul"></i>
+              <span>Listados</span>
+              <i class="icon bx bx-chevron-down"></i>
+              <input type="checkbox" class="lista-check" />
+            </a>
+
+            <div class="lista-content">
+              <ul class="lista-sub">
+                <a href="{{ url_for('trabajadores') }}" class="enlace-li"
+                  >Empleados</a
                 >
-              </li>
-              <li class="dropdown__li">
-                <a href="{{url_for('inactivos')}}" class="dropdown__anchor"
-                  >Trabajadores Inactivos</a
+                <a href="{{url_for('inactivos')}}" class="enlace-li"
+                  >Empleados Inactivos</a
                 >
-              </li>
-              <li class="dropdown__li">
                 <a
                   href="{{ url_for('listar_departamentos') }}"
-                  class="dropdown__anchor"
-                  >Lista Departamentos</a
+                  class="enlace-li"
+                  >Departamentos</a
                 >
-              </li>
-              <li class="dropdown__li">
-                <a
-                  href="{{ url_for('cargos') }}"
-                  class="dropdown__anchor"
-                  >Lista Cargos</a
-                >
-              </li>
-              <li class="dropdown__li">
                 <a
                   href="{{ url_for('departamentos_Inactivos') }}"
-                  class="dropdown__anchor"
-                  >Lista de Departamentos Inactivos</a
+                  class="enlace-li"
+                  >Departamentos Inactivos</a
                 >
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="dropdown__list">
-          <a href="{{ url_for('reportes') }}" class="dropdown__link">
-            <img
-              src="{{ url_for('static', filename='/assets/stats.svg') }}"
-              class="dropdown__icon"
-            />
-            <span class="dropdown__span">Reportes</span>
-          </a>
-        </li>
+                <a href="{{ url_for('cargos') }}" class="enlace-li">Cargos</a>
+              </ul>
+            </div>
+          </li>
 
-        <li class="dropdown__list">
+          <li class="lista">
+            <a href="#" class="enlace-lista">
+              <i class="bx bx-file"></i>
+              <span>Reportes</span>
+              <i class="icon bx bx-chevron-down"></i>
+              <input type="checkbox" class="lista-check" />
+            </a>
+
+            <div class="lista-content">
+              <ul class="lista-sub">
+                <a href="{{ url_for('reportes') }}" class="enlace-li"
+                  >Reporte General</a
+                >
+                <a href="#" class="enlace-li">Boletin Pago</a>
+                <a href="#" class="enlace-li">Boletin Nomina</a>
+                <a href="#" class="enlace-li">No se</a>
+              </ul>
+            </div>
+          </li>
+
+          <a href="#" class="enlace-lista">
+            <i class="bx bx-cog"></i>
+            <span>Configuración</span>
+          </a>
+
           <a
             href="{{ url_for('logout') }}"
-            class="dropdown__link"
+            class="enlace-lista"
             onclick="confirmLogout(event)"
           >
-            <img
-              src="{{ url_for('static', filename='/assets/Exit.svg') }}"
-              class="dropdown__icon"
-            />
-            <span class="dropdown__span">Salir</span>
+            <i class="bx bx-exit"></i>
+            <span>Salir</span>
           </a>
-        </li>
-      </ul>
+        </div>
+        <i class="menui bx bx-menu-alt-left" id="menu-admi"></i>
+      </div>
+    </nav>
+    <header class="nav__container">
+      <a href="{{url_for('index')}}" class="titulo" id="autotype">
+        Group| <span class="auto-type"></span>
+      </a>
+    </header>
+
+    <div class="buscador">
+      <input
+        class="buscar"
+        type="text"
+        placeholder="Buscar departamento"
+        id="search"
+      />
+      <i class="iconi fa-solid fa-magnifying-glass"></i>
     </div>
 
     <div class="table-container">
       <h1>Lista de Departamentos Inactivos</h1>
-      <table class="table">
+      <table class="table" id="employee-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -133,35 +144,24 @@
         <tbody>
           {% for departamento in departamentos %}
           <tr>
-              <td>{{ departamento.ID }}</td>
-              <td>{{ departamento.Nombre }}</td>
-              <td>20/25/23</td>
-              <td>
-                  <a href="{{ url_for('reactivar_departamento', id_departamento=departamento.ID) }}" class="activar"
-                  onclick="confirmActivar(event)"
-                  ><i class="fas fa-check"></i
-                >
-              </td>
+            <td>{{ departamento.ID }}</td>
+            <td>{{ departamento.Nombre }}</td>
+            <td>20/25/23</td>
+            <td>
+              <a
+                href="{{ url_for('reactivar_departamento', id_departamento=departamento.ID) }}"
+                class="activar"
+                onclick="confirmActivar(event)"
+                ><i class="fas fa-check"></i
+              ></a>
+            </td>
           </tr>
           {% endfor %}
-      </tbody>
+        </tbody>
       </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script>
-      //EFECTO DE ESCRITURA
-      var typed = new Typed(".auto-type", {
-        strings: [
-          "Explora contigo  🔍",
-          "Te facilita  📈",
-          "Líderes del futuro 🏆",
-          "Nomimane ✍️",
-        ],
-        typeSpeed: 100,
-        backSpeed: 50,
-        looped: true,
-      });
-    </script>
+    <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
   </body>
 </html>

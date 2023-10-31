@@ -18,9 +18,11 @@ db = mysql.connector.connect(
 )
 cursor = db.cursor()
 
+
 @app.route("/")
 def layout():
     return render_template('layout.html')
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -41,6 +43,7 @@ def login():
 
     return render_template('login.html', error=error if 'error' in locals() else None)
 
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     error_password = None
@@ -55,7 +58,7 @@ def registro():
         # Validar longitud mínima y máxima para la contraseña
         if len(Contraseña) < 8:
             error_password = "La contraseña debe tener al menos 8 caracteres."
-        if len(Contraseña) > 20:
+        if len(Contraseña) > 10:
             error_password = "La contraseña no puede tener más de 20 caracteres."
 
         # Verificar si el correo ya está registrado
@@ -69,14 +72,16 @@ def registro():
         # Validar que la contraseña contenga al menos un número, una mayúscula y una minúscula
         if not re.search(r'[0-9]', Contraseña) or not re.search(r'[A-Z]', Contraseña) or not re.search(r'[a-z]', Contraseña):
             error_password = "La contraseña debe contener al menos un número, una mayúscula y una minúscula."
-        
+
         if not error_password and not error_correo:
             # Inserta el nuevo usuario en la base de datos
-            cursor.execute("INSERT INTO usuario (Nombre, Contraseña, correo) VALUES (%s, %s, %s)", (Nombre, Contraseña, Correo))
+            cursor.execute(
+                "INSERT INTO usuario (Nombre, Contraseña, correo) VALUES (%s, %s, %s)", (Nombre, Contraseña, Correo))
             db.commit()
             sucefull = "Registro exitoso. Ahora puedes iniciar sesión."
 
     return render_template('login.html', error_password=error_password, error_correo=error_correo, sucefull=sucefull)
+
 
 @app.route("/trabajadores")
 def trabajadores():
@@ -94,6 +99,7 @@ def trabajadores():
     cursor.close()
 
     return render_template("trabajadores.html", empleados=empleados_activos)
+
 
 @app.route("/cargos", methods=['GET', 'POST'])
 def cargos():
@@ -138,6 +144,7 @@ def index():
         return redirect(url_for("login"))
     return render_template("index.html")
 
+
 @app.route("/departamentos", methods=["GET", "POST"])
 def listar_departamentos():
     if "username" not in session:
@@ -149,6 +156,7 @@ def listar_departamentos():
     cursor.close()
 
     return render_template("departamentos.html", departamentos=departamentos)
+
 
 @app.route("/departamentos_Inactivos", methods=["GET", "POST"])
 def departamentos_Inactivos():
@@ -162,6 +170,7 @@ def departamentos_Inactivos():
 
     return render_template("departamentos_Inactivos.html", departamentos=departamentos)
 
+
 @app.route("/desactivar_departamento/<int:id_departamento>")
 def desactivar_departamento(id_departamento):
     if "username" not in session:
@@ -169,12 +178,14 @@ def desactivar_departamento(id_departamento):
 
     # Actualiza el estado del departamento a "Inactivo" en tu base de datos
     cursor = db.cursor()
-    cursor.execute("UPDATE departamento SET Estado = 'Inactivo' WHERE ID = %s", (id_departamento,))
+    cursor.execute(
+        "UPDATE departamento SET Estado = 'Inactivo' WHERE ID = %s", (id_departamento,))
     db.commit()
     cursor.close()
 
     # Redirige de nuevo a la lista de departamentos después de desactivar
     return redirect(url_for("listar_departamentos"))
+
 
 @app.route("/reactivar_departamento/<int:id_departamento>")
 def reactivar_departamento(id_departamento):
@@ -183,7 +194,8 @@ def reactivar_departamento(id_departamento):
 
     # Actualiza el estado del departamento a "Inactivo" en tu base de datos
     cursor = db.cursor()
-    cursor.execute("UPDATE departamento SET Estado = 'Activo' WHERE ID = %s", (id_departamento,))
+    cursor.execute(
+        "UPDATE departamento SET Estado = 'Activo' WHERE ID = %s", (id_departamento,))
     db.commit()
     cursor.close()
 
@@ -204,7 +216,8 @@ def agregar_departamento():
 
         if nombre_departamento:
             cursor = db.cursor()
-            cursor.execute("INSERT INTO departamento (Nombre) VALUES (%s)", (nombre_departamento,))
+            cursor.execute(
+                "INSERT INTO departamento (Nombre) VALUES (%s)", (nombre_departamento,))
             db.commit()
             Departamento_ID = cursor.lastrowid
             cursor.close()
@@ -228,13 +241,13 @@ def agregar_cargos():
 
         if nombre_cargo and salario_base and Departamento_ID:
             cursor = db.cursor()
-            cursor.execute("INSERT INTO Cargos (Nombre, Departamento_ID, Salario_Base) VALUES (%s, %s, %s)", (nombre_cargo, Departamento_ID, salario_base))
+            cursor.execute("INSERT INTO Cargos (Nombre, Departamento_ID, Salario_Base) VALUES (%s, %s, %s)",
+                           (nombre_cargo, Departamento_ID, salario_base))
             db.commit()
             cursor.close()
             button_return = True  # Activa el botón de volver
 
     return render_template("agregar_departamento.html", active_form=active_form, Departamento_ID=Departamento_ID, button_return=button_return)
-
 
 
 @app.route("/Editar_departamento/<int:id_departamento>", methods=["GET", "POST"])
@@ -243,7 +256,8 @@ def Editar_departamento(id_departamento):
         return redirect(url_for("login"))
 
     cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM departamento WHERE ID = %s", (id_departamento,))
+    cursor.execute("SELECT * FROM departamento WHERE ID = %s",
+                   (id_departamento,))
     departamento = cursor.fetchone()
 
     if departamento is None:
@@ -253,18 +267,21 @@ def Editar_departamento(id_departamento):
         nuevo_nombre = request.form["nombre"]
 
         if nuevo_nombre:
-            cursor.execute("UPDATE departamento SET Nombre = %s WHERE ID = %s", (nuevo_nombre, id_departamento,))
+            cursor.execute("UPDATE departamento SET Nombre = %s WHERE ID = %s",
+                           (nuevo_nombre, id_departamento,))
             db.commit()
             cursor.close()
 
-            return redirect(url_for("listar_departamentos")) 
+            return redirect(url_for("listar_departamentos"))
 
     return render_template("Editar_departamento.html", departamento=departamento)
+
 
 @app.route("/cargos/<int:departamento_id>")
 def obtener_cargos(departamento_id):
     cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM Cargos WHERE Departamento_ID = %s", (departamento_id,))
+    cursor.execute(
+        "SELECT * FROM Cargos WHERE Departamento_ID = %s", (departamento_id,))
     cargos = cursor.fetchall()
     cursor.close()
 
@@ -276,6 +293,7 @@ def obtener_cargos(departamento_id):
         print(f"Error al convertir a JSON: {e}")
         return jsonify({"error": "Error al convertir a JSON"}), 500
 
+
 @app.route("/desactivar_cargo", methods=['POST'])
 def desactivar_cargo():
     cargo_id = request.form.get('cargo_id')
@@ -283,15 +301,18 @@ def desactivar_cargo():
     cursor = db.cursor()
     try:
         # Actualizar el estado del cargo a 'Inactivo'
-        cursor.execute("UPDATE Cargos SET Estado = 'Inactivo' WHERE ID = %s", (cargo_id,))
+        cursor.execute(
+            "UPDATE Cargos SET Estado = 'Inactivo' WHERE ID = %s", (cargo_id,))
         db.commit()
-        return redirect('/cargos')  # Redirige a la página de cargos después de la desactivación
+        # Redirige a la página de cargos después de la desactivación
+        return redirect('/cargos')
     except Exception as e:
         print(f"Error al desactivar el cargo: {e}")
         db.rollback()
         return jsonify({"error": "Error al desactivar el cargo"}), 500
     finally:
         cursor.close()
+
 
 @app.route("/agregar", methods=["GET", "POST"])
 def agregar():
@@ -312,7 +333,8 @@ def agregar():
         email = request.form["email"]
         departamento_id = int(request.form["departamento"])
         sueldo = int(request.form["sueldo"])
-        cargo_id = int(request.form["cargo"])  # Agregado para obtener el cargo seleccionado
+        # Agregado para obtener el cargo seleccionado
+        cargo_id = int(request.form["cargo"])
 
         query = "INSERT INTO empleados (Nombres, Nro_documento, Apellido_Paterno, Apellido_Materno, Fecha_Nacimiento, Direccion, Barrio, Telefono, Email, Departamento, Sueldo, Cargo_ID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         values = (nombres, nro_documento, apellido_paterno, apellido_materno, fecha_nacimiento,
@@ -348,7 +370,8 @@ def editar(id_empleado):
         telefono = request.form["telefono"]
         email = request.form["email"]
         departamento = int(request.form["departamento"])
-        sueldo = float(request.form["suldo"])  # Asegúrate de convertirlo a float si es un número decimal
+        # Asegúrate de convertirlo a float si es un número decimal
+        sueldo = float(request.form["sueldo"])
         cargo = int(request.form["cargo"])  # Nuevo campo para el cargo
 
         query = "UPDATE empleados SET Nombres = %s, Apellido_Paterno = %s, Apellido_Materno = %s, Fecha_Nacimiento = %s, Direccion = %s, Barrio = %s, Telefono = %s, Email = %s, Departamento = %s, Sueldo = %s, Cargo_ID = %s WHERE ID = %s"
@@ -367,14 +390,14 @@ def editar(id_empleado):
     departamento_empleado = empleado['Departamento']
 
     # Obtener los cargos del departamento del empleado
-    cursor.execute("SELECT * FROM cargos WHERE Departamento_ID = %s", (departamento_empleado,))
+    cursor.execute(
+        "SELECT * FROM cargos WHERE Departamento_ID = %s", (departamento_empleado,))
     cargos = cursor.fetchall()
     cursor.execute("SELECT * FROM departamento")
     departamentos = cursor.fetchall()
     cursor.close()
 
     return render_template("editar.html", empleado=empleado, departamentos=departamentos, cargos=cargos)
-
 
 
 @app.route("/desactivar/<int:id>")
@@ -421,7 +444,9 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
 
-Seguro = 0.0  
+
+Seguro = 0.0
+
 
 @app.route("/Horario", methods=["GET", "POST"])
 def Horario():
@@ -442,18 +467,19 @@ def Horario():
         tipo_liquidacion = request.form["tipo_liquidacion"]
 
         # Obtener los valores de las variables del formulario
-        horas_diurnas = int(request.form["horas_diurnas"]) if request.form["horas_diurnas"].strip() else 0
-        horas_extra_diurnas = int(request.form["horas_extra_diurnas"]) if request.form["horas_extra_diurnas"].strip() else 0
-        horas_nocturnas = int(request.form["horas_nocturnas"]) if request.form["horas_nocturnas"].strip() else 0
-        horas_extra_nocturnas = int(request.form["horas_extra_nocturnas"]) if request.form["horas_extra_nocturnas"].strip() else 0
-        horas_dominicales = int(request.form["horas_dominicales"]) if request.form["horas_dominicales"].strip() else 0
-        horas_extra_dominicales = int(request.form["horas_extra_dominicales"]) if request.form["horas_extra_dominicales"].strip() else 0
-        horas_extra_dom_nocturnas = int(request.form["horas_extra_dom_nocturnas"]) if request.form["horas_extra_dom_nocturnas"].strip() else 0
+        horas_diurnas = int(request.form["horas_diurnas"]) if request.form["horas_diurnas"] else 0
+        horas_extra_diurnas = int(request.form["horas_extra_diurnas"]) if request.form["horas_extra_diurnas"] else 0
+        horas_nocturnas = int(request.form["horas_nocturnas"]) if request.form["horas_nocturnas"] else 0
+        horas_extra_nocturnas = int(request.form["horas_extra_nocturnas"]) if request.form["horas_extra_nocturnas"] else 0
+        horas_dominicales = int(request.form["horas_dominicales"]) if request.form["horas_dominicales"] else 0
+        horas_extra_dominicales = int(request.form["horas_extra_dominicales"]) if request.form["horas_extra_dominicales"] else 0
+        horas_extra_dom_nocturnas = int(request.form["horas_extra_dom_nocturnas"]) if request.form["horas_extra_dom_nocturnas"] else 0
 
         cursor = db.cursor()
 
         # Consulta para obtener datos del empleado
-        cursor.execute("SELECT Sueldo FROM empleados WHERE ID = %s", (empleado_id,))
+        cursor.execute(
+            "SELECT Sueldo FROM empleados WHERE ID = %s", (empleado_id,))
         empleado_data = cursor.fetchone()
 
         if empleado_data:
@@ -464,15 +490,21 @@ def Horario():
             empleado_sueldo = empleado_sueldo
         elif tipo_liquidacion == "quincenal":
             empleado_sueldo = empleado_sueldo/2
-            
+
         # Realizar cálculos
         horas_diurnas_total = ((empleado_sueldo / 120) * horas_diurnas)
-        horas_extra_diurnas_total = (((empleado_sueldo * 1.25) / 120) * horas_extra_diurnas)
-        horas_nocturnas_total = (((empleado_sueldo * 1.35) / 240) * horas_nocturnas)
-        horas_extra_nocturnas_total = (((empleado_sueldo * 1.75) / 120) * horas_extra_nocturnas)
-        horas_dominicales_total = (((empleado_sueldo * 1.75) / 120) * horas_dominicales)
-        horas_extra_dominicales_total = (((empleado_sueldo * 2) / 120) * horas_extra_dominicales)
-        horas_extra_dom_nocturnas_total = (((empleado_sueldo * 2.5) / 120) * horas_extra_dom_nocturnas)
+        horas_extra_diurnas_total = (
+            ((empleado_sueldo * 1.25) / 120) * horas_extra_diurnas)
+        horas_nocturnas_total = (
+            ((empleado_sueldo * 1.35) / 240) * horas_nocturnas)
+        horas_extra_nocturnas_total = (
+            ((empleado_sueldo * 1.75) / 120) * horas_extra_nocturnas)
+        horas_dominicales_total = (
+            ((empleado_sueldo * 1.75) / 120) * horas_dominicales)
+        horas_extra_dominicales_total = (
+            ((empleado_sueldo * 2) / 120) * horas_extra_dominicales)
+        horas_extra_dom_nocturnas_total = (
+            ((empleado_sueldo * 2.5) / 120) * horas_extra_dom_nocturnas)
 
         cursor = db.cursor()
 
@@ -485,7 +517,6 @@ def Horario():
             total_devengado = empleado_sueldo + horas_extra_total
         else:
             total_devengado = empleado_sueldo + 140606 + horas_extra_total
-        
 
         total_deducido = salud + pension + (Seguro * 0.0975)
         neto_pagado = total_devengado - total_deducido
@@ -518,7 +549,8 @@ def Horario():
     if empleado_id is not None:
         empleado_id = int(empleado_id)
     else:
-        return redirect(url_for("trabajadores"))  # Redirige de nuevo a la lista de empleados si no se proporciona el empleado_id en la URL
+        # Redirige de nuevo a la lista de empleados si no se proporciona el empleado_id en la URL
+        return redirect(url_for("trabajadores"))
 
     cursor.execute("SELECT * FROM empleados WHERE Estado = 'Activo'")
     empleados = cursor.fetchall()
@@ -526,15 +558,15 @@ def Horario():
 
     return render_template(
         "Horario.html",
-        empleados = empleados,
-        empleado_id = empleado_id  # Pasa el empleado_id a la plantilla
+        empleados=empleados,
+        empleado_id=empleado_id  # Pasa el empleado_id a la plantilla
     )
 
 
 @app.route("/realizar_pago", methods=["POST"])
 def realizar_pago():
-    Riesgo_LV=0
-    tarifa_riesgo=0
+    Riesgo_LV = 0
+    tarifa_riesgo = 0
     # Guardar las variables en la base de datos
     cursor = db.cursor()
 
@@ -546,17 +578,23 @@ def realizar_pago():
     total_deducido = float(request.form["total_deducido"])
     neto_pagado = float(request.form["neto_pagado"])
     horas_diurnas_total = float(request.form["horas_diurnas_total"])
-    horas_extra_diurnas_total = float(request.form["horas_extra_diurnas_total"])
+    horas_extra_diurnas_total = float(
+        request.form["horas_extra_diurnas_total"])
     horas_nocturnas_total = float(request.form["horas_nocturnas_total"])
-    horas_extra_nocturnas_total = float(request.form["horas_extra_nocturnas_total"])
+    horas_extra_nocturnas_total = float(
+        request.form["horas_extra_nocturnas_total"])
     horas_dominicales_total = float(request.form["horas_dominicales_total"])
-    horas_extra_dominicales_total = float(request.form["horas_extra_dominicales_total"])
-    horas_extra_dom_nocturnas_total = float(request.form["horas_extra_dom_nocturnas_total"])
+    horas_extra_dominicales_total = float(
+        request.form["horas_extra_dominicales_total"])
+    horas_extra_dom_nocturnas_total = float(
+        request.form["horas_extra_dom_nocturnas_total"])
     fecha_actual = datetime.now()
 
-    cursor.execute("SELECT Nombres, Apellido_Paterno, Apellido_Materno, Cargo_ID, Sueldo FROM empleados WHERE ID = %s", [empleado_id])
+    cursor.execute(
+        "SELECT Nombres, Apellido_Paterno, Apellido_Materno, Cargo_ID, Sueldo FROM empleados WHERE ID = %s", [empleado_id])
     empleado_data = cursor.fetchone()
-    cursor.execute("SELECT Riesgo_LV FROM Cargos WHERE ID = %s", [empleado_data[3]])
+    cursor.execute("SELECT Riesgo_LV FROM Cargos WHERE ID = %s",
+                   [empleado_data[3]])
     cargo_data = cursor.fetchone()
 
     empleado_nombre = empleado_data[0] + empleado_data[1] + empleado_data[2]
@@ -565,58 +603,53 @@ def realizar_pago():
     print(empleado_data)
 
     if Riesgo_LV == 1:
-        tarifa_riesgo=0.0522
+        tarifa_riesgo = 0.0522
     elif Riesgo_LV == 2:
-        tarifa_riesgo=0.1044
+        tarifa_riesgo = 0.1044
     elif Riesgo_LV == 3:
-        tarifa_riesgo=0.2436
+        tarifa_riesgo = 0.2436
     elif Riesgo_LV == 4:
-        tarifa_riesgo=0.4350
+        tarifa_riesgo = 0.4350
 
-    #Detalles de descuento por seguridad social
+    # Detalles de descuento por seguridad social
     Aporte_Salud = (salario_base + horas_extra_total)*0.085
     Aporte_Pension = (salario_base + horas_extra_total)*0.12
     Total_DDSS = Aporte_Salud + Aporte_Pension
 
-    #apropiaciones
+    # apropiaciones
     Cesantias = total_devengado * 0.0833
     Interes_C = Cesantias * 0.12
-    Prima= total_devengado * 0.0833
+    Prima = total_devengado * 0.0833
     Vacaciones = salario_base * 0.0417
     Cajas_C = (salario_base + horas_extra_total) * 0.04
     ICBF = (salario_base+horas_extra_total)*0.003
     SENA = (salario_base+horas_extra_total)*0.002
     Aporte_PF = Cajas_C+ICBF+SENA
-    ARL=(salario_base+horas_extra_total)*tarifa_riesgo
-    Total_Apropiado=Cesantias+Interes_C+Prima+Vacaciones+Aporte_PF+ARL
-    Gran_Total=total_devengado+Total_DDSS+Total_Apropiado
+    ARL = (salario_base+horas_extra_total)*tarifa_riesgo
+    Total_Apropiado = Cesantias+Interes_C+Prima+Vacaciones+Aporte_PF+ARL
+    Gran_Total = total_devengado+Total_DDSS+Total_Apropiado
 
-    cursor.execute("SELECT COUNT(*) FROM horario WHERE empleado_ID = %s AND MONTH(Fecha) = %s AND YEAR(Fecha) = %s",
-                (empleado_id, fecha_actual.month, fecha_actual.year))
-    existing_records = cursor.fetchone()
+    cursor.execute("INSERT INTO gran_total (ID_empleado, Total) VALUES (%s, %s)",
+                   (empleado_id, Gran_Total))
+    cursor.execute("INSERT INTO aporte_social (Aporte_Salud, Aporte_Pension, Total_Social, Fecha, ID_empleado) VALUES (%s, %s, %s, %s, %s)",
+                   (Aporte_Salud, Aporte_Pension, Total_DDSS, fecha_actual, empleado_id))
+    cursor.execute("INSERT INTO apropiaciones (Cesantia, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_Compensacion, ICBF, SENA, ARL, Total_Apropiado, Fecha, ID_Empleado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                   (Cesantias, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_C, ICBF, SENA, ARL, Total_Apropiado, fecha_actual, empleado_id))
+    cursor.execute("INSERT INTO deduccion (Empleado_ID, Salud, Pension, Fecha) VALUES (%s, %s, %s, %s)",
+                   (empleado_id, salud, pension, fecha_actual))
+    cursor.execute("INSERT INTO sueldo (Empleado_ID, Total_Dev, Total_Ded, Salario_Neto, Fecha) VALUES (%s, %s, %s, %s, %s)",
+                   (empleado_id, total_devengado, total_deducido, neto_pagado, fecha_actual))
+    cursor.execute("INSERT INTO horario (HorDiurna, HorExtDiurna, HorNocturna, HorExtNocturna, HorDominical, HorExtDominical, HorExtDomNoct, empleado_ID, Fecha) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                   (horas_diurnas_total, horas_extra_diurnas_total, horas_nocturnas_total, horas_extra_nocturnas_total, horas_dominicales_total, horas_extra_dominicales_total, horas_extra_dom_nocturnas_total, empleado_id, fecha_actual))
+    db.commit()
+    cursor.close()
+    generar_pdf(empleado_nombre, horas_extra_total, total_devengado,
+                total_deducido, neto_pagado, fecha_actual)
 
-    if existing_records and existing_records[0] > 0:
-        return redirect(url_for("login"))
-    else:
-        cursor.execute("INSERT INTO gran_total (ID_empleado, Total) VALUES (%s, %s)",
-                        (empleado_id, Gran_Total))
-        cursor.execute("INSERT INTO aporte_social (Aporte_Salud, Aporte_Pension, Total_Social, Fecha, ID_empleado) VALUES (%s, %s, %s, %s, %s)",
-                        (Aporte_Salud, Aporte_Pension, Total_DDSS, fecha_actual, empleado_id))
-        cursor.execute("INSERT INTO apropiaciones (Cesantia, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_Compensacion, ICBF, SENA, ARL, Total_Apropiado, Fecha, ID_Empleado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                        (Cesantias, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_C, ICBF, SENA, ARL, Total_Apropiado, fecha_actual, empleado_id))
-        cursor.execute("INSERT INTO deduccion (Empleado_ID, Salud, Pension, Fecha) VALUES (%s, %s, %s, %s)",
-                        (empleado_id, salud, pension, fecha_actual))
-        cursor.execute("INSERT INTO sueldo (Empleado_ID, Total_Dev, Total_Ded, Salario_Neto, Fecha) VALUES (%s, %s, %s, %s, %s)",
-                        (empleado_id, total_devengado, total_deducido, neto_pagado, fecha_actual))
-        cursor.execute("INSERT INTO horario (HorDiurna, HorExtDiurna, HorNocturna, HorExtNocturna, HorDominical, HorExtDominical, HorExtDomNoct, empleado_ID, Fecha) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                        (horas_diurnas_total, horas_extra_diurnas_total, horas_nocturnas_total, horas_extra_nocturnas_total, horas_dominicales_total, horas_extra_dominicales_total, horas_extra_dom_nocturnas_total, empleado_id, fecha_actual))
-        db.commit()
-        cursor.close()
-        generar_pdf(empleado_nombre, horas_extra_total, total_devengado, total_deducido, neto_pagado, fecha_actual)
+    return render_template(
+        "ExitoPago.html",
+    )
 
-        return render_template(
-            "ExitoPago.html",
-        )
 
 def generar_pdf(empleado_nombre, horas_extra_total, total_devengado, total_deducido, neto_pagado, fecha_actual):
     # Obtener la ruta de la carpeta de descargas
@@ -629,7 +662,8 @@ def generar_pdf(empleado_nombre, horas_extra_total, total_devengado, total_deduc
     fecha_str_limpio = fecha_actual.strftime("%Y%m%d_%H%M%S")
 
     # Construir la ruta completa del PDF
-    pdf_path = os.path.join(downloads_folder, f"boletin_pago_{empleado_nombre_limpio}_{fecha_str_limpio}.pdf")
+    pdf_path = os.path.join(
+        downloads_folder, f"boletin_pago_{empleado_nombre_limpio}_{fecha_str_limpio}.pdf")
 
     # Crear el objeto Canvas
     c = canvas.Canvas(pdf_path)
@@ -647,6 +681,7 @@ def generar_pdf(empleado_nombre, horas_extra_total, total_devengado, total_deduc
 
     # Guardar el PDF
     c.save()
+
 
 @app.route('/reportes')
 def reportes():
@@ -679,7 +714,8 @@ def reportes():
     pago_total = cursor.fetchone()[0]
 
     # Crear un gráfico de barras para las estadísticas de departamentos
-    df_departamentos = pd.DataFrame(estadisticas_departamentos, columns=['Departamento', 'Cantidad'])
+    df_departamentos = pd.DataFrame(estadisticas_departamentos, columns=[
+                                    'Departamento', 'Cantidad'])
 
     fig_departamentos = px.bar(
         df_departamentos,
@@ -689,14 +725,16 @@ def reportes():
     )
 
     # Crear un gráfico de barras para las estadísticas de empleados activos e inactivos
-    df_estado = pd.DataFrame(estadisticas_estado, columns=['Estado', 'Cantidad'])
+    df_estado = pd.DataFrame(estadisticas_estado, columns=[
+                             'Estado', 'Cantidad'])
 
     fig_estado = px.bar(
         df_estado,
         x='Estado',
         y='Cantidad',
         title='Empleados Activos vs. Inactivos',
-        labels={'Estado': 'Estado de Empleados', 'Cantidad': 'Cantidad de Empleados'}
+        labels={'Estado': 'Estado de Empleados',
+                'Cantidad': 'Cantidad de Empleados'}
     )
 
     # Crea un gráfico de líneas para las ganancias mensuales

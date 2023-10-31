@@ -16,12 +16,20 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
   </head>
   <body>
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form method="POST" action="{{ url_for('login') }}" class="sign-in-form">
+          <form
+            method="POST"
+            action="{{ url_for('login') }}"
+            class="sign-in-form"
+          >
             <h2 class="title">Iniciar sesión</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
@@ -63,19 +71,38 @@
               </a>
             </div>
           </form>
-          <form method="POST" action="{{ url_for('registro') }}" class="sign-up-form">
+          <form
+            method="POST"
+            action="{{ url_for('registro') }}"
+            class="sign-up-form"
+          >
             <h2 class="title">Registrarse</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Usuario" id="Nombre" name="Nombre"/>
+              <input
+                type="text"
+                placeholder="Usuario"
+                id="Nombre"
+                name="Nombre"
+              />
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" id="Correo" name="Correo"/>
+              <input
+                type="email"
+                placeholder="Email"
+                id="Correo"
+                name="Correo"
+              />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Contraseña" id="Contraseña" name="Contraseña"/>
+              <input
+                type="password"
+                placeholder="Contraseña"
+                id="Contraseña"
+                name="Contraseña"
+              />
             </div>
             <input type="submit" class="btn" value="Registrarse" />
             <p class="social-text">O inicie sesión en plataformas sociales</p>
@@ -133,28 +160,22 @@
       </div>
     </div>
 
-      {% if error %}
-          <script>
-            alert("{{ error }}");
-          </script>
-      {% endif %}
-
-    {% if error_password %}
-        <script>
-          alert("{{ error_password }}");
-        </script>
-    {% endif %}
-
-    {% if error_correo %}
-        <script>
-          alert("{{ error_correo }}");
-        </script>
-    {% endif %}
-    
-    {% if sucefull %}
-        <script>
-          alert("{{ sucefull }}");
-        </script>
+    {% if error %}
+    <script>
+      alert("{{ error }}");
+    </script>
+    {% endif %} {% if error_password %}
+    <script>
+      alert("{{ error_password }}");
+    </script>
+    {% endif %} {% if error_correo %}
+    <script>
+      alert("{{ error_correo }}");
+    </script>
+    {% endif %} {% if sucefull %}
+    <script>
+      alert("{{ sucefull }}");
+    </script>
     {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{ url_for('static', filename='Recources/Js/login.js') }}"></script>

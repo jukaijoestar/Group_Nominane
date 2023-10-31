@@ -27,7 +27,7 @@
     />
   </head>
   <body>
-    <nav id="desktop-nav">
+    <header id="desktop-nav">
       <!--<div class="logo"><h1>G|Nomimane</h1></div>-->
       <div>
         <ul class="nav-links">
@@ -39,9 +39,9 @@
           <li><a href="{{ url_for('login') }}">Log In</a></li>
         </ul>
       </div>
-    </nav>
+    </header>
     <nav id="hamburger-nav">
-      <div class="logo">John Doe</div>
+      <div class="logo">GroupNomimane</div>
       <div class="hamburger-menu">
         <div class="hamburger-icon" onclick="toggleMenu()">
           <span></span>
@@ -62,28 +62,27 @@
     <section id="inicio">
       <div class="carousel-container">
         <div class="carousel">
-          <!--<div
-            class="carousel-slide"
-            style="background-image: url('./assets/Fondo.jpg')"
-          ></div>
-          <div
-            class="carousel-slide"
-            style="background-image: url('./assets/Fondo1.jpg')"
-          ></div>
-          <div
-            class="carousel-slide"
-            style="background-image: url('./assets/Fondo2.jpg')"
-          ></div>
-          <div
-            class="carousel-slide"
-            style="background-image: url('./assets/Fondo3.jpg')"
-          ></div>
-          <div
-            class="carousel-slide"
-            style="background-image: url('./assets/Fondo4.jpg')"
-          ></div>-->
+          <div class="carousel-slide">
+            <img
+              src="{{ url_for('static', filename='Recources/Fondo2.jpg') }}"
+              alt=""
+            />
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="{{ url_for('static', filename='Recources/Fondo1.jpg') }}"
+              alt=""
+            />
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="{{ url_for('static', filename='Recources/Fondo2.jpg') }}"
+              alt=""
+            />
+          </div>
         </div>
       </div>
+
       <button class="carousel-button prev-button">
         <i class="fas fa-arrow-left"></i>
       </button>
@@ -92,10 +91,10 @@
       </button>
       <div class="content">
         <div class="section__text">
-          <p class="section__text__p1">Hola mundo, estas en</p>
-          <h1 class="title">GroupNomimane</h1>
+          <p class="section__text__p1-i">Hola mundo, estas en</p>
+          <h1 class="title_prin">GroupNomimane</h1>
           <h2 class="sub-title">Somos <span class="auto-type"></span></h2>
-          <p class="section__text__p1">Bienvenido a nuestro sitio web. 👋🏼</p>
+          <p class="section__text__p1-i">Bienvenido a nuestro sitio web. 👋🏼</p>
         </div>
       </div>
     </section>
@@ -114,12 +113,12 @@
         </div>
         <div class="about-details-container">
           <div class="about-containers">
-            <div class="details-container" data-aos="fade-right">
+            <div class="details-container" data-aos="fade-up">
               <i class="fas fa-medal icon" alt="Education icon"></i>
               <h3>Experience</h3>
               <p>2+ Años <br />Brindando Efectividad</p>
             </div>
-            <div class="details-container" data-aos="fade-left">
+            <div class="details-container" data-aos="fade-up">
               <i
                 class="fa-solid fa-graduation-cap icon"
                 alt="Education icon"
@@ -262,6 +261,57 @@
       <h1 class="title">Equipo Ejecutivo</h1>
       <div class="experience-details-container">
         <div class="about-containers">
+          <!-- Tarjeta pardo-->
+          <div class="details-container color-container">
+            <div class="article-container">
+              <img
+                src="{{ url_for('static', filename='Recources/PARDO.jpg') }}"
+                alt="Project 1"
+                class="project-img"
+              />
+            </div>
+            <h2 class="experience-sub-title project-title">ING. PARDO</h2>
+            <div class="sub-container">
+              <p class="card-text sub">Desarrollador De Niños</p>
+            </div>
+
+            <div class="separator"></div>
+
+            <li class="contact-item">
+              <div class="contact-info">
+                <p class="contact-title">
+                  <i class="fas fa-map-marker-alt"> </i>_Location
+                </p>
+                <address>Barranquilla, Atlantico</address>
+              </div>
+            </li>
+
+            <div class="separator"></div>
+
+            <ul class="social-list">
+              <li class="social-item">
+                <a href="#" class="social-link">
+                  <i class="fa-brands fa-square-facebook"></i>
+                </a>
+              </li>
+              <li class="social-item">
+                <a href="#" class="social-link">
+                  <i class="fa-brands fa-square-x-twitter"></i>
+                </a>
+              </li>
+              <li class="social-item">
+                <a href="#" class="social-link">
+                  <i class="fa-brands fa-square-instagram"></i>
+                </a>
+              </li>
+            </ul>
+            <p class="card-text">
+              <small class="text-body-secondary"
+                >Última actualización hace 3 minutos</small
+              >
+            </p>
+          </div>
+
           <!-- Tarjeta Esteban-->
           <div class="details-container color-container">
             <div class="article-container">
@@ -307,7 +357,9 @@
               </li>
             </ul>
             <p class="card-text">
-              <small class="text-body-secondary">Last updated 3 mins ago</small>
+              <small class="text-body-secondary"
+                >Última actualización hace 2 segundos</small
+              >
             </p>
           </div>
 
@@ -356,7 +408,9 @@
               </li>
             </ul>
             <p class="card-text">
-              <small class="text-body-secondary">Last updated 3 mins ago</small>
+              <small class="text-body-secondary"
+                >Última actualización hace 1 minutos</small
+              >
             </p>
           </div>
 
@@ -405,7 +459,9 @@
               </li>
             </ul>
             <p class="card-text">
-              <small class="text-body-secondary">Last updated 3 mins ago</small>
+              <small class="text-body-secondary"
+                >Última actualización hace 30 dias</small
+              >
             </p>
           </div>
         </div>
@@ -476,18 +532,6 @@
 
     <!-- Contenido de la sección "Final De Pagina" -->
     <footer>
-      <nav>
-        <div class="nav-links-container">
-          <ul class="nav-links">
-            <li><a class="final" href="#desktop-nav">Home</a></li>
-            <li><a class="final" href="#nosotros">Sobre Nosotros</a></li>
-            <li><a class="final" href="#servicios">Servicios</a></li>
-            <li><a class="final" href="#experiencia">Experiencia</a></li>
-            <li><a class="final" href="#equipo">Equipo</a></li>
-            <li><a class="final" href="#contacto">Contacto</a></li>
-          </ul>
-        </div>
-      </nav>
       <p>Copyright &#169; 2023 GroupNomimane. All Rights Reserved.</p>
     </footer>
 
@@ -496,12 +540,40 @@
       <i class="fa-solid fa-angles-up"></i>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ url_for('static', filename='Recources/Js/layout.js') }}"></script>
     <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init({
         duration: 1500, // Cambia este valor según tus preferencias
+      });
+    </script>
+    <script>
+      // JavaScript para cambiar el estilo del encabezado al hacer scroll
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector("header");
+        if (window.scrollY > 100) {
+          header.classList.add("scrolling");
+          header.style.width = "80%"; // Reducir el ancho gradualmente
+        } else {
+          header.classList.remove("scrolling");
+          header.style.width = "100%"; // Restaurar el ancho al 100%
+        }
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href").substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop,
+              behavior: "smooth",
+            });
+          }
+        });
       });
     </script>
   </body>

@@ -20,12 +20,18 @@
       empleado_id }} recibirá el pago total de {{ neto_pagado }}
     </p>
     <p>Detalles:</p>
-    <ul>
-      <li>Horas Extra Total: {{ horas_extra_total }}</li>
-      <li>Salud: {{ salud }}</li>
-      <li>Pensión: {{ pension }}</li>
-      <li>Total Devengado: {{ total_devengado }}</li>
-      <li>Total Deducido: {{ total_deducido }}</li>
+    <ul class="aligned-list">
+      <li class="left">
+        Horas Extra Total: <span class="right">{{ horas_extra_total }}</span>
+      </li>
+      <li class="left">Salud: <span class="right">{{ salud }}</span></li>
+      <li class="left">Pensión: <span class="right">{{ pension }}</span></li>
+      <li class="left">
+        Total Devengado: <span class="right">{{ total_devengado }}</span>
+      </li>
+      <li class="left">
+        Total Deducido: <span class="right">{{ total_deducido }}</span>
+      </li>
     </ul>
     <form action="{{ url_for('realizar_pago') }}" method="post" id="pago-form">
       <input type="hidden" name="empleado_id" value="{{ empleado_id }}" />
@@ -35,14 +41,42 @@
         value="{{ horas_extra_total }}"
       />
       <input type="hidden" name="salud" value="{{ salud }}" />
-      <input type="hidden" name="pension" value="{{ pension }}" /> 
-      <input type="hidden" name="horas_diurnas_total" value="{{ horas_diurnas_total }}" />
-      <input type="hidden" name="horas_extra_diurnas_total" value="{{ horas_extra_diurnas_total }}" /> 
-      <input type="hidden" name="horas_nocturnas_total" value="{{ horas_nocturnas_total }}" /> 
-      <input type="hidden" name="horas_extra_nocturnas_total" value="{{ horas_extra_nocturnas_total }}" /> 
-      <input type="hidden" name="horas_dominicales_total" value="{{ horas_dominicales_total }}" />
-      <input type="hidden" name="horas_extra_dominicales_total" value="{{ horas_extra_dominicales_total }}" />
-      <input type="hidden" name="horas_extra_dom_nocturnas_total" value="{{ horas_extra_dom_nocturnas_total }}" />
+      <input type="hidden" name="pension" value="{{ pension }}" />
+      <input
+        type="hidden"
+        name="horas_diurnas_total"
+        value="{{ horas_diurnas_total }}"
+      />
+      <input
+        type="hidden"
+        name="horas_extra_diurnas_total"
+        value="{{ horas_extra_diurnas_total }}"
+      />
+      <input
+        type="hidden"
+        name="horas_nocturnas_total"
+        value="{{ horas_nocturnas_total }}"
+      />
+      <input
+        type="hidden"
+        name="horas_extra_nocturnas_total"
+        value="{{ horas_extra_nocturnas_total }}"
+      />
+      <input
+        type="hidden"
+        name="horas_dominicales_total"
+        value="{{ horas_dominicales_total }}"
+      />
+      <input
+        type="hidden"
+        name="horas_extra_dominicales_total"
+        value="{{ horas_extra_dominicales_total }}"
+      />
+      <input
+        type="hidden"
+        name="horas_extra_dom_nocturnas_total"
+        value="{{ horas_extra_dom_nocturnas_total }}"
+      />
 
       <input
         type="hidden"

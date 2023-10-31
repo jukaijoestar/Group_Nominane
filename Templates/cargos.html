@@ -1,498 +1,184 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista Cargos | GROUPNOMIMANE</title>
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='Recources/Styles/Estilocar.css') }}"
     />
     <link
       rel="icon"
       href="{{url_for('static', filename='Recources/logo.png')}}"
     />
     <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
-    <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  outline: none;
-  border: none;
-  text-decoration: none;
-  list-style: none;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-  
-}
-
-body {
- /* display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  min-height: 100vh;
-  display: contents;
-  width: 100%;
-  max-width: 1400px;*/
-  background-color: rgba(205, 205, 205, 0.42);
-}
-
-/* Estilos específicos */
-/*.main-top {
-  background: #b8b8b800;
-  box-shadow: 0px 5px 10px rgba(126, 126, 126, 0.1);
-  border-radius: 0 0 15px 15px;
-}*/
-
-/*seccion Menu*/
-.nav__container:has(.dropdown:target) {
-  --img1: scale(0);
-  --img2: scale(1);
-
-  --clip: inset(0 0 0 0);
-}
-
-.nav__container {
-  border-radius: 0px 0px 1.5rem 1.5rem;
-  background-color: #d3d3d300;
-  width: 80%;
-  margin: 0 auto;
-  height: 70px;
-  z-index: 1000;
-  padding: 20px;
-  /*box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);*/
-  --img1: scale(1);
-  --img2: scale(0);
-
-  display: grid;
-  grid-template-columns: max-content max-content;
-  grid-template-areas: "title img";
-  justify-content: space-between;
-  align-items: center;
-  /*box-shadow: 0px 0px 20px rgb(170, 170, 170);*/
-}
-.nav__title{
-    color: #3f3f3f;
-    grid-area: title;
-    text-decoration: none; 
-    font-size: 18px;
-    font-weight: 500;
-}
-
-/* Estilos para el efecto de autotipeo */
-.auto-type {
-  color: rgb(161, 161, 161);
-}
-.nav__icon {
-  font-size: 18px; 
-  color:  #a19d9dd3;
-  text-decoration: none; 
-}
-
-.nav__menu i{
-  text-decoration: none;
-}
-.nav__icon:hover{
-  color: #b7b7b7d3;
-}
-
-.menu_icon{
-  font-size: 25px; 
-  color: #ffffff;
-}
-
-.menu_icon:hover{
-  color: #a19d9dd3;
-}
-
-.nav__menu {
-  grid-area: img;
-  position: relative;
-  z-index: 50;
-  transform: var(--img1);
-}
-
-.nav__menu--second {
-  transform: var(--img2);
-}
-
-.nav__icon {
-  width: 30px;
-  display: block;
-}
-
-.dropdown {
-  position: absolute;
-  background-color: #00000097;
-  width: 75%;
-  max-width: 300px;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 1em;
-
-  display: grid;
-  align-content: center;
-  gap: 1rem;
-
-  overflow-y: auto;
-
-  clip-path: var(--clip, inset(0 0 100% 100%));
-  transition: clip-path 0.5s;
-}
-
-.dropdown__list {
-  list-style: none;
-}
-
-.dropdown__link {
-  color: rgb(184, 187, 191);
-  padding: 1em 0.7em;
-  text-decoration: none;
-
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-
-  position: relative;
-  background-color: var(--bg, transparent);
-  border-radius: 6px;
-}
-
-.dropdown__list:has(:checked) {
-  --rows: 1fr;
-  --rotate: rotate(180deg);
-  --bg: grey;
-}
-
-.dropdown__check {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.dropdown__arrow {
-  margin-left: auto;
-  transform: var(--rotate, 0);
-  transition: 0.2s transform;
-}
-
-.dropdown__content {
-  display: grid;
-  grid-template-rows: var(--rows, 0fr);
-  transition: 0.3s grid-template-rows;
-}
-
-.dropdown__sub {
-  overflow: hidden;
-}
-
-.dropdown__li {
-  width: 85%;
-  list-style: none;
-  margin-left: auto;
-}
-
-.dropdown__anchor {
-  padding: 1em 0;
-  display: block;
-  color: #b6babe;
-  text-decoration: none;
-}
-
-.container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .cargo {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            width: 95%;
-            margin-right: 20px; /* Añadido un margen entre el contenedor y el formulario */
-        }
-
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .eleccion[type="submit"] {
-            background-color: #676767;
-            color: #fff;
-            padding: 5px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 10px;
-        }
-
-        .eleccion[type="submit"]:hover {
-            background-color: #6767678a;
-        }
-h1 {
-  background-color: #676767;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-}
-
-.table-container {
-  margin: 40px auto;
-  width: 95%;
-  background: #fff;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.204);
-  border-radius: 10px;
-  overflow-x:auto
-}
-.table {
-  width: 100%;
-  table-layout: fixed;
-  min-width: 1000px;
-  border-collapse: collapse;
-  
-}
-thead th{
-  background-color: #b8b8b8;
-  font-weight: 600;
-  color: #f5f5f5;
-}
-
-th, td {
-  padding: 15px 5px 15px 5px; /* Mantén el padding superior e inferior, y quita el derecho y el izquierdo */
-  text-align: center;
-  border-bottom: 2px solid #f2f2f2;
-  word-break: break-all;
-  font-size: 14px;
-}
-
-tr:hover td{
-  color: #ffffff;
-  cursor: pointer;
-  background-color: #bbb9b9ce;
-}
-
-/* Estilos para el botón "Desactivar" */
-.desactivar {
-  background-color: #dc3545;
-  color: #fff;
-  padding: 3px 7px; 
-  border-radius: 7px;
-  display: inline-block; 
-  margin-left: 4px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-::placeholder{
-  color: #3bc964;
-}
-
-::-webkit-scrollbar{
-  height: 5px;
-  width: 5px;
-}
-
-::-webkit-scrollbar-track{
- box-shadow: inset 0 0 6px rgb(0,0, 0, 0.3); 
- border-radius: 8px;
-}
-
-
-::-webkit-scrollbar-thumb{
- box-shadow: inset 0 0 6px rgb(0,0, 0, 0.3); 
-  border-radius: 8px;
-}
-    </style>
-</head>
-<body>
-  <div class="main-top">
-    <div class="nav__container">
-      <a href="#menu" class="nav__menu">
-        <i class="fa-solid fa-grip nav__icon"></i>
-      </a>
-      <a href="#menu" class="nav__title" id="autotype">
-        Group| <span class="auto-type"></span>
-      </a>
-
-      <a href="#" class="nav__menu nav__menu--second">
-        <i class="nav__icon fa-solid fa-rectangle-xmark"></i>
-      </a>
-
-      <ul class="dropdown" id="menu">
-        <li class="dropdown__list">
-          <a href="{{url_for('index')}}" class="dropdown__link">
-            <img
-              src="{{ url_for('static', filename='/assets/dashboard.svg') }}"
-              class="dropdown__icon"
-            />
-            <span class="dropdown__span" data-inicio>Inicio</span>
-          </a>
-        </li>
-
-        <li class="dropdown__list">
-          <a href="#" class="dropdown__link">
-            <img
-              src="{{ url_for('static', filename='/assets/projects.svg') }}"
-              class="dropdown__icon"
-            />
-            <span class="dropdown__span">Listados</span>
-            <img
-              src="{{ url_for('static', filename='/assets/down.svg') }}"
-              class="dropdown__arrow"
-            />
-
-            <input type="checkbox" class="dropdown__check" />
+  </head>
+  <body>
+    <nav class="menu-admi" id="nav">
+      <!-- Tipo 1 -->
+      <div class="header">
+        <!-- INPUT SEARCH -->
+        <div class="input-search">
+          <i class="bx bx-search"></i>
+          <input
+            type="text"
+            class="input"
+            placeholder="Buscar"
+            id="search-input"
+          />
+        </div>
+        <!-- MENU -->
+        <div class="menu">
+          <a href="{{url_for('index')}}" class="enlace-lista">
+            <i class="bx bx-grid-alt"></i>
+            <span>Inicio</span>
           </a>
 
-          <div class="dropdown__content">
-            <ul class="dropdown__sub">
-              <li class="dropdown__li">
-                <a
-                  href="{{ url_for('trabajadores') }}"
-                  class="dropdown__anchor"
-                  >Lista Trabajadores</a
+          <a href="#" class="enlace-lista">
+            <i class="bx bx-user"></i>
+            <span>Usuarios</span>
+          </a>
+
+          <li class="lista">
+            <a href="#" class="enlace-lista">
+              <i class="bx bx-list-ul"></i>
+              <span>Listados</span>
+              <i class="icon bx bx-chevron-down"></i>
+              <input type="checkbox" class="lista-check" />
+            </a>
+
+            <div class="lista-content">
+              <ul class="lista-sub">
+                <a href="{{ url_for('trabajadores') }}" class="enlace-li"
+                  >Empleados</a
                 >
-              </li>
-              <li class="dropdown__li">
-                <a href="{{url_for('inactivos')}}" class="dropdown__anchor"
-                  >Trabajadores Inactivos</a
+                <a href="{{url_for('inactivos')}}" class="enlace-li"
+                  >Empleados Inactivos</a
                 >
-              </li>
-              <li class="dropdown__li">
                 <a
                   href="{{ url_for('listar_departamentos') }}"
-                  class="dropdown__anchor"
-                  >Lista Departamentos</a
+                  class="enlace-li"
+                  >Departamentos</a
                 >
-              </li>
-              <li class="dropdown__li">
-                <a
-                  href="{{ url_for('cargos') }}"
-                  class="dropdown__anchor"
-                  >Lista Cargos</a
-                >
-              </li>
-              <li class="dropdown__li">
                 <a
                   href="{{ url_for('departamentos_Inactivos') }}"
-                  class="dropdown__anchor"
-                  >Lista de Departamentos Inactivos</a
+                  class="enlace-li"
+                  >Departamentos Inactivos</a
                 >
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="dropdown__list">
-          <a href="{{ url_for('reportes') }}" class="dropdown__link">
-            <img
-              src="{{ url_for('static', filename='/assets/stats.svg') }}"
-              class="dropdown__icon"
-            />
-            <span class="dropdown__span">Reportes</span>
-          </a>
-        </li>
+                <a href="{{ url_for('cargos') }}" class="enlace-li">Cargos</a>
+              </ul>
+            </div>
+          </li>
 
-        <li class="dropdown__list">
+          <li class="lista">
+            <a href="#" class="enlace-lista">
+              <i class="bx bx-file"></i>
+              <span>Reportes</span>
+              <i class="icon bx bx-chevron-down"></i>
+              <input type="checkbox" class="lista-check" />
+            </a>
+
+            <div class="lista-content">
+              <ul class="lista-sub">
+                <a href="{{ url_for('reportes') }}" class="enlace-li"
+                  >Reporte General</a
+                >
+                <a href="#" class="enlace-li">Boletin Pago</a>
+                <a href="#" class="enlace-li">Boletin Nomina</a>
+                <a href="#" class="enlace-li">No se</a>
+              </ul>
+            </div>
+          </li>
+
+          <a href="#" class="enlace-lista">
+            <i class="bx bx-cog"></i>
+            <span>Configuración</span>
+          </a>
+
           <a
             href="{{ url_for('logout') }}"
-            class="dropdown__link"
+            class="enlace-lista"
             onclick="confirmLogout(event)"
           >
-            <img
-              src="{{ url_for('static', filename='/assets/Exit.svg') }}"
-              class="dropdown__icon"
-            />
-            <span class="dropdown__span">Salir</span>
+            <i class="bx bx-exit"></i>
+            <span>Salir</span>
           </a>
-        </li>
-      </ul>
+        </div>
+        <i class="menui bx bx-menu-alt-left" id="menu-admi"></i>
+      </div>
+    </nav>
+    <header class="nav__container">
+      <a href="{{url_for('index')}}" class="titulo" id="autotype">
+        Group| <span class="auto-type"></span>
+      </a>
+    </header>
+
+    <div class="buscador">
+      <input
+        class="buscar"
+        type="text"
+        placeholder="Buscar cargo"
+        id="search"
+      />
+      <i class="iconi fa-solid fa-magnifying-glass"></i>
     </div>
-  </div>
 
     <div class="table-container">
       <div class="cargo">
         <form method="post" action="/cargos">
           <label for="departamento">Selecciona un departamento:</label>
           <select id="departamento" name="departamento">
-              <option value="0">Seleccione una opción</option>
-              {% for departamento in departamentos %}
-                  <option value="{{ departamento.ID }}">{{ departamento.Nombre }}</option>
-              {% endfor %}
-          </select>
-          <input class="eleccion" type="submit" value="Mostrar Cargos">
-      </form>
-    </div>
-            {% if cargos %}
-            {% set departamento_id = cargos[0].Departamento_ID %}
-            {% set departamento_encontrado = false %}
+            <option value="0">Seleccione una opción</option>
             {% for departamento in departamentos %}
-                {% if not departamento_encontrado and departamento.ID == departamento_id %}
-                    {% set departamento_encontrado = true %}
-                    <h1>Lista de Cargos de {{ departamento.Nombre }}</h1>
-                {% endif %}
+            <option value="{{ departamento.ID }}">
+              {{ departamento.Nombre }}
+            </option>
             {% endfor %}
-        {% endif %}
-            <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Salario Base</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cargo in cargos %}
-                    <tr>
-                        <td>{{ cargo.ID }}</td>
-                        <td>{{ cargo.Nombre }}</td>
-                        <td>{{ cargo.Salario_Base }}</td>
-                        <td>
-                            <form method="post" action="/desactivar_cargo">
-                                <input type="hidden" name="cargo_id" value="{{ cargo.ID }}">
-                                <input type="submit" value="Desactivar"
-                                class="desactivar">
-                            </form>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+          </select>
+          <input class="eleccion" type="submit" value="Mostrar Cargos" />
+        </form>
+      </div>
+      {% if cargos %} {% set departamento_id = cargos[0].Departamento_ID %} {%
+      set departamento_encontrado = false %} {% for departamento in
+      departamentos %} {% if not departamento_encontrado and departamento.ID ==
+      departamento_id %} {% set departamento_encontrado = true %}
+      <h1>Lista de Cargos de {{ departamento.Nombre }}</h1>
+      {% endif %} {% endfor %} {% endif %}
+      <table class="table" id="employee-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Salario Base</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cargo in cargos %}
+          <tr>
+            <td>{{ cargo.ID }}</td>
+            <td>{{ cargo.Nombre }}</td>
+            <td>{{ cargo.Salario_Base }}</td>
+            <td>
+              <form method="post" action="/desactivar_cargo">
+                <input type="hidden" name="cargo_id" value="{{ cargo.ID }}" />
+                <input type="submit" value="Desactivar" class="desactivar" />
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script>
-      //EFECTO DE ESCRITURA
-      var typed = new Typed(".auto-type", {
-        strings: [
-          "Explora contigo  🔍",
-          "Te facilita  📈",
-          "Líderes del futuro 🏆",
-          "Nomimane ✍️",
-        ],
-        typeSpeed: 100,
-        backSpeed: 50,
-        looped: true,
-      });
-    </script>
-</body>
+    <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
+  </body>
 </html>

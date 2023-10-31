@@ -76,7 +76,7 @@
                 <input
                   class="controls"
                   placeholder="Horas Extra Dominicales"
-                  type="number"
+                  type="tenumberxt"
                   autocomplete="off"
                   name="horas_extra_dominicales"
                 /><br />
@@ -107,6 +107,7 @@
                   empleado.Apellido_Paterno }} {% endif %} {% endfor %} {% endif
                   %}
                 </p>
+                <p id="empleado_nombre_apellido">En caso de dejar espacios en blanco se rellenarán con 0.</p>
                 <input
                   type="hidden"
                   name="empleado_id"
@@ -115,7 +116,6 @@
                 />
                 <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
               </div>
-              <h3>Puede saltar este espacio si no es necesario.</h3>
               <button type="submit" class="botons">
                 <lord-icon
                   src="https://cdn.lordicon.com/xxwwxrom.json"
