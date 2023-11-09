@@ -625,6 +625,7 @@ def realizar_pago():
     ICBF = (salario_base+horas_extra_total)*0.003
     SENA = (salario_base+horas_extra_total)*0.002
     Aporte_PF = Cajas_C+ICBF+SENA
+    #hola
     ARL = (salario_base+horas_extra_total)*tarifa_riesgo
     Total_Apropiado = Cesantias+Interes_C+Prima+Vacaciones+Aporte_PF+ARL
     Gran_Total = total_devengado+Total_DDSS+Total_Apropiado
