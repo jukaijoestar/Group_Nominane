@@ -10,6 +10,7 @@ import re
 from reportlab.pdfgen import canvas
 from flask import Response
 import os
+#ailejlasd
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 db = mysql.connector.connect(
