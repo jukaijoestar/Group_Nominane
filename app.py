@@ -89,7 +89,7 @@ def registro():
 
 
 
-#Lista de trabajadores
+# Lista de trabajadores
 @app.route("/trabajadores")
 def trabajadores():
     if "username" not in session:
@@ -97,11 +97,13 @@ def trabajadores():
 
     cursor = db.cursor(dictionary=True)
     cursor.execute("""
-        SELECT e.*, d.Nombre AS Nombre_Departamento 
+        SELECT e.*, d.Nombre AS Nombre_Departamento, c.Nombre AS Nombre_Cargo
         FROM empleados e
-        JOIN departamento d ON e.Departamento = d.ID 
+        JOIN departamento d ON e.Departamento = d.ID
+        JOIN cargos c ON e.Cargo_ID = c.ID
         WHERE e.Estado = 'Activo'
     """)
+    
     empleados_activos = cursor.fetchall()
     cursor.close()
 
@@ -375,12 +377,13 @@ def agregar():
         email = request.form["email"]
         departamento_id = int(request.form["departamento"])
         sueldo = int(request.form["sueldo"])
+        Tipo_Sangre = request.form["Tipo_Sangre"]
         # Agregado para obtener el cargo seleccionado
         cargo_id = int(request.form["cargo"])
 
-        query = "INSERT INTO empleados (Nombres, Nro_documento, Apellido_Paterno, Apellido_Materno, Fecha_Nacimiento, Direccion, Barrio, Telefono, Email, Departamento, Sueldo, Cargo_ID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO empleados (Nombres, Nro_documento, Apellido_Paterno, Apellido_Materno, Fecha_Nacimiento, Direccion, Barrio, Telefono, Email, Departamento, Tipo_Sangre, Sueldo, Cargo_ID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         values = (nombres, nro_documento, apellido_paterno, apellido_materno, fecha_nacimiento,
-                  direccion, barrio, telefono, email, departamento_id, sueldo, cargo_id)
+                  direccion, barrio, telefono, email, departamento_id, Tipo_Sangre, sueldo, cargo_id)
         cursor.execute(query, values)
         db.commit()
         cursor.close()

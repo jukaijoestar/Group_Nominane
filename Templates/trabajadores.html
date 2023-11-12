@@ -146,7 +146,9 @@
             <th>Barrio</th>
             <th>Telefono</th>
             <th>Email</th>
+            <th>Tipo de sangre</th>
             <th>Departamento</th>
+            <th>Cargo asignado</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -162,7 +164,9 @@
             <td>{{ empleado['Barrio'] }}</td>
             <td>{{ empleado['Telefono'] }}</td>
             <td>{{ empleado['Email'] }}</td>
+            <td>{{empleado['Tipo_Sangre']}}</td>
             <td>{{ empleado['Nombre_Departamento'] }}</td>
+            <td>{{ empleado['Nombre_Cargo'] }}</td>
             <td>
               <a
                 href="{{ url_for('editar', id_empleado=empleado['ID']) }}"
