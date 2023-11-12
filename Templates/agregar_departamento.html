@@ -175,31 +175,8 @@
                         <input type="submit" value="Agregar" class="botons">
                     </div>
                 </form>
-
-                {% if active_form %}
-                
-                <form class="formulario" action="{{ url_for('agregar_cargos') }}" method="POST">
-                    <h1 class="mensaje">Agregar Cargo</h1>
-                    <input type="hidden" name="Departamento_ID" value="{{ Departamento_ID }}">
-                    <div class="form-group">
-                        <label for="nombre_cargo">Nombre del cargo</label>
-                        <input type="text" id="nombre_cargo" name="nombre_cargo" required class="controls">
-                    </div>
-                    <div class="form-group">
-                        <label for="salario_base">Salario base</label>
-                        <input type="text" id="salario_base" name="salario_base" required class="controls">
-                    </div>
-                    <div class="bnt-agregar">
-                        <input type="submit" value="Agregar" class="botons">
-                    </div>
-                </form>
-                {% endif %}
             </div>
         </div>
-
-        {% if button_return %}
-        <a href="{{ url_for('listar_departamentos') }}" class="boton-volver"><i class="fas fa-arrow-left"></i></a>
-        {% endif %}
     </div>
 </body>
 </html>

@@ -10,7 +10,10 @@ import re
 from reportlab.pdfgen import canvas
 from flask import Response
 import os
-#ailejlasd
+#Todo esto se instala
+
+
+
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 db = mysql.connector.connect(
@@ -18,12 +21,13 @@ db = mysql.connector.connect(
 )
 cursor = db.cursor()
 
-
+#Pagina principal
 @app.route("/")
 def layout():
     return render_template('layout.html')
 
 
+#Pagina de inicio de sesión
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
@@ -44,6 +48,7 @@ def login():
     return render_template('login.html', error=error if 'error' in locals() else None)
 
 
+#Función de registro
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     error_password = None
@@ -83,6 +88,8 @@ def registro():
     return render_template('login.html', error_password=error_password, error_correo=error_correo, sucefull=sucefull)
 
 
+
+#Lista de trabajadores
 @app.route("/trabajadores")
 def trabajadores():
     if "username" not in session:
@@ -101,6 +108,7 @@ def trabajadores():
     return render_template("trabajadores.html", empleados=empleados_activos)
 
 
+#lista de cargos
 @app.route("/cargos", methods=['GET', 'POST'])
 def cargos():
     if "username" not in session:
@@ -138,6 +146,7 @@ def cargos():
     return render_template("cargos.html", departamentos=lista_departamentos, cargos=[])
 
 
+#Pagina principal de Nomina
 @app.route("/index")
 def index():
     if "username" not in session:
@@ -145,6 +154,7 @@ def index():
     return render_template("index.html")
 
 
+#Lista de departamentos
 @app.route("/departamentos", methods=["GET", "POST"])
 def listar_departamentos():
     if "username" not in session:
@@ -158,6 +168,7 @@ def listar_departamentos():
     return render_template("departamentos.html", departamentos=departamentos)
 
 
+#Lista de departamentos inactivos
 @app.route("/departamentos_Inactivos", methods=["GET", "POST"])
 def departamentos_Inactivos():
     if "username" not in session:
@@ -171,6 +182,7 @@ def departamentos_Inactivos():
     return render_template("departamentos_Inactivos.html", departamentos=departamentos)
 
 
+#Función de desactivar departamento
 @app.route("/desactivar_departamento/<int:id_departamento>")
 def desactivar_departamento(id_departamento):
     if "username" not in session:
@@ -187,6 +199,7 @@ def desactivar_departamento(id_departamento):
     return redirect(url_for("listar_departamentos"))
 
 
+#Función de reactivar departamento
 @app.route("/reactivar_departamento/<int:id_departamento>")
 def reactivar_departamento(id_departamento):
     if "username" not in session:
@@ -205,9 +218,6 @@ def reactivar_departamento(id_departamento):
 
 @app.route("/agregar_departamento", methods=["GET", "POST"])
 def agregar_departamento():
-    active_form = False
-    Departamento_ID = None
-
     if "username" not in session:
         return redirect(url_for("login"))
 
@@ -219,35 +229,67 @@ def agregar_departamento():
             cursor.execute(
                 "INSERT INTO departamento (Nombre) VALUES (%s)", (nombre_departamento,))
             db.commit()
-            Departamento_ID = cursor.lastrowid
-            cursor.close()
-            active_form = True
+            cursor.execute("SELECT LAST_INSERT_ID() as id")
+            departamento_id = cursor.fetchone()[0]
 
-    return render_template("agregar_departamento.html", active_form=active_form, Departamento_ID=Departamento_ID)
+            #Solución a bugg
+            cursor.execute(
+                "INSERT INTO cargos (Nombre, Salario_Base, Departamento_ID, Riesgo_LV) VALUES (%s, %s, %s, %s)",
+                ("Administrador", 120000, departamento_id, "III")
+            )
+            db.commit()
+
+            cursor.close()
+            return redirect(url_for("listar_departamentos"))
+
+    return render_template("agregar_departamento.html")
+
 
 
 @app.route("/agregar_cargos", methods=["GET", "POST"])
 def agregar_cargos():
-    button_return = False
-    active_form = True  # Mantén el formulario de cargos visible
 
     if "username" not in session:
         return redirect(url_for("login"))
 
     if request.method == "POST":
+        
         nombre_cargo = request.form["nombre_cargo"]
         salario_base = request.form["salario_base"]
-        Departamento_ID = request.form["Departamento_ID"]
+        Departamento_ID = request.form["Departamento_id"]
+        nivel_riesgo = request.form["nivel_riesgo"]
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO Cargos (Nombre, Departamento_id, Salario_Base, Riesgo_LV) VALUES (%s, %s, %s, %s)",
+                           (nombre_cargo, Departamento_ID, salario_base, nivel_riesgo))
+        db.commit()
+        cursor.close()
+        return redirect(url_for("cargos"))
 
-        if nombre_cargo and salario_base and Departamento_ID:
+    return render_template("cargos.html")
+
+@app.route("/editar_cargo", methods=["POST"])
+def editar_cargo():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        cargo_id = request.form["cargo_id_edit"]
+        nombre_cargo = request.form["nombre_cargo_edit"]
+        salario_base = request.form["salario_base_edit"]
+        nivel_riesgo = request.form["nivel_riesgo_edit"]
+
+        if nombre_cargo and salario_base and nivel_riesgo:
             cursor = db.cursor()
-            cursor.execute("INSERT INTO Cargos (Nombre, Departamento_ID, Salario_Base) VALUES (%s, %s, %s)",
-                           (nombre_cargo, Departamento_ID, salario_base))
+            update_query = (
+                "UPDATE cargos SET Nombre = %s, Salario_Base = %s, Riesgo_LV = %s WHERE ID = %s"
+            )
+            cursor.execute(update_query, (nombre_cargo, salario_base, nivel_riesgo, cargo_id))
             db.commit()
             cursor.close()
-            button_return = True  # Activa el botón de volver
 
-    return render_template("agregar_departamento.html", active_form=active_form, Departamento_ID=Departamento_ID, button_return=button_return)
+            return redirect(url_for("cargos"))
+        else:
+            return redirect(url_for("cargos"))
 
 
 @app.route("/Editar_departamento/<int:id_departamento>", methods=["GET", "POST"])

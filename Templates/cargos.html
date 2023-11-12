@@ -21,6 +21,37 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
   </head>
+  <style>
+    /* Estilos del modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
   <body>
     <nav class="menu-admi" id="nav">
       <!-- Tipo 1 -->
@@ -158,6 +189,7 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Salario Base</th>
+            <th>Nivel de Riesgo</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -167,10 +199,12 @@
             <td>{{ cargo.ID }}</td>
             <td>{{ cargo.Nombre }}</td>
             <td>{{ cargo.Salario_Base }}</td>
+            <td>{{ cargo.Riesgo_LV }}</td>
             <td>
               <form method="post" action="/desactivar_cargo">
                 <input type="hidden" name="cargo_id" value="{{ cargo.ID }}" />
                 <input type="submit" value="Desactivar" class="desactivar" />
+                <button type="button" class="editar" onclick="abrirModalEditar('{{ cargo.ID }}', '{{ cargo.Nombre }}', '{{ cargo.Salario_Base }}', '{{ cargo.Riesgo_LV }}')">Editar</button>
               </form>
             </td>
           </tr>
@@ -178,6 +212,106 @@
         </tbody>
       </table>
     </div>
+    <button id="btnAgregarCargo">Añadir Cargo</button>
+    
+    <div id="modalAgregarCargo" class="modal">
+      <div class="modal-content">
+        <span class="close" id="cerrarModal">&times;</span>
+        <h2>Añadir Cargo</h2>
+        <form id="formAgregarCargo" method="post" action="{{ url_for('agregar_cargos') }}">
+          <input type="hidden" name="Departamento_id" id="Departamento_id" value="{{ departamento_id }}">
+          <label for="nombre_cargo">Nombre del Cargo:</label>
+          <input type="text" name="nombre_cargo" id="nombre_cargo" required>
+          <label for="salario_base">Salario Base:</label>
+          <input type="number" name="salario_base" id="salario_base" required>
+          <label for="nivel_riesgo">Nivel de Riesgo:</label>
+          <input type="text" name="nivel_riesgo" id="nivel_riesgo" required>
+          <input type="submit" value="Guardar">
+        </form>
+      </div>
+    </div>
+
+    <div id="modalEditarCargo" class="modal">
+      <div class="modal-content">
+        <span class="close" id="cerrarModalEditar">&times;</span>
+        <h2>Editar Cargo</h2>
+        <form id="formEditarCargo" method="post" action="{{ url_for('editar_cargo') }}">
+          <input type="hidden" name="cargo_id_edit" id="cargo_id_edit" value="">
+          <label for="nombre_cargo_edit">Nombre del Cargo:</label>
+          <input type="text" name="nombre_cargo_edit" id="nombre_cargo_edit" required>
+          <label for="salario_base_edit">Salario Base:</label>
+          <input type="number" name="salario_base_edit" id="salario_base_edit" required>
+          <label for="nivel_riesgo_edit">Nivel de riesgo:</label>
+          <select class="controls" name="nivel_riesgo" id="nivel_riesgo" required>
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+          </select>
+          <input type="submit" value="Guardar Edición">
+        </form>
+      </div>
+    </div>
+    
+    <script>
+      // Prevenir el envío del formulario al hacer clic en el botón de editar
+      document.querySelectorAll(".editar").forEach(function(button) {
+        button.addEventListener("click", function(event) {
+          event.preventDefault();
+        });
+      });
+    </script>
+    <script>
+      // Abrir el modal cuando se haga clic en el botón "Añadir"
+      document.getElementById("btnAgregarCargo").addEventListener("click", function() {
+        var modal = document.getElementById("modalAgregarCargo");
+        modal.style.display = "block";
+      });
+    
+      // Cerrar el modal cuando se haga clic en la "x"
+      document.getElementById("cerrarModal").addEventListener("click", function() {
+        var modal = document.getElementById("modalAgregarCargo");
+        modal.style.display = "none";
+      });
+    
+      // Establecer el valor del ID del departamento en el formulario cuando se abra el modal
+      document.getElementById("btnAgregarCargo").addEventListener("click", function() {
+        var departamentoId = obtenerDepartamentoId(); // Obtén el ID del departamento (puedes usar JavaScript para obtenerlo)
+        document.getElementById("departamento_id").value = departamentoId;
+      });
+    
+      $(document).ready(function() {
+        // Cuando la página esté lista, realiza la solicitud AJAX
+        var departamentoId = obtenerDepartamentoId(); // Obtén el ID del departamento (puedes usar JavaScript para obtenerlo)
+        $.ajax({
+          type: "GET",
+          url: "/cargos/" + departamentoId,
+          dataType: "json",
+          success: function(data) {
+            // Manipula los datos y muestra la lista de cargos
+            var cargosList = $("#cargos-list");
+            cargosList.empty(); // Limpia el contenido previo si lo hubiera
+    
+            data.forEach(function(cargo) {
+              var cargoHtml = "<p>ID: " + cargo.ID + ", Nombre: " + cargo.Nombre + ", Salario Base: " + cargo.Salario_Base + "</p>";
+              cargosList.append(cargoHtml);
+            });
+          },
+          error: function(error) {
+            console.log("Error al cargar los cargos: " + error);
+          }
+        });
+      });
+      function abrirModalEditar(id, nombre, salario_base) {
+        var modal = document.getElementById("modalEditarCargo");
+        modal.style.display = "block";
+        
+        document.getElementById("cargo_id_edit").value = id;
+        document.getElementById("nombre_cargo_edit").value = nombre;
+        document.getElementById("salario_base_edit").value = salario_base;
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
   </body>
