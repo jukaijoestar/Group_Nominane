@@ -325,7 +325,7 @@ def Editar_departamento(id_departamento):
 def obtener_cargos(departamento_id):
     cursor = db.cursor(dictionary=True)
     cursor.execute(
-        "SELECT * FROM Cargos WHERE Departamento_ID = %s", (departamento_id,))
+        "SELECT * FROM Cargos WHERE Departamento_ID = %s AND Estado = 'activo'", (departamento_id,))
     cargos = cursor.fetchall()
     cursor.close()
 
@@ -357,6 +357,25 @@ def desactivar_cargo():
     finally:
         cursor.close()
 
+
+@app.route("/reactivar_cargo", methods=['POST'])
+def reactivar_cargo():
+    cargo_id = request.form.get('cargo_id')
+
+    cursor = db.cursor()
+    try:
+        # Actualizar el estado del cargo a 'Activo'
+        cursor.execute(
+            "UPDATE Cargos SET Estado = 'Activo' WHERE ID = %s", (cargo_id,))
+        db.commit()
+        # Redirige a la página de cargos después de la reactivación
+        return redirect('/cargos')
+    except Exception as e:
+        print(f"Error al reactivar el cargo: {e}")
+        db.rollback()
+        return jsonify({"error": "Error al reactivar el cargo"}), 500
+    finally:
+        cursor.close()
 
 @app.route("/agregar", methods=["GET", "POST"])
 def agregar():

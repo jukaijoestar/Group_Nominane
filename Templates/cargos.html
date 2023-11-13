@@ -190,24 +190,34 @@
             <th>Nombre</th>
             <th>Salario Base</th>
             <th>Nivel de Riesgo</th>
+            <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           {% for cargo in cargos %}
-          <tr>
-            <td>{{ cargo.ID }}</td>
-            <td>{{ cargo.Nombre }}</td>
-            <td>{{ cargo.Salario_Base }}</td>
-            <td>{{ cargo.Riesgo_LV }}</td>
-            <td>
-              <form method="post" action="/desactivar_cargo">
-                <input type="hidden" name="cargo_id" value="{{ cargo.ID }}" />
-                <input type="submit" value="Desactivar" class="desactivar" />
+            <tr>
+              <td>{{ cargo.ID }}</td>
+              <td>{{ cargo.Nombre }}</td>
+              <td>{{ cargo.Salario_Base }}</td>
+              <td>{{ cargo.Riesgo_LV }}</td>
+              <td>{{ cargo.estado }}</td>
+              <td>
+                <form method="post" action="/desactivar_cargo">
+                  <input type="hidden" name="cargo_id" value="{{ cargo.ID }}" />
+                  {% if cargo.estado == 'Activo' %}
+                    <input type="submit" value="Desactivar" class="desactivar" />
+                  {% endif %}
+                </form>
+                {% if cargo.estado == 'Inactivo' %}
+                  <form method="post" action="/reactivar_cargo">
+                    <input type="hidden" name="cargo_id" value="{{ cargo.ID }}" />
+                    <input type="submit" value="Reactivar" class="reactivar" />
+                  </form>
+                {% endif %}
                 <button type="button" class="editar" onclick="abrirModalEditar('{{ cargo.ID }}', '{{ cargo.Nombre }}', '{{ cargo.Salario_Base }}', '{{ cargo.Riesgo_LV }}')">Editar</button>
-              </form>
-            </td>
-          </tr>
+              </td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
@@ -242,7 +252,7 @@
           <label for="salario_base_edit">Salario Base:</label>
           <input type="number" name="salario_base_edit" id="salario_base_edit" required>
           <label for="nivel_riesgo_edit">Nivel de riesgo:</label>
-          <select class="controls" name="nivel_riesgo" id="nivel_riesgo" required>
+          <select class="controls" name="nivel_riesgo_edit" id="nivel_riesgo_edit" required>
             <option value="I">I</option>
             <option value="II">II</option>
             <option value="III">III</option>
