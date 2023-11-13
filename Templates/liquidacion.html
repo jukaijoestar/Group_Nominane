@@ -16,23 +16,23 @@
   <body>
     <h1>Liquidación de Pago</h1>
     <p>
-      El empleado {{ empleado_nombre }} identificado con el N° de ID {{
-      empleado_id }} recibirá el pago total de {{ neto_pagado }}
+      El empleado {{ empleado_nombre_completo }} con Número de identificación {{ format_number(empleado_Identificacion) }}
+      recibirá el pago total de {{ format_number(neto_pagado) }}
     </p>
     <p>Detalles:</p>
     <ul class="aligned-list">
       <li class="left">
-        Horas Extra Total: <span class="right">{{ horas_extra_total }}</span>
+        Horas Extra Total: <span class="right">{{ format_number(horas_extra_total) }}</span>
       </li>
-      <li class="left">Salud: <span class="right">{{ salud }}</span></li>
-      <li class="left">Pensión: <span class="right">{{ pension }}</span></li>
+      <li class="left">Salud: <span class="right">{{ format_number(salud) }}</span></li>
+      <li class="left">Pensión: <span class="right">{{ format_number(pension) }}</span></li>
       <li class="left">
-        Total Devengado: <span class="right">{{ total_devengado }}</span>
+        Total Devengado: <span class="right">{{ format_number(total_devengado) }}</span>
       </li>
       <li class="left">
-        Total Deducido: <span class="right">{{ total_deducido }}</span>
+        Total Deducido: <span class="right">{{ format_number(total_deducido) }}</span>
       </li>
-    </ul>
+    </ul>         
     <form action="{{ url_for('realizar_pago') }}" method="post" id="pago-form">
       <input type="hidden" name="empleado_id" value="{{ empleado_id }}" />
       <input

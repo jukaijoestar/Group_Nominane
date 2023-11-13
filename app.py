@@ -10,8 +10,8 @@ import re
 from reportlab.pdfgen import canvas
 from flask import Response
 import os
-#Todo esto se instala
-
+#Todo lo de arriba se instala
+import locale
 
 
 app = Flask(__name__)
@@ -489,15 +489,18 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
 
+# Configura la localización para formatear números con comas
+locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
 
-Seguro = 0.0
+def format_number(number):
+    return locale.format_string("%d", number, grouping=True)
 
 
 @app.route("/Horario", methods=["GET", "POST"])
 def Horario():
     if "username" not in session:
         return redirect(url_for("login"))
-
+    Seguro = 0.0
     cursor = db.cursor(dictionary=True)
 
     show_combobox = True
@@ -521,14 +524,22 @@ def Horario():
         horas_extra_dom_nocturnas = int(request.form["horas_extra_dom_nocturnas"]) if request.form["horas_extra_dom_nocturnas"] else 0
 
         cursor = db.cursor()
-
+        
         # Consulta para obtener datos del empleado
         cursor.execute(
-            "SELECT Sueldo FROM empleados WHERE ID = %s", (empleado_id,))
+            """
+            SELECT e.*, CONCAT(e.Nombres, ' ', e.Apellido_Paterno, ' ', e.Apellido_Materno) AS empleado_nombre_completo, d.Nombre AS Nombre_Departamento, c.Nombre AS Nombre_Cargo
+            FROM empleados e
+            LEFT JOIN departamento d ON e.Departamento = d.ID
+            LEFT JOIN cargos c ON e.Cargo_ID = c.ID
+            WHERE e.ID = %s
+            """, (empleado_id,))
         empleado_data = cursor.fetchone()
 
         if empleado_data:
             empleado_sueldo = int(empleado_data[0])
+            empleado_nombre_completo = empleado_data[2]+" "+empleado_data[3]+" "+empleado_data[4]  # O el índice adecuado para el campo deseado
+            empleado_Identificacion = empleado_data[1]
 
         fecha_actual = datetime.now()
         if tipo_liquidacion == "mensual":
@@ -573,6 +584,9 @@ def Horario():
         return render_template(
             "liquidacion.html",
             empleado_id=empleado_id,
+            format_number=format_number,
+            empleado_nombre_completo=empleado_nombre_completo,
+            empleado_Identificacion= empleado_Identificacion,
             horas_extra_total=horas_extra_total,
             salud=salud,
             pension=pension,
@@ -818,6 +832,7 @@ def generar_reporte():
 
     # Obtener datos de todos los empleados activos con los nombres de los departamentos
     cursor.execute("SELECT e.*, h.*, d.*, s.* FROM empleados e LEFT JOIN horario h ON e.ID = h.empleado_ID LEFT JOIN deduccion d ON e.ID = d.Empleado_ID LEFT JOIN sueldo s ON e.ID = s.Empleado_ID WHERE e.Estado = 'Activo'")
+
     empleados_activos = cursor.fetchall()
 
     cursor.close()
