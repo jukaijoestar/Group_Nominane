@@ -225,11 +225,12 @@ def agregar_departamento():
 
     if request.method == "POST":
         nombre_departamento = request.form["nombre"]
+        Fecha = request.form["Fecha"]
 
         if nombre_departamento:
             cursor = db.cursor()
             cursor.execute(
-                "INSERT INTO departamento (Nombre) VALUES (%s)", (nombre_departamento,))
+                "INSERT INTO departamento (Nombre, Fecha_Creacion) VALUES (%s, %s)", (nombre_departamento, Fecha))
             db.commit()
             cursor.execute("SELECT LAST_INSERT_ID() as id")
             departamento_id = cursor.fetchone()[0]
@@ -309,16 +310,17 @@ def Editar_departamento(id_departamento):
 
     if request.method == "POST":
         nuevo_nombre = request.form["nombre"]
+        nueva_fecha = request.form["FechaEditar"]  # Obtiene la nueva fecha del formulario
 
         if nuevo_nombre:
-            cursor.execute("UPDATE departamento SET Nombre = %s WHERE ID = %s",
-                           (nuevo_nombre, id_departamento,))
+            cursor.execute("UPDATE departamento SET Nombre = %s, Fecha_Creacion = %s WHERE ID = %s",
+                           (nuevo_nombre, nueva_fecha, id_departamento,))
             db.commit()
             cursor.close()
 
             return redirect(url_for("listar_departamentos"))
 
-    return render_template("Editar_departamento.html", departamento=departamento)
+    return redirect(url_for("listar_departamentos"), departamentos=departamentos)
 
 
 @app.route("/cargos/<int:departamento_id>")

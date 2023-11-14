@@ -174,7 +174,7 @@
           <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Fecha</th>
+            <th>Fecha de creación</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -183,14 +183,11 @@
           <tr>
             <td>{{ departamento.ID }}</td>
             <td>{{ departamento.Nombre }}</td>
-            <td>10/20/25</td>
+            <td>{{ departamento.Fecha_Creacion }}</td>
             <td>
-              <a
-                href="{{ url_for('Editar_departamento', id_departamento=departamento.ID) }}"
-                class="editar"
-              >
+              <button class="editar" data-id="{{ departamento.ID }}">
                 <i class="fas fa-user-edit"></i>
-              </a>
+              </button>          
               <a
                 href="{{ url_for('desactivar_departamento', id_departamento=departamento.ID) }}"
                 class="desactivar"
@@ -205,58 +202,118 @@
       </table>
     </div>
 
-    <div class="modal" id="myModal">
+    <div class="modal" id="myModalAgregar">
       <div class="modal-content">
         <div class="header">
           <h1>Agregar Departamento</h1>
+          <span class="close-modal">&times;</span> <!-- Botón X para cerrar -->
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <form class="formulario" action="{{ url_for('agregar_departamento') }}" method="POST">
-                        <div class="form-group">
-                            <label for="nombre">Nombre del Departamento:</label>
-                            <input type="text" id="nombre" name="nombre" required class="controls">
-                        </div>
-                        <div class="bnt-agregar">
-                            <input type="submit" value="Agregar" class="botons">
-                        </div>
-                    </form>
+          <div class="row">
+            <div class="col-md-6">
+              <form class="formulario" action="{{ url_for('agregar_departamento') }}" method="POST">
+                <div class="form-group">
+                  <label for="nombre">Nombre del Departamento:</label>
+                  <input type="text" id="nombre" name="nombre" required class="controls">
                 </div>
+                <div class="form-group">
+                  <label for="Fecha">Fecha de creación:</label>
+                  <input type="date" id="Fecha" name="Fecha" required class="controls">
+                </div>
+                <div class="bnt-agregar">
+                  <input type="submit" value="Agregar" class="botons">
+                </div>
+              </form>
             </div>
+          </div>
         </div>
       </div>
-    </div>    
+    </div>     
 
-    <button class="floating-button" id="openModalButton" class="floating-button">
+    <button class="floating-button" id="openModalAgregarButton" class="floating-button">
       <i class="fa-solid fa-folder-plus"></i>
-    </button>    
+    </button>
 
+    <!-- Modal para Editar Departamento -->
+    <div class="modal" id="myModalEditar">
+      <div class="modal-content">
+        <div class="header">
+          <h1>Editar Departamento</h1>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <form class="formulario" id="formEditar" action="{{ url_for('Editar_departamento', id_departamento=0) }}" method="POST">
+                <!-- El ID del departamento se actualizará dinámicamente con JavaScript -->
+                <div class="form-group">
+                  <label for="nombreEditar">Nombre del Departamento:</label>
+                  <input type="text" id="nombreEditar" name="nombre" required class="controls">
+                </div>
+                <div class="form-group">
+                  <label for="FechaEditar">Fecha de creación:</label>
+                  <input type="date" id="FechaEditar" name="FechaEditar" required class="controls">
+                </div>
+                <div class="bnt-agregar">
+                  <input type="submit" value="Guardar Cambios" class="botons">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script>
-      const modal = document.getElementById('myModal');
-      const openModalButton = document.getElementById('openModalButton');
-      const closeModalButton = document.querySelector('.close-modal');
-
-      openModalButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        modal.style.display = 'block';
+      document.addEventListener("DOMContentLoaded", function() {
+        const openModalAgregarButton = document.getElementById('openModalAgregarButton');
+        const closeModalAgregarButton = document.querySelector('#myModalAgregar .close-modal');
+        const modalAgregar = document.getElementById('myModalAgregar');
+    
+        openModalAgregarButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          modalAgregar.style.display = 'block';
+        });
+    
+        closeModalAgregarButton.addEventListener('click', function() {
+          modalAgregar.style.display = 'none';
+        });
+        
+        const editButtons = document.querySelectorAll('.editar');
+        const modalEditar = document.getElementById('myModalEditar');
+        const formEditar = modalEditar.querySelector('.formulario');
+        const nombreInputEditar = formEditar.querySelector('#nombreEditar');
+    
+        editButtons.forEach(button => {
+          button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const departamentoID = this.getAttribute('data-id');
+            const departamentoNombre = this.parentElement.parentElement.querySelector('td:nth-child(2)').innerText;
+    
+            nombreInputEditar.value = departamentoNombre;
+            formEditar.action = `/Editar_departamento/${departamentoID}`;
+            
+            modalEditar.style.display = 'block';
+          });
+        });
+    
+        const closeModalEditarButton = modalEditar.querySelector('.close-modal');
+    
+        closeModalEditarButton.addEventListener('click', function() {
+          modalEditar.style.display = 'none';
+        });
+    
+        window.addEventListener('click', function(event) {
+          if (event.target === modalAgregar) {
+            modalAgregar.style.display = 'none';
+          }
+          if (event.target === modalEditar) {
+            modalEditar.style.display = 'none';
+          }
+        });
       });
-
-      openModalButton.addEventListener('click', function() {
-        modal.style.display = 'block';
-      });
-
-      closeModalButton.addEventListener('click', function() {
-        modal.style.display = 'none';
-      });
-
-      window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-          modal.style.display = 'none';
-        }
-      });      
-    </script>
+    </script>  
+    
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
   </body>
