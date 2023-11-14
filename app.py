@@ -244,7 +244,7 @@ def agregar_departamento():
             cursor.close()
             return redirect(url_for("listar_departamentos"))
 
-    return render_template("agregar_departamento.html")
+    return redirect(url_for("listar_departamentos"))
 
 
 

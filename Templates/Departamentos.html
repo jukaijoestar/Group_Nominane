@@ -20,6 +20,43 @@
       href="{{ url_for('static', filename='Recources/Styles/Estilodepa.css') }}"
     />
   </head>
+  <style>
+    /* Estilos para el modal */
+    .modal {
+      display: none; /* Ocultar por defecto */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .close-modal {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close-modal:hover,
+    .close-modal:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
   <body>
     <nav class="menu-admi" id="nav">
       <!-- Tipo 1 -->
@@ -168,10 +205,58 @@
       </table>
     </div>
 
-    <a href="{{ url_for('agregar_departamento') }}" class="floating-button">
-      <i class="fa-solid fa-folder-plus"></i>
-    </a>
+    <div class="modal" id="myModal">
+      <div class="modal-content">
+        <div class="header">
+          <h1>Agregar Departamento</h1>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="formulario" action="{{ url_for('agregar_departamento') }}" method="POST">
+                        <div class="form-group">
+                            <label for="nombre">Nombre del Departamento:</label>
+                            <input type="text" id="nombre" name="nombre" required class="controls">
+                        </div>
+                        <div class="bnt-agregar">
+                            <input type="submit" value="Agregar" class="botons">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>    
 
+    <button class="floating-button" id="openModalButton" class="floating-button">
+      <i class="fa-solid fa-folder-plus"></i>
+    </button>    
+
+
+    <script>
+      const modal = document.getElementById('myModal');
+      const openModalButton = document.getElementById('openModalButton');
+      const closeModalButton = document.querySelector('.close-modal');
+
+      openModalButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        modal.style.display = 'block';
+      });
+
+      openModalButton.addEventListener('click', function() {
+        modal.style.display = 'block';
+      });
+
+      closeModalButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+
+      window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });      
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
   </body>
