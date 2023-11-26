@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;700;900&family=Poppins:ital,wght@0,100;0,200;0,400;0,500;1,300;1,600&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Outfit", sans-serif;
+}
+
+body {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+}
+
+.conteo-general{
+    margin-top: 50px ;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-radius: 1.5rem;
+    color: gray;
+    border: 1px solid #e2dfdf;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    padding: 30px;
+    height: 180px;
+}
+
+.conteo-general > div:not(:last-child) {
+    border-right: 2px solid #e2dfdf; /* Borde derecho para todos los elementos excepto el último */
+    padding-left: 20px;
+    height: 100%;
+}
+
+.conteo-general > div:nth-child(4) {
+    /* Estilo para el cuarto elemento (el último) */
+    padding-left: 20px;
+    height: 100%;
+}
+
+.conteo-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .conteo-info i {
+    font-size: 30px;
+    padding: 20px;
+    border-radius: 1rem;
+    color: gray;
+    background-color: #e2dfdf;
+    margin-right: 10px; /* Espaciado a la derecha del icono */
+  }
+  
+  .conteo-info p span{
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+.container-info{
+    width: 90%;
+    display: grid;
+    grid-template-columns: minmax(max-content, 35%) minmax(
+        min-content,
+        1fr
+      );
+    gap: 30px;
+    margin: 40px;
+}
+
+.porcentaje-general{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 1.5rem;
+    color: gray;
+    border: 1px solid #e2dfdf;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.porcentaje-info p span{
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 50px;
+  }
+
+  .porcentaje-info p{
+    margin-bottom: 20px;
+  }
+
+  .gastos{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    align-content: baseline;
+    justify-content: center;
+    flex-direction: column; 
+  }
+
+  .circular-progress {
+    margin-left: 40px;
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+  .circular-progress:before {
+    content: "";
+    position: absolute;
+    height: 77%;
+    width: 77%;
+    background-color: #ffffff;
+    border-radius: 50%;
+  }
+  .value-container {
+    position: relative;
+    font-size: 30px;
+  }
+
+  .boton{
+    border-radius: 1.5rem;
+    color: gray;
+    border: 1px solid #e2dfdf;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.boton p{
+    background-color: #e2dfdf;
+    width: 100%;
+    padding: 15px 40px;
+    border-radius: 1rem 0rem 0rem 1rem; 
+}
+
+.boton p span{
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+.boton a{
+    padding: 35px 20px;
+    text-decoration: none;
+    color: gray;
+}
+.boton a i{
+    padding: 0px 10px;
+    font-size: 25px;
+}
+
+
+.informacion-contable{
+    border-radius: 1.5rem;
+    color: gray;
+    border: 1px solid #e2dfdf;
+    width: 100%;
+}
+
+.informacion-contable .content{
+    padding: 30px;
+}
+
+.tab-title {
+  font-weight: 450;
+  color: grey;
+  background: none;
+  border: none;
+  padding: 25px 30px;
+  cursor: pointer;
+  border-bottom: 3px solid rgba(210, 210, 210, 0.271);
+}
+
+.title{
+  font-weight: 300;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: end;
+    padding-bottom: 10px;
+  }
+  
+  footer .footer {
+    width: 95%;
+  }
+  
+  footer .footer div {
+    border-top: 1px solid #dadada;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    font-size: 0.75rem;
+  }
+
+/*la barra de desplazamiento de la ventana  */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgb(173, 174, 177);
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-horizontal {
+    height: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb:horizontal {
+    background:rgb(173, 174, 177);
+  }
+  
+  ::-webkit-scrollbar-track:horizontal {
+    background: #f1f1f1;
+  }
+  

@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GroupNomimane | SENA</title>
     <link
@@ -16,550 +15,724 @@
       href="{{ url_for('static', filename='Recources/Styles/layout.css') }}"
     />
     <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
-      href="{{ url_for('static', filename='Recources/Styles/mediaqueries.css') }}"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
   </head>
   <body>
-    <header id="desktop-nav">
-      <!--<div class="logo"><h1>G|Nomimane</h1></div>-->
-      <div>
-        <ul class="nav-links">
-          <li><a href="#nosotros">Sobre Nosotros</a></li>
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#experiencia">Experiencia</a></li>
-          <li><a href="#equipo">Equipo</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-          <li><a href="{{ url_for('login') }}">Log In</a></li>
-        </ul>
+    <nav class="navbar">
+      <h3>G|Nomimane</h3>
+      <a href="">Inicio</a>
+      <a href="#explora">Explorar</a>
+      <a href="#nosotros">Acerca de</a>
+      <a href="#contact-form">Contáctenos</a>
+      <a id="buscar" class="link" href="#"
+        >Buscar<span><i class="bx bx-chevron-down"></i></span
+      ></a>
+      <div id="buscar-content">
+        <form>
+          <div class="input-correo">
+            <input
+              class="search"
+              id="search-query"
+              type="text"
+              placeholder="Buscar..."
+              required
+            />
+            <button type="submit" id="search-submit">
+              <i class="bx bx-search-alt"></i>
+            </button>
+          </div>
+        </form>
       </div>
-    </header>
-    <nav id="hamburger-nav">
-      <div class="logo">GroupNomimane</div>
-      <div class="hamburger-menu">
-        <div class="hamburger-icon" onclick="toggleMenu()">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="menu-links">
-          <li><a href="#inicio" onclick="toggleMenu()">Home</a></li>
-          <li><a href="#nosotros" onclick="toggleMenu()">About</a></li>
-          <li><a href="#experiencia" onclick="toggleMenu()">Experience</a></li>
-          <li><a href="#equipo" onclick="toggleMenu()">Projects</a></li>
-          <li><a href="#contacto" onclick="toggleMenu()">Contact</a></li>
-        </div>
-      </div>
+      <a href="{{ url_for('login') }}" class="login">Acceso</a>
     </nav>
-
-    <!-- Contenido de la sección "Inicio" -->
-    <section id="inicio">
-      <div class="carousel-container">
-        <div class="carousel">
-          <div class="carousel-slide">
-            <img
-              src="{{ url_for('static', filename='Recources/Fondo2.jpg') }}"
-              alt=""
-            />
-          </div>
-          <div class="carousel-slide">
-            <img
-              src="{{ url_for('static', filename='Recources/Fondo1.jpg') }}"
-              alt=""
-            />
-          </div>
-          <div class="carousel-slide">
-            <img
-              src="{{ url_for('static', filename='Recources/Fondo2.jpg') }}"
-              alt=""
-            />
-          </div>
-        </div>
-      </div>
-
-      <button class="carousel-button prev-button">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <button class="carousel-button next-button">
-        <i class="fas fa-arrow-right"></i>
-      </button>
+    <div class="container-top">
       <div class="content">
-        <div class="section__text">
-          <p class="section__text__p1-i">Hola mundo, estas en</p>
-          <h1 class="title_prin">GroupNomimane</h1>
-          <h2 class="sub-title">Somos <span class="auto-type"></span></h2>
-          <p class="section__text__p1-i">Bienvenido a nuestro sitio web. 👋🏼</p>
+        <div class="text-content">
+          <h1 class="sub-title">Somos <span class="auto-type"></span></h1>
+          <p>Bienvenido a nuestro sitio web. 👋🏼</p>
         </div>
       </div>
-    </section>
-
-    <!-- Contenido de la sección "Sobre Nosotros" -->
-    <section id="nosotros">
-      <p class="section__text__p1" data-aos="fade-down">Conozca más</p>
-      <h1 class="title">Lo Que Hacemos</h1>
-      <div class="section-container">
-        <div class="section__pic-container" data-aos="fade-up">
-          <img
-            src="{{ url_for('static', filename='Recources/Img3.png') }}"
-            alt="Profile picture"
-            class="about-pic"
-          />
+    </div>
+    <div class="container-barra">
+      <div>
+        <i class='bx bx-group'></i>
+        <div>
+          <h4>Comunidad</h4>
         </div>
-        <div class="about-details-container">
-          <div class="about-containers">
-            <div class="details-container" data-aos="fade-up">
-              <i class="fas fa-medal icon" alt="Education icon"></i>
-              <h3>Experience</h3>
-              <p>2+ Años <br />Brindando Efectividad</p>
-            </div>
-            <div class="details-container" data-aos="fade-up">
-              <i
-                class="fa-solid fa-graduation-cap icon"
-                alt="Education icon"
-              ></i>
-              <h3>Education</h3>
-              <p>
-                SENA. Industrial Y Aviacion <br />
-                Youtube
-              </p>
-            </div>
+      </div>
+      <div>
+        <i class="bx bx-qr"></i>
+        <div>
+          <h4>Accesibilidad</h4>
+        </div>
+      </div>
+      <div>
+        <i class="bx bx-chat"></i>
+        <div>
+          <h4>Comunicacion</h4>
+        </div>
+      </div>
+      <div>
+        <i class="bx bx-notepad"></i>
+        <div>
+          <h4>Eventos</h4>
+        </div>
+      </div>
+      <div>
+        <i class="bx bx-search-alt"></i>
+        <div>
+          <h4>Busquedas</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="servicios-section">
+      <h1>Lo que ofrecemos</h1>
+      <p>Diseñamos servicios que superan expectativas.</p>
+      <div class="card-content">
+        <div class="card">
+          <i class="bx bx-wallet"></i>
+          <h2>Cartera</h2>
+          <p>Todo en un solo lugar</p>
+        </div>
+        <div class="card">
+          <i class="bx bx-data"></i>
+          <h2>Base Datos</h2>
+          <p>Archivos seguros</p>
+        </div>
+        <div class="card">
+          <i class="bx bx-credit-card"></i>
+          <h2>Facturacion</h2>
+          <p>Haz tus transacciones seguras</p>
+        </div>
+        <div class="card">
+          <i class="bx bx-receipt"></i>
+          <h2>Administracion</h2>
+          <p>Todos tus documentos digitales</p>
+        </div>
+      </div>
+      <div class="info-line"></div>
+    </div>
+
+    <div class="detalles-servicios" id="explora">
+      <div class="tex-content">
+        <p>Explora</p>
+        <h1>Adiós al papeleo, hola a las nóminas digitales</h1>
+        <p>
+          Nuestra plataforma de nóminas digitales proporciona un sistema
+          integral que abarca desde la captura de datos hasta la generación de
+          informes, todo en línea y sin la carga de documentos en papel.
+        </p>
+        <div class="botones">
+          <a href="">Premium</a>
+          <a href="">Standart</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="experiencia-section">
+      <div class="img-content" data-aos="fade-up">
+        <img
+          src="{{url_for('static', filename='Recources/Img/Img3.png')}}"
+          alt="Picture"
+          class="img"
+        />
+      </div>
+      <div class="detalles">
+        <div class="containers">
+          <div class="container-detalles" data-aos="fade-up">
+            <i class="bx bxs-medal icon" alt="Education icon"></i>
+            <h3>Experience</h3>
+            <p>2+ Años <br />Brindando Efectividad</p>
           </div>
-          <div class="text-container">
+          <div class="container-detalles" data-aos="fade-up">
+            <i class="bx bxs-graduation icon" alt="Education icon"></i>
+            <h3>Education</h3>
             <p>
-              Nuestro objetivo es brindarte una experiencia sin complicaciones
-              al gestionar y procesar nóminas, permitiéndote ahorrar tiempo y
-              recursos para que puedas enfocarte en lo que realmente importa:
-              hacer crecer tu negocio.
+              SENA. Industrial Y Aviacion <br />
+              Youtube
             </p>
           </div>
         </div>
+        <div class="text-container">
+          <p>
+            Nuestro objetivo es brindarte una experiencia sin complicaciones al
+            gestionar y procesar nóminas, permitiéndote ahorrar tiempo y
+            recursos para que puedas enfocarte en lo que realmente importa:
+            hacer crecer tu negocio.
+          </p>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Contenido de la sección "Servicios" -->
-    <section id="servicios">
-      <p class="section__text__p1" data-aos="fade-down">¿No Lo Sabias?</p>
-      <h1 class="title">Nuestros Servicios</h1>
-      <div class="card__container">
-        <article class="card__article" data-aos="fade-right">
+    <div class="ubicacion-section">
+      <iframe
+        data-aos="fade-up"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.2742702293144!2d-74.785787625825!3d10.942642556107614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef5d390bce185a1%3A0x7b668739ec70f4b4!2sSENA%20CENTRO%20INDUSTRIAL%20Y%20DE%20AVIACION!5e0!3m2!1ses-419!2sco!4v1696425901242!5m2!1ses-419!2sco"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+      <div class="contect-ubicacion">
+        <p>Te puede interesar</p>
+        <h1>Simplifica, agiliza, digitaliza: así gestionamos nóminas</h1>
+        <p>
+          En GroupNomimane, combinamos innovación y compromiso para ofrecer
+          soluciones excepcionales. Somos más que una empresa; somos un equipo
+          comprometido con la excelencia en cada servicio que brindamos.
+        </p>
+        <div class="detalles">
+          <div class="info">
+            <h2>122+</h2>
+            <p>Contratos</p>
+          </div>
+          <div class="info">
+            <h2>168+</h2>
+            <p>Nominas</p>
+          </div>
+          <div class="info">
+            <h2>93+</h2>
+            <p>Clientes satisfechos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="herramientas-container" id="nosotros">
+      <p>Nuestros implementos</p>
+      <h1>Herramientas De Desarrollo</h1>
+      <div class="article-container">
+        <article>
           <img
-            src="{{ url_for('static', filename='Recources/Img1.png') }}"
-            alt="image"
-            class="card__img"
+            class="icon"
+            src="{{url_for('static', filename='Recources/Img/html-5.png')}}"
+            alt=""
           />
-
-          <div class="card__data">
-            <span class="card__description">Todo en un solo lugar</span>
-            <h2 class="card__title">Administracion</h2>
-            <a href="#" class="card__button">Read More</a>
+          <div data-aos="zoom-out-right">
+            <h3>HTML</h3>
+            <p>Experienced</p>
           </div>
         </article>
-
-        <article class="card__article" data-aos="fade-up">
+        <article>
           <img
-            src="{{ url_for('static', filename='Recources/Img2.png') }}"
-            alt="image"
-            class="card__img"
+            class="icon"
+            src="{{url_for('static', filename='Recources/Img/css-3.png')}}"
+            alt=""
           />
-
-          <div class="card__data">
-            <span class="card__description">Informacion segura</span>
-            <h2 class="card__title">Base De Datos</h2>
-            <a href="#" class="card__button">Read More</a>
+          <div data-aos="zoom-in">
+            <h3>CSS</h3>
+            <p>Experienced</p>
           </div>
         </article>
-
-        <article class="card__article" data-aos="fade-left">
+        <article>
           <img
-            src="{{ url_for('static', filename='Recources/Img.png') }}"
-            alt="image"
-            class="card__img"
+            class="icon"
+            src="{{url_for('static', filename='Recources/Img/dato.png')}}"
+            alt=""
           />
-
-          <div class="card__data">
-            <span class="card__description">Organizacion y efectividad</span>
-            <h2 class="card__title">Nominas</h2>
-            <a href="#" class="card__button">Read More</a>
+          <div data-aos="zoom-in">
+            <h3>Mysql</h3>
+            <p>Intermediate</p>
+          </div>
+        </article>
+        <article>
+          <img
+            class="icon"
+            src="{{url_for('static', filename='Recources/Img/js.png')}}"
+            alt=""
+          />
+          <div data-aos="zoom-in">
+            <h3>JavaScript</h3>
+            <p>Basic</p>
+          </div>
+        </article>
+        <article>
+          <i class="bx bx-check-shield icon"></i>
+          <div data-aos="zoom-out-left">
+            <h3>TypeScript</h3>
+            <p>Basic</p>
+          </div>
+        </article>
+        <article>
+          <img
+            class="icon"
+            src="{{url_for('static', filename='Recources/Img/piton.png')}}"
+            alt=""
+          />
+          <div data-aos="zoom-out-right">
+            <h3>Python</h3>
+            <p>Intermediate</p>
           </div>
         </article>
       </div>
-    </section>
+    </div>
 
-    <!-- Contenido de la sección "Experiencia" -->
-    <section id="experiencia">
-      <p class="section__text__p1" data-aos="fade-down">Explora Nuestra</p>
-      <h1 class="title">Experiencia</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <div class="details-container">
-            <h2 class="experience-sub-title">Herramientas De Desarrollo</h2>
-            <div class="article-container">
-              <article>
-                <i class="fa-solid fa-square-check icon"></i>
-                <div data-aos="zoom-out-right">
-                  <h3>HTML</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <i class="fa-solid fa-square-check icon"></i>
-                <div data-aos="zoom-in">
-                  <h3>CSS</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <i class="fa-solid fa-square-check icon"></i>
-                <div data-aos="zoom-in">
-                  <h3>Mysql</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <i class="fa-solid fa-square-check icon"></i>
-                <div data-aos="zoom-in">
-                  <h3>JavaScript</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-              <article>
-                <i class="fa-solid fa-square-check icon"></i>
-                <div data-aos="zoom-out-left">
-                  <h3>TypeScript</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-              <article>
-                <i class="fa-solid fa-square-check icon"></i>
-                <div data-aos="zoom-out-right">
-                  <h3>Python</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <i class="fa-solid fa-square-check icon"></i>
-                <div data-aos="zoom-out-left">
-                  <h3>Python</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
+    <div class="fundadores-section">
+      <div class="info-line"></div>
+      <div class="titulo">
+        <p>Mira quienes somos...</p>
+        <h1>
+          Por ellos <br />
+          GroupNomimane es posible<i class="bx bx-group"></i>
+        </h1>
+      </div>
+
+      <div class="integrantes">
+        <!-- Tarjeta pardo-->
+        <article>
+          <div class="thumb"></div>
+          <div class="infos">
+            <h2 class="title">
+              ING. PARDO<span class="flag"></span><span class="flag1"></span>
+            </h2>
+            <p class="date">Desarrollador De Niños</p>
+            <p class="seats">Última actualización: 3min</p>
+            <p class="txt">
+              Únase a nosotros para nuestra comunidad Groupcompany en la hermosa
+              ciudad de Barranquilla....
+            </p>
+            <div class="bottom">
+              <ul class="social-list">
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-facebook"></i>
+                  </a>
+                </li>
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-twitter"></i>
+                  </a>
+                </li>
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-instagram"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+        <!-- Fin Tarjeta pardo-->
+
+        <!-- Tarjeta Esteban-->
+        <article>
+          <div class="thumb"></div>
+          <div class="infos">
+            <h2 class="title">
+              ING. ESTEBAN<span class="flag"></span><span class="flag1"></span>
+            </h2>
+            <p class="date">Desarrollador Software</p>
+            <p class="seats">Última actualización: 2seg</p>
+            <p class="txt">
+              Únase a nosotros para nuestra comunidad Groupcompany en la hermosa
+              ciudad de Barranquilla....
+            </p>
+            <div class="bottom">
+              <ul class="social-list">
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-facebook"></i>
+                  </a>
+                </li>
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-twitter"></i>
+                  </a>
+                </li>
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-instagram"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+        <!-- Fin tarjeta Esteban-->
+
+        <!-- Tarjeta Derian-->
+        <article>
+          <div class="thumb"></div>
+          <div class="infos">
+            <h2 class="title">
+              ING. DERIAN<span class="flag"></span><span class="flag1"></span>
+            </h2>
+            <p class="date">Desarrollador Web</p>
+            <p class="seats">Última actualización: 1min</p>
+            <p class="txt">
+              Únase a nosotros para nuestra comunidad Groupcompany en la hermosa
+              ciudad de Barranquilla....
+            </p>
+            <div class="bottom">
+              <ul class="social-list">
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-facebook"></i>
+                  </a>
+                </li>
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-twitter"></i>
+                  </a>
+                </li>
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-instagram"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+        <!-- Fin tarjeta Derian-->
+
+        <!-- Tarjeta Daniel-->
+        <article>
+          <div class="thumb"></div>
+          <div class="infos">
+            <h2 class="title">
+              ING. DANIEL<span class="flag"></span><span class="flag1"></span>
+            </h2>
+            <p class="date">Gerente Produccions</p>
+            <p class="seats">Última actualización: 30dias</p>
+            <p class="txt">
+              Únase a nosotros para nuestra comunidad Groupcompany en la hermosa
+              ciudad de Barranquilla....
+            </p>
+            <div class="bottom">
+              <ul class="social-list">
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-facebook"></i>
+                  </a>
+                </li>
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-twitter"></i>
+                  </a>
+                </li>
+                <li class="social-item">
+                  <a href="#" class="social-link">
+                    <i class="bx bxl-instagram"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+        <!-- Fin tarjeta Daniel-->
+      </div>
+    </div>
+
+    <div class="testimonios-section">
+      <div class="contenido">
+        <div class="texto">
+          <p>Esto se dice...</p>
+          <h1>
+            Lo que opinan nuestros clientes<i
+              class="bx bxs-message-square-dots"
+            ></i>
+          </h1>
+        </div>
+      </div>
+      <div class="grid-gallery">
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-1.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">"¡Gracias!"</div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-2.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">
+              "Eficiente y organizado, ¡gracias!"
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-3.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">
+              "Nóminas digitales que cumplen y superan expectativas."
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-4.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">"Fácil de entender"</div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-5.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">"Pensando en cada detalle."</div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-6.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">
+              "¡Increíble servicio! Simplificaron completamente nuestro proceso
+              de nómina."
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-7.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">"¡Excelente trabajo"</div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-8.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">
+              "Satisfechos con la rapidez y la calidad."
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <a href="#" data-lightbox="gridImage">
+            <img
+              src="{{url_for('static', filename='Recources/Testimonios/T-9.jpg')}}"
+            />
+          </a>
+          <div class="overlay">
+            <div class="overlay-content">
+              "Hicieron que la nómina fuera tan simple como debería ser."
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Contenido de la sección "Equipo" -->
-    <section id="equipo">
-      <p class="section__text__p1" data-aos="fade-down">Quienes Somos</p>
-      <h1 class="title">Equipo Ejecutivo</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <!-- Tarjeta pardo-->
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="{{ url_for('static', filename='Recources/PARDO.jpg') }}"
-                alt="Project 1"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">ING. PARDO</h2>
-            <div class="sub-container">
-              <p class="card-text sub">Desarrollador De Niños</p>
-            </div>
-
-            <div class="separator"></div>
-
-            <li class="contact-item">
-              <div class="contact-info">
-                <p class="contact-title">
-                  <i class="fas fa-map-marker-alt"> </i>_Location
-                </p>
-                <address>Barranquilla, Atlantico</address>
-              </div>
-            </li>
-
-            <div class="separator"></div>
-
-            <ul class="social-list">
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-facebook"></i>
-                </a>
-              </li>
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-x-twitter"></i>
-                </a>
-              </li>
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-instagram"></i>
-                </a>
-              </li>
-            </ul>
-            <p class="card-text">
-              <small class="text-body-secondary"
-                >Última actualización hace 3 minutos</small
-              >
-            </p>
+    <div class="compañias-aliadas">
+      <p>Colaboración que impulsa el progreso</p>
+      <h2>
+        Creemos en el poder de las alianzas estratégicas, donde nuestras
+        fortalezas se multiplican y nuestras metas comunes se vuelven
+        alcanzables
+      </h2>
+      <div class="wrapper">
+        <div class="card">
+          <div class="info">
+            <h1>Deloitte</h1>
+            <p>Londres, Reino Unido</p>
+            <a href="https://www2.deloitte.com/co/es.html" class="btn"
+              >Leer mas</a
+            >
           </div>
-
-          <!-- Tarjeta Esteban-->
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="{{ url_for('static', filename='Recources/WILLIAM.jpeg') }}"
-                alt="Project 1"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">ING. Esteban</h2>
-            <div class="sub-container">
-              <p class="card-text sub">Desarrollador Software</p>
-            </div>
-
-            <div class="separator"></div>
-
-            <li class="contact-item">
-              <div class="contact-info">
-                <p class="contact-title">
-                  <i class="fas fa-map-marker-alt"> </i>_Location
-                </p>
-                <address>Barranquilla, Atlantico</address>
-              </div>
-            </li>
-
-            <div class="separator"></div>
-
-            <ul class="social-list">
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-facebook"></i>
-                </a>
-              </li>
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-x-twitter"></i>
-                </a>
-              </li>
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-instagram"></i>
-                </a>
-              </li>
-            </ul>
-            <p class="card-text">
-              <small class="text-body-secondary"
-                >Última actualización hace 2 segundos</small
-              >
-            </p>
+        </div>
+        <div class="card">
+          <div class="info">
+            <h1>KPMG</h1>
+            <p>Barranquilla, Colombia</p>
+            <a href="https://kpmg.com/co/es/home.html" class="btn">Leer mas</a>
           </div>
-
-          <!-- Tarjeta Derian-->
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="{{ url_for('static', filename='Recources/DERIAN.jpeg') }}"
-                alt="Project 1"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">ING. Derian</h2>
-            <div class="sub-container">
-              <p class="card-text sub">Desarrollador Web</p>
-            </div>
-
-            <div class="separator"></div>
-
-            <li class="contact-item">
-              <div class="contact-info">
-                <p class="contact-title">
-                  <i class="fas fa-map-marker-alt"> </i>_Location
-                </p>
-                <address>Barranquilla, Atlantico</address>
-              </div>
-            </li>
-
-            <div class="separator"></div>
-
-            <ul class="social-list">
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-facebook"></i>
-                </a>
-              </li>
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-x-twitter"></i>
-                </a>
-              </li>
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-instagram"></i>
-                </a>
-              </li>
-            </ul>
-            <p class="card-text">
-              <small class="text-body-secondary"
-                >Última actualización hace 1 minutos</small
-              >
-            </p>
+        </div>
+        <div class="card">
+          <div class="info">
+            <h1>Globant</h1>
+            <p>Buenos Aires, Argentina</p>
+            <a href="https://www.globant.com/es" class="btn">Leer mas</a>
           </div>
-
-          <!-- Tarjeta Daniel-->
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="{{ url_for('static', filename='Recources/DANIEL.jpeg') }}"
-                alt="Project 1"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">ING. Daniel</h2>
-            <div class="sub-container">
-              <p class="card-text sub">Gerente Produccion</p>
-            </div>
-
-            <div class="separator"></div>
-
-            <li class="contact-item">
-              <div class="contact-info">
-                <p class="contact-title">
-                  <i class="fas fa-map-marker-alt"> </i>_Location
-                </p>
-                <address>Barranquilla, Atlantico</address>
-              </div>
-            </li>
-
-            <div class="separator"></div>
-
-            <ul class="social-list">
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-facebook"></i>
-                </a>
-              </li>
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-x-twitter"></i>
-                </a>
-              </li>
-              <li class="social-item">
-                <a href="#" class="social-link">
-                  <i class="fa-brands fa-square-instagram"></i>
-                </a>
-              </li>
-            </ul>
-            <p class="card-text">
-              <small class="text-body-secondary"
-                >Última actualización hace 30 dias</small
-              >
-            </p>
+        </div>
+        <div class="card">
+          <div class="info">
+            <h1>Bakertilly</h1>
+            <p>Barranquilla, Colombia</p>
+            <a href="https://bakertilly.co/" class="btn">Leer mas</a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Contenido de la sección "Contacto" -->
-    <section id="contacto">
-      <p class="section__text__p1" data-aos="fade-down">Ponerse en contacto</p>
-      <h1 class="title">Contáctenos</h1>
-      <div class="contact-info-upper-container">
-        <iframe
-          data-aos="zoom-in-down"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.2742702293144!2d-74.785787625825!3d10.942642556107614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef5d390bce185a1%3A0x7b668739ec70f4b4!2sSENA%20CENTRO%20INDUSTRIAL%20Y%20DE%20AVIACION!5e0!3m2!1ses-419!2sco!4v1696425901242!5m2!1ses-419!2sco"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-        <div class="contact-form">
-          <h3 class="h3 form-title">Formulario De Contacto</h3>
-
-          <form action="#" class="form" data-form>
-            <div class="input-wrapper" data-aos="fade-up">
-              <input
-                type="text"
-                name="fullname"
-                class="form-input"
-                placeholder="Nombre"
-                required
-                data-form-input
-              />
-
+    <div class="contacto" id="contact-form">
+      <div class="content">
+        <div class="text-content">
+          <h1>
+            En GroupNomimane, explora nuevas oportunidades y descubre cómo
+            podemos colaborar
+          </h1>
+          <p>Tu próximo paso está a solo un correo electrónico de distancia</p>
+          <form id="myForm">
+            <div class="input-box">
               <input
                 type="email"
-                name="email"
-                class="form-input"
-                placeholder="Email"
+                id="emailInput"
+                placeholder="Ingresa tu correo electrónico"
                 required
-                data-form-input
               />
+              <button type="submit">
+                <i class="bx bx-envelope"></i>
+              </button>
             </div>
-
-            <textarea
-              data-aos="fade-up"
-              name="message"
-              class="form-input"
-              placeholder="Mensaje"
-              required
-              data-form-input
-            ></textarea>
-
-            <button class="form-btn" type="submit">
-              <lord-icon
-                name="paper-plane"
-                src="https://cdn.lordicon.com/ehfubvwr.json"
-                trigger="hover"
-                colors="primary:#ffffff"
-                state="hover"
-                style="width: 30px; height: 30px"
-              >
-              </lord-icon>
-              <!--<span>Send Message</span>-->
-            </button>
           </form>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Contenido de la sección "Final De Pagina" -->
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p>¿Tienes algo que decirnos?</p>
+        <h1 class="form-title">Formulario De Contacto</h1>
+
+        <form action="#" class="form" data-form>
+          <div class="input-wrapper" data-aos="fade-up">
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Nombre"
+              required
+              data-form-input
+            />
+
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Ciudad - Pais"
+              required
+              data-form-input
+            />
+          </div>
+
+          <textarea
+            data-aos="fade-up"
+            name="message"
+            class="form-input"
+            placeholder="Mensaje"
+            required
+            data-form-input
+          ></textarea>
+
+          <button class="form-btn" type="submit">
+            <i class="bx bx-checkbox-checked"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
     <footer>
-      <p>Copyright &#169; 2023 GroupNomimane. All Rights Reserved.</p>
+      <div class="footer-content">
+        <div class="mensaje-final">
+          <h2>Gracias por Visitar Nuestra Página</h2>
+          <p>
+            Este es solo el comienzo de una fascinante travesía. Te invitamos a
+            explorar más sobre nuestros servicios. ¡Empieza tu viaje ahora!
+            <a href="#contact-form">Explora más</a>.
+          </p>
+        </div>
+        <div class="column-info">
+          <div class="footer-info">
+            <h4>Contacto</h4>
+            <p>Dirección: Calle Ejemplo, Ciudad, País</p>
+            <p>Email: info@example.com</p>
+            <p>Teléfono: +123 456 789</p>
+          </div>
+          <div class="footer-info">
+            <h4>Compañia</h4>
+            <p>About us</p>
+            <p>Contact</p>
+            <p>Carear</p>
+          </div>
+          <div class="footer-info">
+            <h4>Support</h4>
+            <p>FAQ</p>
+            <p>Help</p>
+            <p>Privacy Policy</p>
+          </div>
+          <div class="footer-social">
+            <h4>Síguenos</h4>
+            <a href="#" class="social-icon"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="bx bxl-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-line"></div>
+      <p class="derechos">
+        Copyright &#169; 2023 GroupNomimane. All Rights Reserved.
+      </p>
     </footer>
 
     <!-- Botón flotante para ir hacia arriba -->
     <div id="scroll-to-top" class="scroll-to-top">
-      <i class="fa-solid fa-angles-up"></i>
+      <i class="bx bx-chevron-up"></i>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('static', filename='Recources/Js/layout.js') }}"></script>
-    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init({
         duration: 1500, // Cambia este valor según tus preferencias
       });
-    </script>
-    <script>
-      // JavaScript para cambiar el estilo del encabezado al hacer scroll
-      window.addEventListener("scroll", function () {
-        const header = document.querySelector("header");
-        if (window.scrollY > 100) {
-          header.classList.add("scrolling");
-          header.style.width = "80%"; // Reducir el ancho gradualmente
-        } else {
-          header.classList.remove("scrolling");
-          header.style.width = "100%"; // Restaurar el ancho al 100%
-        }
+
+      $(document).ready(function () {
+        $("#buscar").click(function () {
+          $(this).next("#buscar-content").slideToggle();
+          $(this).toggleClass("active");
+
+          if ($(this).hasClass("active")) {
+            $(this).find("i").css("transform", "rotate(180deg)");
+          } else {
+            $(this).find("i").css("transform", "rotate(0deg)");
+          }
+        });
+      });
+
+      var typed = new Typed(".auto-type", {
+        strings: [
+          "Competitividad",
+          "Pasión",
+          "Calidad",
+          "Trabajo en equipo",
+          "Líderes del futuro",
+          "Un grupo",
+          "GroupNomimane",
+        ],
+        typeSpeed: 100,
+        backSpeed: 90,
+        looped: true,
       });
 
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -573,6 +746,57 @@
               behavior: "smooth",
             });
           }
+        });
+      });
+
+      // Obtén el formulario y el modal
+      const form = document.getElementById("myForm");
+      const modal = document.getElementById("myModal");
+
+      // Agrega un evento de escucha para el envío del formulario
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Evita que se envíe el formulario de la manera predeterminada
+
+        // Aquí puedes agregar lógica adicional antes de mostrar el modal si es necesario
+
+        showModal();
+      });
+
+      // Función para mostrar el modal
+      function showModal() {
+        modal.style.display = "block";
+      }
+
+      // Función para cerrar el modal
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      // Cierra el modal si el usuario hace clic fuera de él
+      window.onclick = function (event) {
+        if (event.target === modal) {
+          closeModal();
+        }
+      };
+
+      //BOTON FLOTANTE
+      document.addEventListener("DOMContentLoaded", function () {
+        var scrollToTopButton = document.getElementById("scroll-to-top");
+
+        // Mostrar u ocultar el botón flotante en función del desplazamiento
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 300) {
+            scrollToTopButton.style.display = "block";
+          } else {
+            scrollToTopButton.style.display = "none";
+          }
+        });
+
+        scrollToTopButton.addEventListener("click", function () {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         });
       });
     </script>

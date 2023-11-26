@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agregar Departamento | GROUPNOMIMANE</title>
     <link
       rel="icon"
@@ -10,173 +10,41 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      href="{{ url_for('static', filename='Recources/Styles/agregar-depa.css') }}"
     />
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
-        }
-
-        .body {
-            background-color: #293b36;
-        }
-
-        .container {
-            margin-top: 30px;
-        }
-
-        .row {
-            display: flex;
-            justify-content: center;
-        }
-
-        .mensaje {
-            margin-top: 4%;
-            margin-bottom: 1%;
-            margin-left: 5%;
-            display: flex;
-        }
-
-        .mensaje label {
-            color: rgb(92, 92, 92);
-        }
-
-        .col-md-6 {
-            width: 80%;
-            padding-left: 80px;
-            padding-right: 80px;
-            padding-bottom: 30px;
-            padding-top: 20px;
-        }
-
-        .header {
-            background-color: #b8b8b8;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            border-radius: 1rem;
-            box-shadow: 0 0 10px rgb(198, 198, 198);
-            width: 90%;
-            margin: 0 auto;
-        }
-
-
-        .form-group {
-            margin-bottom: 5px;
-            position: relative;
-        }
-
-        .form-group label {
-            font-size: 15px;
-            color: rgb(92, 92, 92);
-        }
-
-        .bnt-agregar {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            grid-column: span 3;
-        }
-
-        .controls {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .botons {
-            width: 40%;
-            height: 50px;
-            background-color: #b8b8b8;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            transition: 0.1s ease all;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .botons:hover {
-            box-shadow: 2px 0px 10px rgba(163, 163, 163, 1);
-            color: rgb(224, 224, 224);
-        }
-
-        @keyframes floatAnimation {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-
-.boton-volver {
-    width: 3%;
-    height: 30px;
-    background-color: rgba(123, 123, 124, 0.733);
-    border: none;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    text-decoration: none;
-    animation: floatAnimation 2s infinite; 
-}
-
-.boton-volver:hover {
-    box-shadow: 2px 0px 10px rgba(163, 163, 163, 1);
-}
-
-
-        ::-webkit-scrollbar {
-            height: 5px;
-            width: 5px;
-        }
-
-        ::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 6px rgb(0, 0, 0, 0.3);
-            border-radius: 8px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            box-shadow: inset 0 0 6px rgb(0, 0, 0, 0.3);
-            border-radius: 8px;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>Agregar Departamento</h1>
-    </div>
+  </head>
+  <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <form class="formulario" action="{{ url_for('agregar_departamento') }}" method="POST">
-                    <div class="form-group">
-                        <label for="nombre">Nombre del Departamento:</label>
-                        <input type="text" id="nombre" name="nombre" required class="controls">
-                    </div>
-                    <div class="bnt-agregar">
-                        <input type="submit" value="Agregar" class="botons">
-                    </div>
-                </form>
+      <div class="container-agregar">
+        <h3 class="tab-title">
+          GroupNomimane| <span class="auto-type"></span>
+        </h3>
+        <form action="{{ url_for('agregar_departamento') }}" method="POST">
+          <div class="content-box">
+            <div class="content">
+              <div>
+                <label for="nombre">Nombre del Departamento:</label>
+                <input type="text" id="nombre" name="nombre" required />
+              </div>
             </div>
-        </div>
+          </div>
+          <div class="botones">
+            <button type="submit" class="agregar">Agregar departamento</button>
+            <a href="{{url_for('listar_departamentos')}}" class="cancelar"
+              >Cancelar</a
+            >
+          </div>
+        </form>
+      </div>
     </div>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+      var typed = new Typed(".auto-type", {
+        strings: ["Agregar nuevo departamento a la lista"],
+        typeSpeed: 80,
+        backSpeed: 50,
+        looped: true,
+      });
+    </script>
+  </body>
 </html>

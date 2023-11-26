@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;700;900&family=Poppins:ital,wght@0,100;0,200;0,400;0,500;1,300;1,600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Outfit", sans-serif;
+}
+
+body {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 95%;
+  display: grid;
+  grid-template-columns: minmax(max-content, 40% ) minmax(min-content,1fr);
+  gap: 30px;
+  margin-top: 10%;
+}
+
+.info-edit{
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  color: gray;
+  border: 1px solid #e2dfdf;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.container-editar{
+  background-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  color: gray;
+  border: 1px solid #e2dfdf;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.tab-title {
+    width: 100%;
+  font-weight: 450;
+  color: grey;
+  background: none;
+  border: none;
+  padding: 25px 30px;
+  cursor: pointer;
+  border-bottom: 3px solid rgba(210, 210, 210, 0.271);
+}
+
+.auto-type, 
+.auto-title{
+  font-weight: 300;
+}
+
+.content-box {
+  margin: 20px 0px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+
+.content-box .content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0px 30px;
+}
+
+ label {
+  margin-bottom: 10px;
+  display: block;
+  font-size: 15px;
+}
+
+input, select {
+  width: 95%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  color: grey;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+ input:focus {
+  border: 0.9px solid gray;
+  outline: none;
+}
+
+.botones{
+  width: 100%;
+  background-color: rgba(210, 210, 210, 0.271);
+  color: gray;
+  padding: 30px;
+  border-radius: 0rem  0rem 1.5rem 1.5rem;
+}
+
+.editar{
+  padding: 15px 30px;
+  background-color: grey;
+  color: white;
+  border-radius: 1rem;
+  margin-right: 15px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.cancelar{
+  padding: 15px 30px;
+  background-color: grey;
+  color: white;
+  border-radius: 1rem;
+  font-size: 13px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cancelar:hover,
+.editar:hover{
+  color: grey;
+  background-color: rgb(255, 255, 255);
+}
+
+/*la barra de desplazamiento de la ventana  */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(173, 174, 177);
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-horizontal {
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background:rgb(173, 174, 177);
+}
+
+::-webkit-scrollbar-track:horizontal {
+  background: #f1f1f1;
+}

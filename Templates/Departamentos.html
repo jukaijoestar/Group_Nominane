@@ -8,18 +8,19 @@
       href="{{url_for('static', filename='Recources/logo.png')}}"
     />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-    <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='Recources/Styles/Estilodepa.css') }}"
+      href="{{ url_for('static', filename='Recources/Styles/departamento.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='Recources/Styles/generales.css') }}"
     />
   </head>
+
   <style>
     /* Estilos para el modal */
     .modal {
@@ -57,114 +58,164 @@
       cursor: pointer;
     }
   </style>
+
   <body>
-    <nav class="menu-admi" id="nav">
-      <!-- Tipo 1 -->
-      <div class="header">
-        <!-- INPUT SEARCH -->
-        <div class="input-search">
-          <i class="bx bx-search"></i>
-          <input
-            type="text"
-            class="input"
-            placeholder="Buscar"
-            id="search-input"
-          />
-        </div>
-        <!-- MENU -->
-        <div class="menu">
-          <a href="{{url_for('index')}}" class="enlace-lista">
-            <i class="bx bx-grid-alt"></i>
-            <span>Inicio</span>
-          </a>
-
-          <a href="#" class="enlace-lista">
-            <i class="bx bx-user"></i>
-            <span>Usuarios</span>
-          </a>
-
-          <li class="lista">
-            <a href="#" class="enlace-lista">
-              <i class="bx bx-list-ul"></i>
-              <span>Listados</span>
-              <i class="icon bx bx-chevron-down"></i>
-              <input type="checkbox" class="lista-check" />
-            </a>
-
-            <div class="lista-content">
-              <ul class="lista-sub">
-                <a href="{{ url_for('trabajadores') }}" class="enlace-li"
-                  >Empleados</a
-                >
-                <a href="{{url_for('inactivos')}}" class="enlace-li"
-                  >Empleados Inactivos</a
-                >
-                <a
-                  href="{{ url_for('listar_departamentos') }}"
-                  class="enlace-li"
-                  >Departamentos</a
-                >
-                <a
-                  href="{{ url_for('departamentos_Inactivos') }}"
-                  class="enlace-li"
-                  >Departamentos Inactivos</a
-                >
-                <a href="{{ url_for('cargos') }}" class="enlace-li">Cargos</a>
-              </ul>
-            </div>
-          </li>
-
-          <li class="lista">
-            <a href="#" class="enlace-lista">
-              <i class="bx bx-file"></i>
-              <span>Reportes</span>
-              <i class="icon bx bx-chevron-down"></i>
-              <input type="checkbox" class="lista-check" />
-            </a>
-
-            <div class="lista-content">
-              <ul class="lista-sub">
-                <a href="{{ url_for('reportes') }}" class="enlace-li"
-                  >Reporte General</a
-                >
-                <a href="#" class="enlace-li">Boletin Pago</a>
-                <a href="#" class="enlace-li">Boletin Nomina</a>
-                <a href="#" class="enlace-li">No se</a>
-              </ul>
-            </div>
-          </li>
-
-          <a href="#" class="enlace-lista">
-            <i class="bx bx-cog"></i>
-            <span>Configuración</span>
-          </a>
-
-          <a
-            href="{{ url_for('logout') }}"
-            class="enlace-lista"
-            onclick="confirmLogout(event)"
-          >
-            <i class="bx bx-exit"></i>
-            <span>Salir</span>
+    <header>
+      <!--inicio de auto escritura de navegacion -->
+      <div class="header-navigation">
+        <div class="tabs">
+          <a href="{{url_for('index')}}" class="titulo" id="autotype">
+            Group| <span class="auto-type"></span>
           </a>
         </div>
-        <i class="menui bx bx-menu-alt-left" id="menu-admi"></i>
       </div>
-    </nav>
-    <header class="nav__container">
-      <a href="{{url_for('index')}}" class="titulo" id="autotype">
-        Group| <span class="auto-type"></span>
-      </a>
+
+      <!--fin de auto escritura de navegacion -->
+
+      <!--inicio de usuario de sesion y botones de navegacion -->
+      <div class="header-actions">
+        <button class="user-profile">
+          <span>Derian Serrano</span>
+          <span>
+            <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
+          </span>
+        </button>
+
+        <div class="header-actions-buttons">
+          <button class="icon-button large">
+            <i class="bx bx-search-alt"></i>
+          </button>
+          <button class="icon-button large">
+            <i class="bx bx-bell"></i>
+          </button>
+          <button class="botonMenu icon-button large">
+            <i class="bx bxs-dashboard"></i>
+          </button>
+
+          <nav class="principal">
+            <div class="header">
+              <!-- INPUT SEARCH -->
+              <div class="input-search">
+                <i class="bx bx-search-alt"></i>
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="Buscar"
+                  id="search-input"
+                />
+              </div>
+              <!-- MENU -->
+              <div class="menu">
+                <a href="{{url_for('index')}}" class="enlace-lista">
+                  <i class="bx bx-grid-alt"></i>
+                  <span>Inicio</span>
+                </a>
+
+                <a href="{{url_for('usuarios')}}" class="enlace-lista">
+                  <i class="bx bx-user"></i>
+                  <span>Perfil</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-list-ul"></i>
+                    <span>Listados</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('trabajadores') }}" class="enlace-li"
+                        >Empleados</a
+                      >
+                      <a href="{{url_for('inactivos')}}" class="enlace-li"
+                        >Empleados Inactivos</a
+                      >
+                      <a
+                        href="{{ url_for('listar_departamentos') }}"
+                        class="enlace-li"
+                        >Departamentos</a
+                      >
+                      <a
+                        href="{{ url_for('departamentos_Inactivos') }}"
+                        class="enlace-li"
+                        >Departamentos Inactivos</a
+                      >
+                      <a href="{{ url_for('cargos') }}" class="enlace-li"
+                        >Cargos</a
+                      >
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="{{ url_for('Horario') }}" class="enlace-lista">
+                  <i class="bx bx-wallet"></i>
+                  <span>Liquidacion</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-file"></i>
+                    <span>Reportes</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('reportes') }}" class="enlace-li"
+                        >Reporte General</a
+                      >
+                      <a href="#" class="enlace-li">Boletin Pago</a>
+                      <a href="#" class="enlace-li">Boletin Nomina</a>
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="#" class="enlace-lista">
+                  <i class="bx bx-cog"></i>
+                  <span>Configuración</span>
+                </a>
+
+                <a
+                  href="{{ url_for('logout') }}"
+                  class="enlace-lista"
+                  onclick="confirmLogout(event)"
+                >
+                  <i class="bx bx-exit"></i>
+                  <span>Salir</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- fin inicio de usuario de sesion y botones de navegacion -->
     </header>
 
-    <div class="buscador">
-      <input
-        class="buscar"
-        type="text"
-        placeholder="Buscar departamento"
-        id="search"
-      />
-      <i class="iconi fa-solid fa-magnifying-glass"></i>
+    <div class="barra-opciones">
+      <div class="contenedor-filtro">
+        <div class="btn-filtro" onclick="alternarOpcionesFiltro()">
+          <p class="texto-btn">Filtrar</p>
+          <div class="flecha-abajo"><i class="bx bx-chevron-down"></i></div>
+        </div>
+
+        <div class="opciones-filtro"></div>
+      </div>
+
+      <div class="search-container">
+        <i class="bx bx-search-alt search-icon"></i>
+        <input
+          type="text"
+          placeholder="Buscar..."
+          class="search-input"
+          id="search"
+        />
+      </div>
+      <button class="btn-agregar" id="openModalAgregarButton">
+        Nuevo<i class="bx bx-folder-plus"></i>
+      </button>
     </div>
 
     <div class="table-container">
@@ -174,7 +225,7 @@
           <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Fecha de creación</th>
+            <th>Fecha</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -186,14 +237,14 @@
             <td>{{ departamento.Fecha_Creacion }}</td>
             <td>
               <button class="editar" data-id="{{ departamento.ID }}">
-                <i class="fas fa-user-edit"></i>
-              </button>          
+                <i class="bx bx-edit"></i>
+              </button>
               <a
                 href="{{ url_for('desactivar_departamento', id_departamento=departamento.ID) }}"
                 class="desactivar"
                 onclick="confirmDesactivar(event)"
               >
-                <i class="fas fa-ban"></i>
+                <i class="bx bx-block"></i>
               </a>
             </td>
           </tr>
@@ -201,38 +252,6 @@
         </tbody>
       </table>
     </div>
-
-    <div class="modal" id="myModalAgregar">
-      <div class="modal-content">
-        <div class="header">
-          <h1>Agregar Departamento</h1>
-          <span class="close-modal">&times;</span> <!-- Botón X para cerrar -->
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6">
-              <form class="formulario" action="{{ url_for('agregar_departamento') }}" method="POST">
-                <div class="form-group">
-                  <label for="nombre">Nombre del Departamento:</label>
-                  <input type="text" id="nombre" name="nombre" required class="controls">
-                </div>
-                <div class="form-group">
-                  <label for="Fecha">Fecha de creación:</label>
-                  <input type="date" id="Fecha" name="Fecha" required class="controls">
-                </div>
-                <div class="bnt-agregar">
-                  <input type="submit" value="Agregar" class="botons">
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>     
-
-    <button class="floating-button" id="openModalAgregarButton" class="floating-button">
-      <i class="fa-solid fa-folder-plus"></i>
-    </button>
 
     <!-- Modal para Editar Departamento -->
     <div class="modal" id="myModalEditar">
@@ -244,18 +263,35 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              <form class="formulario" id="formEditar" action="{{ url_for('Editar_departamento', id_departamento=0) }}" method="POST">
+              <form
+                class="formulario"
+                id="formEditar"
+                action="{{ url_for('Editar_departamento', id_departamento=0) }}"
+                method="POST"
+              >
                 <!-- El ID del departamento se actualizará dinámicamente con JavaScript -->
                 <div class="form-group">
                   <label for="nombreEditar">Nombre del Departamento:</label>
-                  <input type="text" id="nombreEditar" name="nombre" required class="controls">
+                  <input
+                    type="text"
+                    id="nombreEditar"
+                    name="nombreEditar"
+                    required
+                    class="controls"
+                  />
                 </div>
                 <div class="form-group">
                   <label for="FechaEditar">Fecha de creación:</label>
-                  <input type="date" id="FechaEditar" name="FechaEditar" required class="controls">
+                  <input
+                    type="date"
+                    id="FechaEditar"
+                    name="FechaEditar"
+                    required
+                    class="controls"
+                  />
                 </div>
                 <div class="bnt-agregar">
-                  <input type="submit" value="Guardar Cambios" class="botons">
+                  <input type="submit" value="Guardar Cambios" class="botons" />
                 </div>
               </form>
             </div>
@@ -264,57 +300,205 @@
       </div>
     </div>
 
+    <!--modal agregar-->
+    <div class="modal" id="myModalAgregar">
+      <div class="modal-content">
+        <div class="header">
+          <h1>Agregar Departamento</h1>
+          <span class="close-modal">&times;</span>
+          <!-- Botón X para cerrar -->
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <form
+                class="formulario"
+                action="{{ url_for('agregar_departamento') }}"
+                method="POST"
+              >
+                <div class="form-group">
+                  <label for="nombre">Nombre del Departamento:</label>
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    required
+                    class="controls"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="Fecha">Fecha de creación:</label>
+                  <input
+                    type="date"
+                    id="Fecha"
+                    name="Fecha"
+                    required
+                    class="controls"
+                  />
+                </div>
+                <div class="bnt-agregar">
+                  <input type="submit" value="Agregar" class="botons" />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer">
+        <div>
+          GroupNomimane &#169;<br />Copyright 2023. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
+
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        const openModalAgregarButton = document.getElementById('openModalAgregarButton');
-        const closeModalAgregarButton = document.querySelector('#myModalAgregar .close-modal');
-        const modalAgregar = document.getElementById('myModalAgregar');
-    
-        openModalAgregarButton.addEventListener('click', function(event) {
+      document.addEventListener("DOMContentLoaded", function () {
+        const openModalAgregarButton = document.getElementById(
+          "openModalAgregarButton"
+        );
+        const closeModalAgregarButton = document.querySelector(
+          "#myModalAgregar .close-modal"
+        );
+        const modalAgregar = document.getElementById("myModalAgregar");
+
+        openModalAgregarButton.addEventListener("click", function (event) {
           event.preventDefault();
-          modalAgregar.style.display = 'block';
+          modalAgregar.style.display = "block";
         });
-    
-        closeModalAgregarButton.addEventListener('click', function() {
-          modalAgregar.style.display = 'none';
+
+        closeModalAgregarButton.addEventListener("click", function () {
+          modalAgregar.style.display = "none";
         });
-        
-        const editButtons = document.querySelectorAll('.editar');
-        const modalEditar = document.getElementById('myModalEditar');
-        const formEditar = modalEditar.querySelector('.formulario');
-        const nombreInputEditar = formEditar.querySelector('#nombreEditar');
-    
-        editButtons.forEach(button => {
-          button.addEventListener('click', function(event) {
+
+        const editButtons = document.querySelectorAll(".editar");
+        const modalEditar = document.getElementById("myModalEditar");
+        const formEditar = modalEditar.querySelector(".formulario");
+        const nombreInputEditar = formEditar.querySelector("#nombreEditar");
+
+        editButtons.forEach((button) => {
+          button.addEventListener("click", function (event) {
             event.preventDefault();
-            const departamentoID = this.getAttribute('data-id');
-            const departamentoNombre = this.parentElement.parentElement.querySelector('td:nth-child(2)').innerText;
-    
+            const departamentoID = this.getAttribute("data-id");
+            const departamentoNombre =
+              this.parentElement.parentElement.querySelector(
+                "td:nth-child(2)"
+              ).innerText;
+
             nombreInputEditar.value = departamentoNombre;
             formEditar.action = `/Editar_departamento/${departamentoID}`;
-            
-            modalEditar.style.display = 'block';
+
+            modalEditar.style.display = "block";
           });
         });
-    
-        const closeModalEditarButton = modalEditar.querySelector('.close-modal');
-    
-        closeModalEditarButton.addEventListener('click', function() {
-          modalEditar.style.display = 'none';
+
+        const closeModalEditarButton =
+          modalEditar.querySelector(".close-modal");
+
+        closeModalEditarButton.addEventListener("click", function () {
+          modalEditar.style.display = "none";
         });
-    
-        window.addEventListener('click', function(event) {
+
+        window.addEventListener("click", function (event) {
           if (event.target === modalAgregar) {
-            modalAgregar.style.display = 'none';
+            modalAgregar.style.display = "none";
           }
           if (event.target === modalEditar) {
-            modalEditar.style.display = 'none';
+            modalEditar.style.display = "none";
           }
         });
       });
-    </script>  
-    
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
+    </script>
+    {% for departamento in departamentos %}
+    <script>
+
+      function confirmDesactivar(event) {
+        event.preventDefault(); // Prevenir la navegación por defecto del enlace
+
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel",
+          },
+          buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "¿Estás seguro?",
+            text: "¡No podrás revertir esto!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, Desactivarlo",
+            cancelButtonText: "No, Cancelar",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              swalWithBootstrapButtons.fire(
+                "Activado!",
+                "El departamento ha sido desactivado.",
+                "success"
+              );
+              setTimeout(function () {
+                window.location.href =
+                  "{{ url_for('desactivar_departamento', id_departamento=departamento.ID) }}";
+              }, 1200); // Espera 1.5 segundos antes de redirigir
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire(
+                "Cancelado",
+                "Parece que fue un error :)",
+                "error"
+              );
+            }
+          });
+      }
+    </script>
+    {% endfor %}
+
+    <script>
+      function confirmLogout(event) {
+        event.preventDefault();
+
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel",
+          },
+          buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "¿Estás seguro?",
+            text: "¿Deseas cerrar sesión?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, Cerrar sesión",
+            cancelButtonText: "Cancelar",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "{{ url_for('logout') }}";
+            }
+          });
+      }
+    </script>
+    {% if error %}
+    <script>
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "{{ error }}",
+      });
+    </script>
+    {% endif %}
   </body>
 </html>

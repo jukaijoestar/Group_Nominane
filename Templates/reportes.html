@@ -1,32 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Estadísticas de Empleados</title>
-    <!-- Agrega las bibliotecas de Plotly -->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="{{url_for('static', filename='Recources/logo.png')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='Recources/Styles/reportes.css') }}"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='Recources/Styles/generales.css') }}"
+    />
+    <title>Estadisticas | GROUPNOMIMANE</title>
+  </head>
+  <body>
+    <header>
+      <!--inicio de auto escritura de navegacion -->
+      <div class="header-navigation">
+        <div class="tabs">
+          <a href="{{url_for('index')}}" class="titulo" id="autotype">
+            Group| <span class="auto-type"></span>
+          </a>
+        </div>
+      </div>
+      <!--fin de auto escritura de navegacion -->
+
+      <!--inicio de usuario de sesion y botones de navegacion -->
+      <div class="header-actions">
+        <button class="user-profile">
+          <span>Derian Serrano</span>
+          <span>
+            <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
+          </span>
+        </button>
+
+        <div class="header-actions-buttons">
+          <button class="icon-button large">
+            <i class="bx bx-search-alt"></i>
+          </button>
+          <button class="icon-button large">
+            <i class="bx bx-bell"></i>
+          </button>
+          <button class="botonMenu icon-button large">
+            <i class="bx bxs-dashboard"></i>
+          </button>
+
+          <nav class="principal">
+            <div class="header">
+              <!-- INPUT SEARCH -->
+              <div class="input-search">
+                <i class="bx bx-search-alt"></i>
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="Buscar"
+                  id="search-input"
+                />
+              </div>
+              <!-- MENU -->
+              <div class="menu">
+                <a href="{{url_for('index')}}" class="enlace-lista">
+                  <i class="bx bx-grid-alt"></i>
+                  <span>Inicio</span>
+                </a>
+
+                <a href="{{url_for('usuarios')}}" class="enlace-lista">
+                  <i class="bx bx-user"></i>
+                  <span>Perfil</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-list-ul"></i>
+                    <span>Listados</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('trabajadores') }}" class="enlace-li"
+                        >Empleados</a
+                      >
+                      <a href="{{url_for('inactivos')}}" class="enlace-li"
+                        >Empleados Inactivos</a
+                      >
+                      <a
+                        href="{{ url_for('listar_departamentos') }}"
+                        class="enlace-li"
+                        >Departamentos</a
+                      >
+                      <a
+                        href="{{ url_for('departamentos_Inactivos') }}"
+                        class="enlace-li"
+                        >Departamentos Inactivos</a
+                      >
+                      <a href="{{ url_for('cargos') }}" class="enlace-li"
+                        >Cargos</a
+                      >
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="{{ url_for('Horario') }}" class="enlace-lista">
+                  <i class="bx bx-wallet"></i>
+                  <span>Liquidacion</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-file"></i>
+                    <span>Reportes</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('reportes') }}" class="enlace-li"
+                        >Reporte General</a
+                      >
+                      <a href="#" class="enlace-li">Boletin Pago</a>
+                      <a href="#" class="enlace-li">Boletin Nomina</a>
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="#" class="enlace-lista">
+                  <i class="bx bx-cog"></i>
+                  <span>Configuración</span>
+                </a>
+
+                <a
+                  href="{{ url_for('logout') }}"
+                  class="enlace-lista"
+                  onclick="confirmLogout(event)"
+                >
+                  <i class="bx bx-exit"></i>
+                  <span>Salir</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- fin inicio de usuario de sesion y botones de navegacion -->
+    </header>
+
+    <div class="conteo-general">
+      <div class="conteo-info">
+        <i class="bx bx-wallet"></i>
+        <p>Nominas<br /><span>1</span></p>
+      </div>
+      <div class="conteo-info">
+        <i class="bx bx-receipt"></i>
+        <p>Reportes<br /><span>0</span></p>
+      </div>
+      <div class="conteo-info">
+        <i class="bx bx-money-withdraw"></i>
+        <p>Liquidez <br /><span>Fiable</span></p>
+      </div>
+      <div class="conteo-info">
+        <i class="bx bx-credit-card"></i>
+        <p>Inversiones <br /><span>4</span></p>
+      </div>
+    </div>
+
+    <div class="container-info">
+      <div>
+        <div class="porcentaje-general">
+          <div class="porcentaje-info">
+            <h2>Poblacion Nomimane</h2>
+            <p>Trabajadores activos <br /><span>1</span></p>
+            <p>Pago referente <br /><span>$120.000</span></p>
+          </div>
+          <div class="gastos">
+            <div class="circular-progress">
+              <div class="value-container">0%</div>
+            </div>
+          </div>
+        </div>
+        <div class="boton">
+          <p>Reportes generados <br /><span>100</span> +5</p>
+          <a href="{{ url_for('generar_reporte') }}"
+            ><i class="bx bxs-archive-in"></i> Generar Reporte</a
+          >
+        </div>
+      </div>
+      <div class="informacion-contable">
+        <h3 class="tab-title">GroupNomimane| <span class="title"></span></h3>
+        <div class="content">
+          <h2>Ganancias Anuales:</h2>
+          <div id="grafico_ganancias">{{ grafico_ganancias_html|safe }}</div>
+          <h3 class="title">{{ texto_pago_total }}</h3>
+        </div>
+      </div>
+    </div>
+    
+
+    <footer>
+      <div class="footer">
+        <div>
+          GroupNomimane &#169;<br />Copyright 2023. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</head>
-<body>
-    <h1>Estadísticas de Empleados</h1>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
+    <script>
+      var typed = new Typed(".title", {
+        strings: ["Estadísticas", "Datos contables generales de la compañia"],
+        typeSpeed: 80,
+        backSpeed: 50,
+        looped: true,
+      });
 
-    <h2>Cantidad de Empleados por Departamento:</h2>
-    <div id="grafico_departamentos">{{ grafico_departamentos_html|safe }}</div>
+      let progressBar = document.querySelector(".circular-progress");
+      let valueContainer = document.querySelector(".value-container");
 
-    <h2>Empleados Activos vs. Inactivos:</h2>
-    <div id="grafico_estado">{{ grafico_estado_html|safe }}</div>
+      let progressValue = 0;
+      let progressEndValue = 1;
+      let speed = 50;
 
-    <h2>Ganancias Anuales:</h2>
-    <div id="grafico_ganancias">{{ grafico_ganancias_html|safe }}</div>
+      let progress = setInterval(() => {
+        progressValue++;
+        valueContainer.textContent = `${progressValue}%`;
+        progressBar.style.background = `conic-gradient(
+      #80808084 ${progressValue * 3.6}deg,
+  rgba(181, 181, 181, 0.201) ${progressValue * 3.6}deg
+)`;
+        if (progressValue == progressEndValue) {
+          clearInterval(progress);
+        }
+      }, speed);
 
-    <!-- Agrega el texto del pago total a todos los empleados -->
-    <h2>{{ texto_pago_total }}</h2>
+      function confirmLogout(event) {
+        event.preventDefault();
 
-    <a href="{{ url_for('generar_reporte') }}" class="dropdown__link">
-        <img
-          src="{{ url_for('static', filename='/assets/stats.svg') }}"
-          class="dropdown__icon"
-        />
-        <span class="dropdown__span">Reportes</span>
-    </a>
-</body>
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel",
+          },
+          buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "¿Estás seguro?",
+            text: "¿Deseas cerrar sesión?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, Cerrar sesión",
+            cancelButtonText: "Cancelar",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "{{ url_for('logout') }}";
+            }
+          });
+      }
+    </script>
+  </body>
 </html>

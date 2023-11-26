@@ -1,0 +1,183 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;700;900&family=Poppins:ital,wght@0,100;0,200;0,400;0,500;1,300;1,600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Outfit", sans-serif;
+}
+
+body {
+  background-color: #fff;
+}
+
+.generales{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-header {
+  width: 95%;
+  margin: 50px 0px;
+}
+
+.container-editar{
+  background-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  color: gray;
+  border: 1px solid #e2dfdf;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.tab-title {
+    width: 100%;
+  font-weight: 450;
+  color: grey;
+  background: none;
+  border: none;
+  padding: 25px 30px;
+  cursor: pointer;
+  border-bottom: 3px solid rgba(210, 210, 210, 0.271);
+}
+
+.auto-title{
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.content-box {
+  margin: 20px 0px;
+  padding: 20px 30px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+
+.content-box .content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0px;
+}
+
+label {
+  margin-bottom: 5px;
+  display: block;
+  font-size: 15px;
+}
+
+input,select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  color: grey;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+input:focus {
+  border: 0.9px solid gray;
+  outline: none;
+}
+
+.botones{
+  width: 100%;
+  background-color: rgba(210, 210, 210, 0.271);
+  color: gray;
+  padding: 30px;
+  border-radius: 0rem  0rem 1.5rem 1.5rem;
+}
+
+.editar{
+  padding: 15px 30px;
+  background-color: grey;
+  color: white;
+  border-radius: 1rem;
+  margin-right: 15px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.cancelar{
+  padding: 15px 30px;
+  background-color: grey;
+  color: white;
+  border-radius: 1rem;
+  font-size: 13px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cancelar:hover,
+.editar:hover{
+  color: grey;
+  background-color: rgb(255, 255, 255);
+}
+
+.title-liquidacion{
+  text-align: center;
+  color: grey;
+  font-weight: 350;
+  grid-column: span 3;
+  
+}
+
+.liquidacion-info{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0px;
+}
+
+.datos-trabajador{
+  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 20px 0px;
+}
+
+footer {
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: end;
+  padding-bottom: 10px;
+}
+
+footer .footer {
+  width: 95%;
+}
+
+footer .footer div {
+  border-top: 1px solid #dadada;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  font-size: 0.75rem;
+}
+/*  barra de desplazamiento */
+::-webkit-scrollbar{
+  height: 5px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-track{
+ box-shadow: inset 0 0 6px rgb(0,0, 0, 0.3); 
+ border-radius: 8px;
+}
+
+
+::-webkit-scrollbar-thumb{
+ box-shadow: inset 0 0 6px rgb(0,0, 0, 0.3); 
+  border-radius: 8px;
+}

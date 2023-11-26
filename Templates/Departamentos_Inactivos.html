@@ -8,126 +8,172 @@
       href="{{url_for('static', filename='Recources/logo.png')}}"
     />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-    <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='Recources/Styles/Estilodepa.css') }}"
+      href="{{ url_for('static', filename='Recources/Styles/departamento.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='Recources/Styles/generales.css') }}"
     />
   </head>
   <body>
-    <nav class="menu-admi" id="nav">
-      <!-- Tipo 1 -->
-      <div class="header">
-        <!-- INPUT SEARCH -->
-        <div class="input-search">
-          <i class="bx bx-search"></i>
-          <input
-            type="text"
-            class="input"
-            placeholder="Buscar"
-            id="search-input"
-          />
-        </div>
-        <!-- MENU -->
-        <div class="menu">
-          <a href="{{url_for('index')}}" class="enlace-lista">
-            <i class="bx bx-grid-alt"></i>
-            <span>Inicio</span>
-          </a>
-
-          <a href="#" class="enlace-lista">
-            <i class="bx bx-user"></i>
-            <span>Usuarios</span>
-          </a>
-
-          <li class="lista">
-            <a href="#" class="enlace-lista">
-              <i class="bx bx-list-ul"></i>
-              <span>Listados</span>
-              <i class="icon bx bx-chevron-down"></i>
-              <input type="checkbox" class="lista-check" />
-            </a>
-
-            <div class="lista-content">
-              <ul class="lista-sub">
-                <a href="{{ url_for('trabajadores') }}" class="enlace-li"
-                  >Empleados</a
-                >
-                <a href="{{url_for('inactivos')}}" class="enlace-li"
-                  >Empleados Inactivos</a
-                >
-                <a
-                  href="{{ url_for('listar_departamentos') }}"
-                  class="enlace-li"
-                  >Departamentos</a
-                >
-                <a
-                  href="{{ url_for('departamentos_Inactivos') }}"
-                  class="enlace-li"
-                  >Departamentos Inactivos</a
-                >
-                <a href="{{ url_for('cargos') }}" class="enlace-li">Cargos</a>
-              </ul>
-            </div>
-          </li>
-
-          <li class="lista">
-            <a href="#" class="enlace-lista">
-              <i class="bx bx-file"></i>
-              <span>Reportes</span>
-              <i class="icon bx bx-chevron-down"></i>
-              <input type="checkbox" class="lista-check" />
-            </a>
-
-            <div class="lista-content">
-              <ul class="lista-sub">
-                <a href="{{ url_for('reportes') }}" class="enlace-li"
-                  >Reporte General</a
-                >
-                <a href="#" class="enlace-li">Boletin Pago</a>
-                <a href="#" class="enlace-li">Boletin Nomina</a>
-                <a href="#" class="enlace-li">No se</a>
-              </ul>
-            </div>
-          </li>
-
-          <a href="#" class="enlace-lista">
-            <i class="bx bx-cog"></i>
-            <span>Configuración</span>
-          </a>
-
-          <a
-            href="{{ url_for('logout') }}"
-            class="enlace-lista"
-            onclick="confirmLogout(event)"
-          >
-            <i class="bx bx-exit"></i>
-            <span>Salir</span>
+    <header>
+      <!--inicio de auto escritura de navegacion -->
+      <div class="header-navigation">
+        <div class="tabs">
+          <a href="{{url_for('index')}}" class="titulo" id="autotype">
+            Group| <span class="auto-type"></span>
           </a>
         </div>
-        <i class="menui bx bx-menu-alt-left" id="menu-admi"></i>
       </div>
-    </nav>
-    <header class="nav__container">
-      <a href="{{url_for('index')}}" class="titulo" id="autotype">
-        Group| <span class="auto-type"></span>
-      </a>
+
+      <!--fin de auto escritura de navegacion -->
+
+      <!--inicio de usuario de sesion y botones de navegacion -->
+      <div class="header-actions">
+        <button class="user-profile">
+          <span>Derian Serrano</span>
+          <span>
+            <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
+          </span>
+        </button>
+
+        <div class="header-actions-buttons">
+          <button class="icon-button large">
+            <i class="bx bx-search-alt"></i>
+          </button>
+          <button class="icon-button large">
+            <i class="bx bx-bell"></i>
+          </button>
+          <button class="botonMenu icon-button large">
+            <i class="bx bxs-dashboard"></i>
+          </button>
+
+          <nav class="principal">
+            <div class="header">
+              <!-- INPUT SEARCH -->
+              <div class="input-search">
+                <i class="bx bx-search-alt"></i>
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="Buscar"
+                  id="search-input"
+                />
+              </div>
+              <!-- MENU -->
+              <div class="menu">
+                <a href="{{url_for('index')}}" class="enlace-lista">
+                  <i class="bx bx-grid-alt"></i>
+                  <span>Inicio</span>
+                </a>
+
+                <a href="{{url_for('usuarios')}}" class="enlace-lista">
+                  <i class="bx bx-user"></i>
+                  <span>Perfil</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-list-ul"></i>
+                    <span>Listados</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('trabajadores') }}" class="enlace-li"
+                        >Empleados</a
+                      >
+                      <a href="{{url_for('inactivos')}}" class="enlace-li"
+                        >Empleados Inactivos</a
+                      >
+                      <a
+                        href="{{ url_for('listar_departamentos') }}"
+                        class="enlace-li"
+                        >Departamentos</a
+                      >
+                      <a
+                        href="{{ url_for('departamentos_Inactivos') }}"
+                        class="enlace-li"
+                        >Departamentos Inactivos</a
+                      >
+                      <a href="{{ url_for('cargos') }}" class="enlace-li"
+                        >Cargos</a
+                      >
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="{{ url_for('Horario') }}" class="enlace-lista">
+                  <i class="bx bx-wallet"></i>
+                  <span>Liquidacion</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-file"></i>
+                    <span>Reportes</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('reportes') }}" class="enlace-li"
+                        >Reporte General</a
+                      >
+                      <a href="#" class="enlace-li">Boletin Pago</a>
+                      <a href="#" class="enlace-li">Boletin Nomina</a>
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="#" class="enlace-lista">
+                  <i class="bx bx-cog"></i>
+                  <span>Configuración</span>
+                </a>
+
+                <a
+                  href="{{ url_for('logout') }}"
+                  class="enlace-lista"
+                  onclick="confirmLogout(event)"
+                >
+                  <i class="bx bx-exit"></i>
+                  <span>Salir</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- fin inicio de usuario de sesion y botones de navegacion -->
     </header>
 
-    <div class="buscador">
-      <input
-        class="buscar"
-        type="text"
-        placeholder="Buscar departamento"
-        id="search"
-      />
-      <i class="iconi fa-solid fa-magnifying-glass"></i>
+    <div class="barra-opciones">
+      <div class="contenedor-filtro">
+        <div class="btn-filtro" onclick="alternarOpcionesFiltro()">
+          <p class="texto-btn">Filtrar</p>
+          <div class="flecha-abajo"><i class="bx bx-chevron-down"></i></div>
+        </div>
+
+        <div class="opciones-filtro"></div>
+      </div>
+
+      <div class="search-container">
+        <i class="bx bx-search-alt search-icon"></i>
+        <input
+          type="text"
+          placeholder="Buscar..."
+          class="search-input"
+          id="search"
+        />
+      </div>
     </div>
 
     <div class="table-container">
@@ -152,7 +198,7 @@
                 href="{{ url_for('reactivar_departamento', id_departamento=departamento.ID) }}"
                 class="activar"
                 onclick="confirmActivar(event)"
-                ><i class="fas fa-check"></i
+                ><i class="bx bx-check"></i
               ></a>
             </td>
           </tr>
@@ -161,7 +207,90 @@
       </table>
     </div>
 
+    <footer>
+      <div class="footer">
+        <div>
+          GroupNomimane &#169;<br />Copyright 2023. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
+    {% for departamento in departamentos %}
+    <script>
+      function confirmActivar(event) {
+        event.preventDefault(); // Prevenir la navegación por defecto del enlace
+
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel",
+          },
+          buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "¿Estás seguro?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, Activarlo",
+            cancelButtonText: "No, Cancelar",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              swalWithBootstrapButtons.fire(
+                "Activado!",
+                "El departamento ha sido reactivado.",
+                "success"
+              );
+              setTimeout(function () {
+                window.location.href =
+                  "{{ url_for('reactivar_departamento', id_departamento=departamento.ID) }}";
+              }, 1200); // Espera 1.5 segundos antes de redirigir
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire(
+                "Cancelado",
+                "Parece que fue un error :)",
+                "error"
+              );
+            }
+          });
+      }
+    </script>
+    {% endfor %}
+    <script>
+      function confirmLogout(event) {
+        event.preventDefault();
+
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel",
+          },
+          buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "¿Estás seguro?",
+            text: "¿Deseas cerrar sesión?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, Cerrar sesión",
+            cancelButtonText: "Cancelar",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "{{ url_for('logout') }}";
+            }
+          });
+      }
+    </script>
   </body>
 </html>

@@ -3,277 +3,348 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Inicio | GROUPNOMIMANE</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500&display=swap"
-      rel="stylesheet"
+      href="{{ url_for('static', filename='Recources/Styles/index.css') }}"
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='Recources/Styles/Estilo.css') }}"
+      href="{{ url_for('static', filename='Recources/Styles/generales.css') }}"
     />
     <link
       rel="icon"
       href="{{url_for('static', filename='Recources/logo.png')}}"
     />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Inicio | GROUPNOMIMANE</title>
   </head>
-
   <body>
-    <nav class="menu-admi" id="nav">
-      <!-- Tipo 1 -->
-      <div class="header">
-        <!-- INPUT SEARCH -->
-        <div class="input-search">
-          <i class="bx bx-search"></i>
-          <input
-            type="text"
-            class="input"
-            placeholder="Buscar"
-            id="search-input"
-          />
-        </div>
-        <!-- MENU -->
-        <div class="menu">
-          <a href="{{url_for('index')}}" class="enlace-lista">
-            <i class="bx bx-grid-alt"></i>
-            <span>Inicio</span>
-          </a>
-
-          <a href="#" class="enlace-lista">
-            <i class="bx bx-user"></i>
-            <span>Usuarios</span>
-          </a>
-
-          <li class="lista">
-            <a href="#" class="enlace-lista">
-              <i class="bx bx-list-ul"></i>
-              <span>Listados</span>
-              <i class="icon bx bx-chevron-down"></i>
-              <input type="checkbox" class="lista-check" />
-            </a>
-
-            <div class="lista-content">
-              <ul class="lista-sub">
-                <a href="{{ url_for('trabajadores') }}" class="enlace-li"
-                  >Empleados</a
-                >
-                <a href="{{url_for('inactivos')}}" class="enlace-li"
-                  >Empleados Inactivos</a
-                >
-                <a
-                  href="{{ url_for('listar_departamentos') }}"
-                  class="enlace-li"
-                  >Departamentos</a
-                >
-                <a
-                  href="{{ url_for('departamentos_Inactivos') }}"
-                  class="enlace-li"
-                  >Departamentos Inactivos</a
-                >
-                <a href="{{ url_for('cargos') }}" class="enlace-li">Cargos</a>
-              </ul>
-            </div>
-          </li>
-
-          <li class="lista">
-            <a href="#" class="enlace-lista">
-              <i class="bx bx-file"></i>
-              <span>Reportes</span>
-              <i class="icon bx bx-chevron-down"></i>
-              <input type="checkbox" class="lista-check" />
-            </a>
-
-            <div class="lista-content">
-              <ul class="lista-sub">
-                <a href="{{ url_for('reportes') }}" class="enlace-li"
-                  >Reporte General</a
-                >
-                <a href="#" class="enlace-li">Boletin Pago</a>
-                <a href="#" class="enlace-li">Boletin Nomina</a>
-                <a href="#" class="enlace-li">No se</a>
-              </ul>
-            </div>
-          </li>
-
-          <a href="#" class="enlace-lista">
-            <i class="bx bx-cog"></i>
-            <span>Configuración</span>
-          </a>
-
-          <a
-            href="{{ url_for('logout') }}"
-            class="enlace-lista"
-            onclick="confirmLogout(event)"
-          >
-            <i class="bx bx-exit"></i>
-            <span>Salir</span>
+    <header>
+      <!--inicio de auto escritura de navegacion -->
+      <div class="header-navigation">
+        <div class="tabs">
+          <a href="{{url_for('index')}}" class="titulo" id="autotype">
+            Group| <span class="auto-type"></span>
           </a>
         </div>
-        <i class="menui bx bx-menu-alt-left" id="menu-admi"></i>
       </div>
-    </nav>
-    <header class="nav__container">
-      <a href="#menu" class="titulo" id="autotype">
-        Group| <span class="auto-type"></span>
-      </a>
+
+      <!--fin de auto escritura de navegacion -->
+
+      <!--inicio de usuario de sesion y botones de navegacion -->
+      <div class="header-actions">
+        <button class="user-profile">
+          <span>Derian Serrano</span>
+          <span>
+            <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
+          </span>
+        </button>
+
+        <div class="header-actions-buttons">
+          <button class="icon-button large">
+            <i class="bx bx-search-alt"></i>
+          </button>
+          <button class="icon-button large">
+            <i class="bx bx-bell"></i>
+          </button>
+          <button class="botonMenu icon-button large">
+            <i class="bx bxs-dashboard"></i>
+          </button>
+
+          <nav class="principal">
+            <div class="header">
+              <!-- INPUT SEARCH -->
+              <div class="input-search">
+                <i class="bx bx-search-alt"></i>
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="Buscar"
+                  id="search-input"
+                />
+              </div>
+              <!-- MENU -->
+              <div class="menu">
+                <a href="{{url_for('index')}}" class="enlace-lista">
+                  <i class="bx bx-grid-alt"></i>
+                  <span>Inicio</span>
+                </a>
+
+                <a href="{{url_for('usuarios')}}" class="enlace-lista">
+                  <i class="bx bx-user"></i>
+                  <span>Perfil</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-list-ul"></i>
+                    <span>Listados</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('trabajadores') }}" class="enlace-li"
+                        >Empleados</a
+                      >
+                      <a href="{{url_for('inactivos')}}" class="enlace-li"
+                        >Empleados Inactivos</a
+                      >
+                      <a
+                        href="{{ url_for('listar_departamentos') }}"
+                        class="enlace-li"
+                        >Departamentos</a
+                      >
+                      <a
+                        href="{{ url_for('departamentos_Inactivos') }}"
+                        class="enlace-li"
+                        >Departamentos Inactivos</a
+                      >
+                      <a href="{{ url_for('cargos') }}" class="enlace-li"
+                        >Cargos</a
+                      >
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="{{ url_for('Horario') }}" class="enlace-lista">
+                  <i class="bx bx-wallet"></i>
+                  <span>Liquidacion</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-file"></i>
+                    <span>Reportes</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('reportes') }}" class="enlace-li"
+                        >Reporte General</a
+                      >
+                      <a href="#" class="enlace-li">Boletin Pago</a>
+                      <a href="#" class="enlace-li">Boletin Nomina</a>
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="#" class="enlace-lista">
+                  <i class="bx bx-cog"></i>
+                  <span>Configuración</span>
+                </a>
+
+                <a
+                  href="{{ url_for('logout') }}"
+                  class="enlace-lista"
+                  onclick="confirmLogout(event)"
+                >
+                  <i class="bx bx-exit"></i>
+                  <span>Salir</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- fin inicio de usuario de sesion y botones de navegacion -->
     </header>
 
-    <!-- Modal de Bienvenida -->
-    <div id="modal-bienvenida" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <img
-            src="{{ url_for('static', filename='Recources/Img8.png') }}"
-            alt="Icono de bienvenida"
-            class="modal-icon"
-          />
-          <h2>Bienvenido, Administrador</h2>
-        </div>
-        <p>¡Gracias por utilizar nuestro sistema de administración!</p>
-        <button id="cerrar-modal">Cerrar</button>
-      </div>
-    </div>
+    <div class="container">
+      <div class="contenido">
+        <div class="card">
+          <h2>Cuenta de la compañia</h2>
+          <div class="info-general">
+            <div class="body-tarjeta">
+              <div class="card-container2">
+                <div class="linea"></div>
+              </div>
+              <div class="card-container">
+                <p>Fincard <span class="tipo-card">Platinum Debit</span></p>
 
-    <div class="content">
-      <main>
-        <ul class="insights">
-          <li>
-            <i class="bx bx-calendar-check"></i>
-            <span class="info">
-              <h3>1,074</h3>
-              <p>N° Ordenes</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-show-alt"></i>
-            <span class="info">
-              <h3>3,944</h3>
-              <p>Visita al sitio</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-line-chart"></i>
-            <span class="info">
-              <h3>14,721</h3>
-              <p>Búsquedas</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-dollar-circle"></i>
-            <span class="info">
-              <h3>$6,742</h3>
-              <p>Nominas Pagadas</p>
-            </span>
-          </li>
-        </ul>
-        <!-- End of Insights -->
-
-        <div class="bottom-data">
-          <div class="orders">
-            <div class="header">
-              <i class="bx bx-receipt"></i>
-              <h3>Ingresos Recientes</h3>
-              <i class="bx bx-filter"></i>
-              <i class="bx bx-search"></i>
+                <div class="card-content">
+                  <img
+                    class="img-chip"
+                    src="{{url_for('static', filename='Recources/Img/Chip-3.png')}}"
+                    alt=""
+                  />
+                  <h3 class="card-number">4771 - 6080 - 1080 - 7889</h3>
+                  <p class="card-expiry">
+                    Valid Thru <span>08/25</span
+                    ><img
+                      class="img-card"
+                      src="{{url_for('static', filename='Recources/Img/Mastercard.png')}}"
+                      alt=""
+                    />
+                  </p>
+                </div>
+              </div>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Usuario</th>
-                  <th>Fecha Registrada</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <img
-                      src="{{ url_for('static', filename='Recources/DERIAN.jpeg') }}"
-                    />
-                    <p>Derian Serrano</p>
-                  </td>
-                  <td>10-10-2023</td>
-                  <td><span class="status completed">Completado</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                      src="{{ url_for('static', filename='Recources/WILLIAM.jpeg') }}"
-                    />
-                    <p>Esteban</p>
-                  </td>
-                  <td>09-10-2023</td>
-                  <td><span class="status pending">Pendiente</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                      src="{{ url_for('static', filename='Recources/DANIEL.jpeg') }}"
-                    />
-                    <p>Mari Rosa</p>
-                  </td>
-                  <td>05-09-2023</td>
-                  <td><span class="status process">Procesando</span></td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="agregar-cuenta">
+              <div class="sub-card">
+                <i class="bx bx-add-to-queue"></i>
+              </div>
+              <p>Agregar otra cuenta</p>
+            </div>
           </div>
         </div>
-      </main>
+
+        <div class="card">
+          <section class="balance-section">
+            <h2>Balance total</h2>
+            <h1>$ 80.201.50</h1>
+            <p>Noviembre 13, 2023 - 03:20 PM</p>
+            <div class="balance-content">
+              <div class="items">
+                <i class="bx bx-book-bookmark"></i>
+                <p>Reporte</p>
+              </div>
+              <div class="items">
+                <i class="bx bx-money-withdraw"></i>
+                <p>Consignar</p>
+              </div>
+              <div class="items">
+                <i class="bx bx-customize"></i>
+                <p>Más</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="card">
+          <section class="transfer-section">
+            <div class="transfer-section-header">
+              <h2>Últimas transferencias</h2>
+              <button class="icon-button">
+                <i class="bx bx-search-alt"></i>
+              </button>
+              <button class="icon-button">
+                <i class="bx bx-calendar-event"></i>
+              </button>
+            </div>
+            <div class="transfers">
+              <div class="transfer">
+                <div class="transfer-logo">
+                  <img
+                    src="{{url_for('static', filename='Recources/Img/Bancolombia.png')}}"
+                  />
+                </div>
+                <dl class="transfer-details">
+                  <div>
+                    <dt>Bancolombia</dt>
+                    <dd>Pago exitoso</dd>
+                  </div>
+                  <div>
+                    <dt>22 Dic. 2023</dt>
+                    <dd>Fecha de pago</dd>
+                  </div>
+                </dl>
+                <div class="transfer-number">$50.550.000</div>
+              </div>
+              <div class="transfer">
+                <div class="transfer-logo">
+                  <img
+                    src="{{url_for('static', filename='Recources/Img/Nequi.png')}}"
+                  />
+                </div>
+                <dl class="transfer-details">
+                  <div>
+                    <dt>Nequi</dt>
+                    <dd>Pago exitoso</dd>
+                  </div>
+                  <div>
+                    <dt>26 Oct. 2023</dt>
+                    <dd>Fecha de pago</dd>
+                  </div>
+                </dl>
+                <div class="transfer-number">$12.527.003</div>
+              </div>
+              <div class="transfer">
+                <div class="transfer-logo">
+                  <img
+                    src="{{url_for('static', filename='Recources/Img/paypal.png')}}"
+                  />
+                </div>
+                <dl class="transfer-details">
+                  <div>
+                    <dt>Paypal</dt>
+                    <dd>Pago exitoso</dd>
+                  </div>
+                  <div>
+                    <dt>22 Oct. 2023</dt>
+                    <dd>Fecha de pago</dd>
+                  </div>
+                </dl>
+                <div class="transfer-number">$5.219.713</div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="card">
+          <section class="gastos-section">
+            <h2>Gastos de la compañia</h2>
+
+            <div class="container-barra">
+              <div class="circular-progress">
+                <div class="value-container">0%</div>
+              </div>
+            </div>
+            <p class="total">Total Gastos:<span>$10.286.32</span></p>
+          </section>
+        </div>
+      </div>
+      <footer>
+        <div class="footer">
+          <h1>GroupNomimane<small>©</small></h1>
+          <div>
+            GroupNomimane &#169;<br />Copyright 2023. All Rights Reserved.
+          </div>
+        </div>
+      </footer>
     </div>
-  </body>
-  <script>
-    /*Alerta para salir de inicio de sesion*/
-    function confirmLogout(event) {
-      event.preventDefault();
 
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "swal2-confirm",
-          cancelButton: "swal2-cancel",
-        },
-        buttonsStyling: false,
-      });
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
+    <script src="{{ url_for('static', filename='Recources/Js/index.js') }}"></script>
 
-      swalWithBootstrapButtons
-        .fire({
-          title: "¿Estás seguro?",
-          text: "¿Deseas cerrar sesión?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Sí, Cerrar sesión",
-          cancelButtonText: "Cancelar",
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "{{ url_for('logout') }}";
-          }
+    
+    <script>
+      function confirmLogout(event) {
+        event.preventDefault();
+
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel",
+          },
+          buttonsStyling: false,
         });
-    }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      // Mostrar el modal de bienvenida al cargar la página
-      const modalBienvenida = document.getElementById("modal-bienvenida");
-      modalBienvenida.style.display = "block";
-
-      // Ocultar el modal al hacer clic en el botón "Cerrar"
-      const cerrarModalBtn = document.getElementById("cerrar-modal");
-      cerrarModalBtn.addEventListener("click", function () {
-        modalBienvenida.style.display = "none";
-      });
-    });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
+        swalWithBootstrapButtons
+          .fire({
+            title: "¿Estás seguro?",
+            text: "¿Deseas cerrar sesión?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, Cerrar sesión",
+            cancelButtonText: "Cancelar",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "{{ url_for('logout') }}";
+            }
+          });
+      }
+    </script>
+  </body>
 </html>

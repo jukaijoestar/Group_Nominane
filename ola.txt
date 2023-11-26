@@ -1,0 +1,196 @@
+@app.route("/Horario", methods=["GET", "POST"])
+def Horario():
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM empleados WHERE Estado = 'activo'")
+    empleados = cursor.fetchall()
+
+    if not empleados:
+         return render_template(
+            "Horario.html",
+            empleados=empleados,
+            error="true"
+        )
+
+    if request.method == "POST":
+
+        empleado_id = request.form["empleado"]
+        dias = int(request.form["dias"])
+        fecha_inicio = request.form["fecha"]
+        cursor.execute(
+            "SELECT Sueldo, Nombres, Apellido_Materno, Apellido_Paterno, Nro_documento FROM empleados WHERE ID = %s", (empleado_id,))
+        empleado = cursor.fetchone()
+        empleado_sueldo = empleado['Sueldo']
+        empleado_nombre_completo = f"{empleado['Nombres']} {empleado['Apellido_Paterno']} {empleado['Apellido_Materno']}"
+        empleado_Identificacion = empleado['Nro_documento']
+        # Obtener los valores de las variables del formulario
+        # horas_diurnas = int(request.form["horas_diurnas"]) if request.form["horas_diurnas"] else 0
+        horas_extra_diurnas = int(
+            request.form["horas_extra_diurnas"]) if request.form["horas_extra_diurnas"] else 0
+        # horas_nocturnas = int(request.form["horas_nocturnas"]) if request.form["horas_nocturnas"] else 0
+        horas_extra_nocturnas = int(
+            request.form["horas_extra_nocturnas"]) if request.form["horas_extra_nocturnas"] else 0
+        horas_dominicales = int(
+            request.form["horas_dominicales"]) if request.form["horas_dominicales"] else 0
+        horas_extra_dominicales = int(
+            request.form["horas_extra_dominicales"]) if request.form["horas_extra_dominicales"] else 0
+        horas_extra_dom_nocturnas = int(
+            request.form["horas_extra_dom_nocturnas"]) if request.form["horas_extra_dom_nocturnas"] else 0
+
+        fecha_actual = datetime.now()
+        empleado_sueldo = empleado_sueldo
+        salario_base_diario = empleado_sueldo / 26
+
+        empleado_sueldo = salario_base_diario * dias
+
+        # Realizar cálculos
+        # horas_diurnas_total = ((empleado_sueldo / 120) * horas_diurnas)
+        horas_extra_diurnas_total = (
+            ((empleado_sueldo * 1.25) / 120) * horas_extra_diurnas)
+        # horas_nocturnas_total = (
+        # ((empleado_sueldo * 1.35) / 240) * horas_nocturnas)
+        horas_extra_nocturnas_total = (
+            ((empleado_sueldo * 1.75) / 120) * horas_extra_nocturnas)
+        horas_dominicales_total = (
+            ((empleado_sueldo * 1.75) / 120) * horas_dominicales)
+        horas_extra_dominicales_total = (
+            ((empleado_sueldo * 2) / 120) * horas_extra_dominicales)
+        horas_extra_dom_nocturnas_total = (
+            ((empleado_sueldo * 2.5) / 120) * horas_extra_dom_nocturnas)
+
+        cursor = db.cursor()
+
+        horas_extra_total = horas_extra_diurnas_total + horas_extra_nocturnas_total + \
+            horas_extra_dominicales_total + horas_extra_dom_nocturnas_total
+        salud = (empleado_sueldo + horas_extra_total) * 0.04
+        pension = (empleado_sueldo + horas_extra_total) * 0.04
+
+        if (empleado_sueldo > 1160000*2):
+            total_devengado = empleado_sueldo + horas_extra_total
+        else:
+            total_devengado = empleado_sueldo + 140606 + horas_extra_total
+
+        total_deducido = salud + pension
+        neto_pagado = total_devengado - total_deducido
+
+        total_deducido = salud + pension
+        db.commit()
+        cursor.close()
+
+        return render_template(
+            "liquidacion.html",
+            empleado_sueldo=empleado_sueldo,
+            empleado_id=empleado_id,
+            format_number=format_number,
+            empleado_nombre_completo=empleado_nombre_completo,
+            empleado_Identificacion=empleado_Identificacion,
+            horas_extra_total=horas_extra_total,
+            salud=salud,
+            pension=pension,
+            total_devengado=total_devengado,
+            total_deducido=total_deducido,
+            neto_pagado=neto_pagado,
+            fecha_inicio=fecha_inicio,
+            dias=dias,
+
+            # horas_diurnas_total=horas_diurnas_total,
+            horas_extra_diurnas_total=horas_extra_diurnas_total,
+            # horas_nocturnas_total=horas_nocturnas_total,
+            horas_extra_nocturnas_total=horas_extra_nocturnas_total,
+            horas_dominicales_total=horas_dominicales_total,
+            horas_extra_dominicales_total=horas_extra_dominicales_total,
+            horas_extra_dom_nocturnas_total=horas_extra_dom_nocturnas_total
+        )
+
+    return render_template(
+        "Horario.html",
+        empleados=empleados
+    )
+
+
+@app.route("/realizar_pago", methods=["POST"])
+def realizar_pago():
+    Riesgo_LV = 0
+    tarifa_riesgo = 0
+    # Guardar las variables en la base de datos
+    cursor = db.cursor()
+
+    dias = int(request.form["dias"])
+    empleado_id = int(request.form["empleado_id"])
+    horas_extra_total = float(request.form["horas_extra_total"])
+    salud = float(request.form["salud"])
+    pension = float(request.form["pension"])
+    total_devengado = float(request.form["total_devengado"])
+    total_deducido = float(request.form["total_deducido"])
+    neto_pagado = float(request.form["neto_pagado"])
+    fecha_inicio = request.form["fecha_inicio"]
+    # horas_diurnas_total = float(request.form["horas_diurnas_total"])
+    horas_extra_diurnas_total = float(
+        request.form["horas_extra_diurnas_total"])
+    # horas_nocturnas_total = float(request.form["horas_nocturnas_total"])
+    horas_extra_nocturnas_total = float(
+        request.form["horas_extra_nocturnas_total"])
+    horas_dominicales_total = float(request.form["horas_dominicales_total"])
+    horas_extra_dominicales_total = float(
+        request.form["horas_extra_dominicales_total"])
+    horas_extra_dom_nocturnas_total = float(
+        request.form["horas_extra_dom_nocturnas_total"])
+    
+
+    cursor.execute(
+        "SELECT Nombres, Apellido_Paterno, Apellido_Materno, Cargo_ID, Sueldo FROM empleados WHERE ID = %s", [empleado_id])
+    empleado_data = cursor.fetchone()
+    cursor.execute("SELECT Riesgo_LV FROM Cargos WHERE ID = %s",
+                   [empleado_data[3]])
+    cargo_data = cursor.fetchone()
+
+    empleado_nombre = empleado_data[0] + empleado_data[1] + empleado_data[2]
+    salario_base = empleado_data[4]
+    Riesgo_LV = cargo_data[0]
+    print(empleado_data)
+
+    salario_base_diario = salario_base / 26
+    salario_base = salario_base_diario * dias
+
+    if Riesgo_LV == 1:
+        tarifa_riesgo = 0.0522
+    elif Riesgo_LV == 2:
+        tarifa_riesgo = 0.1044
+    elif Riesgo_LV == 3:
+        tarifa_riesgo = 0.2436
+    elif Riesgo_LV == 4:
+        tarifa_riesgo = 0.4350
+
+    # Detalles de descuento por seguridad social
+    Aporte_Salud = (salario_base + horas_extra_total)*0.085
+    Aporte_Pension = (salario_base + horas_extra_total)*0.12
+    Total_DDSS = Aporte_Salud + Aporte_Pension
+
+    # apropiaciones
+    Cesantias = total_devengado * 0.0833
+    Interes_C = Cesantias * 0.12
+    Prima = total_devengado * 0.0833
+    Vacaciones = salario_base * 0.0417
+    Cajas_C = (salario_base + horas_extra_total) * 0.04
+    ICBF = (salario_base+horas_extra_total)*0.003
+    SENA = (salario_base+horas_extra_total)*0.002
+    Aporte_PF = Cajas_C+ICBF+SENA
+    # hola
+    ARL = (salario_base+horas_extra_total)*tarifa_riesgo
+    Total_Apropiado = Cesantias+Interes_C+Prima+Vacaciones+Aporte_PF+ARL
+    Gran_Total = total_devengado+Total_DDSS+Total_Apropiado
+
+    cursor.execute("INSERT INTO gran_total (ID_empleado, Total) VALUES (%s, %s)",
+                   (empleado_id, Gran_Total))
+    cursor.execute("INSERT INTO aporte_social (Aporte_Salud, Aporte_Pension, Total_Social, Fecha, ID_empleado) VALUES (%s, %s, %s, %s, %s)",
+                   (Aporte_Salud, Aporte_Pension, Total_DDSS, fecha_actual, empleado_id))
+    cursor.execute("INSERT INTO apropiaciones (Cesantia, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_Compensacion, ICBF, SENA, ARL, Total_Apropiado, Fecha, ID_Empleado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                   (Cesantias, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_C, ICBF, SENA, ARL, Total_Apropiado, fecha_actual, empleado_id))
+   
+    db.commit()
+    cursor.close()
+    generar_pdf(empleado_nombre, horas_extra_total, total_devengado,
+                total_deducido, neto_pagado, fecha_actual)
+
+    return render_template(
+        "ExitoPago.html",
+    )

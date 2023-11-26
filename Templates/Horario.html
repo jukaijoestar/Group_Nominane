@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
     <title>Liquidación | GROUPNOMIMANE</title>
     <link
@@ -7,131 +7,494 @@
       href="{{url_for('static', filename='Recources/logo.png')}}"
     />
     <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
-      href="{{ url_for('static', filename='Recources/Styles/Estilohor.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='Recources/Styles/horario.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='Recources/Styles/generales.css') }}"
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
-    <div class="container">
-      <header class="header">
-        <h3>Proceso De Liquidación</h3>
-      </header>
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="form-register">
-            <form class="formulario" method="POST">
-              <div class="form-group">
-                <label>Horas Diurnas:</label>
-                <input
-                  class="controls"
-                  placeholder="Horas Diurnas"
-                  type="number"
-                  autocomplete="off"
-                  name="horas_diurnas"
-                /><br />
-              </div>
-              <div class="form-group">
-                <label>Horas Extra Diurnas:</label>
-                <input
-                  class="controls"
-                  placeholder="Horas Extra Diurnas"
-                  type="number"
-                  autocomplete="off"
-                  name="horas_extra_diurnas"
-                /><br />
-              </div>
-              <div class="form-group">
-                <label>Horas Nocturnas:</label>
-                <input
-                  class="controls"
-                  placeholder="Horas Nocturnas"
-                  type="number"
-                  autocomplete="off"
-                  name="horas_nocturnas"
-                /><br />
-              </div>
-              <div class="form-group">
-                <label>Horas Extra Nocturnas:</label>
-                <input
-                  class="controls"
-                  placeholder="Horas Extra Nocturnas"
-                  type="number"
-                  autocomplete="off"
-                  name="horas_extra_nocturnas"
-                /><br />
-              </div>
-              <div class="form-group">
-                <label>Horas Dominicales:</label>
-                <input
-                  class="controls"
-                  placeholder="Horas Dominicales"
-                  type="number"
-                  autocomplete="off"
-                  name="horas_dominicales"
-                /><br />
-              </div>
-              <div class="form-group">
-                <label>Horas Extra Dominicales:</label>
-                <input
-                  class="controls"
-                  placeholder="Horas Extra Dominicales"
-                  type="tenumberxt"
-                  autocomplete="off"
-                  name="horas_extra_dominicales"
-                /><br />
-              </div>
-              <div class="form-group">
-                <label>Horas Extra Dominicales Nocturnas:</label>
-                <input
-                  class="controls"
-                  placeholder="Horas Extra Dominicales Nocturnas"
-                  type="number"
-                  autocomplete="off"
-                  name="horas_extra_dom_nocturnas"
-                /><br />
-              </div>
-              <div class="form-group">
-                <label for="tipo_liquidacion">Tipo De Liquidación:</label>
-                <select class="controls" name="tipo_liquidacion" required>
-                  <option value="mensual">Mensual</option>
-                  <option value="quincenal">Quincenal</option>
-                </select>
-              </div>
-              <br />
-              <div class="form-group empleado">
-                <label for="empleado_nombre_apellido">Empleado:</label>
-                <p id="empleado_nombre_apellido">
-                  {% if empleado_id %} {% for empleado in empleados %} {% if
-                  empleado.ID == empleado_id %} {{ empleado.Nombres }} {{
-                  empleado.Apellido_Paterno }} {% endif %} {% endfor %} {% endif
-                  %}
-                </p>
-                <p id="empleado_nombre_apellido">En caso de dejar espacios en blanco se rellenarán con 0.</p>
-                <input
-                  type="hidden"
-                  name="empleado_id"
-                  value="{{ empleado_id }}"
-                  required
-                />
-                <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
-              </div>
-              <button type="submit" class="botons">
-                <lord-icon
-                  src="https://cdn.lordicon.com/xxwwxrom.json"
-                  trigger="morph"
-                  colors="primary:#545454"
-                  state="morph-cash-card-1"
-                  style="width: 50px; height: 50px"
-                >
-                </lord-icon>
-              </button>
-              <br />
-              <div class="bnt-liqui"></div>
-            </form>
-          </div>
+    <header>
+      <!--inicio de auto escritura de navegacion -->
+      <div class="header-navigation">
+        <div class="tabs">
+          <a href="{{url_for('index')}}" class="titulo" id="autotype">
+            Group| <span class="auto-type"></span>
+          </a>
         </div>
       </div>
+
+      <!--fin de auto escritura de navegacion -->
+
+      <!--inicio de usuario de sesion y botones de navegacion -->
+      <div class="header-actions">
+        <button class="user-profile">
+          <span>Derian Serrano</span>
+          <span>
+            <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
+          </span>
+        </button>
+
+        <div class="header-actions-buttons">
+          <button class="icon-button large">
+            <i class="bx bx-search-alt"></i>
+          </button>
+          <button class="icon-button large">
+            <i class="bx bx-bell"></i>
+          </button>
+          <button class="botonMenu icon-button large">
+            <i class="bx bxs-dashboard"></i>
+          </button>
+
+          <nav class="principal">
+            <div class="header">
+              <!-- INPUT SEARCH -->
+              <div class="input-search">
+                <i class="bx bx-search-alt"></i>
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="Buscar"
+                  id="search-input"
+                />
+              </div>
+              <!-- MENU -->
+              <div class="menu">
+                <a href="{{url_for('index')}}" class="enlace-lista">
+                  <i class="bx bx-grid-alt"></i>
+                  <span>Inicio</span>
+                </a>
+
+                <a href="{{url_for('usuarios')}}" class="enlace-lista">
+                  <i class="bx bx-user"></i>
+                  <span>Perfil</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-list-ul"></i>
+                    <span>Listados</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('trabajadores') }}" class="enlace-li"
+                        >Empleados</a
+                      >
+                      <a href="{{url_for('inactivos')}}" class="enlace-li"
+                        >Empleados Inactivos</a
+                      >
+                      <a
+                        href="{{ url_for('listar_departamentos') }}"
+                        class="enlace-li"
+                        >Departamentos</a
+                      >
+                      <a
+                        href="{{ url_for('departamentos_Inactivos') }}"
+                        class="enlace-li"
+                        >Departamentos Inactivos</a
+                      >
+                      <a href="{{ url_for('cargos') }}" class="enlace-li"
+                        >Cargos</a
+                      >
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="{{ url_for('Horario') }}" class="enlace-lista">
+                  <i class="bx bx-wallet"></i>
+                  <span>Liquidacion</span>
+                </a>
+
+                <li class="lista">
+                  <a href="#" class="enlace-lista">
+                    <i class="bx bx-file"></i>
+                    <span>Reportes</span>
+                    <i class="icon bx bx-chevron-down"></i>
+                    <input type="checkbox" class="lista-check" />
+                  </a>
+
+                  <div class="lista-content">
+                    <ul class="lista-sub">
+                      <a href="{{ url_for('reportes') }}" class="enlace-li"
+                        >Reporte General</a
+                      >
+                      <a href="#" class="enlace-li">Boletin Pago</a>
+                      <a href="#" class="enlace-li">Boletin Nomina</a>
+                    </ul>
+                  </div>
+                </li>
+
+                <a href="#" class="enlace-lista">
+                  <i class="bx bx-cog"></i>
+                  <span>Configuración</span>
+                </a>
+
+                <a
+                  href="{{ url_for('logout') }}"
+                  class="enlace-lista"
+                  onclick="confirmLogout(event)"
+                >
+                  <i class="bx bx-exit"></i>
+                  <span>Salir</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- fin inicio de usuario de sesion y botones de navegacion -->
+    </header>
+
+  <div class="generales">
+    <div class="top-header">
+      <div class="container-editar">
+        <h3 class="tab-title">
+          GroupNomimane| <span class="auto-title"></span>
+        </h3>
+        <form method="POST" id="liquidarForm">
+          <div class="content-box">
+            <div>
+              <h3 class="title-liquidacion">Periodo a liquidar</h3>
+              <div class="liquidacion-info">
+                <div>
+                  <label for="fecha">Fecha inicio</label>
+                  <input name="fecha" type="date" required/>
+                </div>
+                <div>
+                  <label for="dias">Dias laborados</label>
+                  <input  name="dias" type="number" required/>
+                </div>                
+              </div>
+              <div>
+                <label for="empleado">Lista de empleados</label>
+                <select name="empleado" id="empleado">
+                  {% for empleado in empleados %}
+                    <option value="{{ empleado['ID'] }}">
+                      {{ empleado['Nombres'] }} {{ empleado['Apellido_Paterno'] }} {{ empleado['Apellido_Materno'] }} - N. Doc: {{ empleado['Nro_documento'] }} - {{ empleado['Sueldo'] }}
+                    </option>
+                  {% endfor %}
+                </select><br />
+                {% for empleado in empleados %}
+                  <input type="hidden" name="Sueldo" id="Sueldo" value="{{ empleado['Sueldo'] }}">
+                  <input type="hidden" name="Nombres" id="Nombres" value="{{ empleado['Nombres'] }}">
+                  <input type="hidden" name="Apellido_Paterno" id="Apellido_Paterno" value="{{ empleado['Apellido_Paterno'] }}">
+                  <input type="hidden" name="Apellido_Materno" id="Apellido_Materno" value="{{ empleado['Apellido_Materno'] }}">
+                {% endfor%}
+
+              </div>
+              <div class="datos-trabajador">
+                <h3 class="title-liquidacion">Empleado a liquidar</h3>
+                <div>
+                  <input
+                    type="number"
+                    name="nro_documento"
+                    id="filtroID"
+                    placeholder="N° Documento"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    name="nombres"
+                    id="filtroNombres"
+                    autocomplete="off"
+                    placeholder="Nombres"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    name="Sueldo"
+                    id="filtroSueldo"
+                    autocomplete="off"
+                    placeholder="Sueldo"
+                  />
+                </div>                
+              </div>
+            </div>
+
+            <div>
+              <h3 class="title-liquidacion">Horas extras trabajadas</h3>
+              <div class="content">
+                <div>
+                  <label>Horas Extra Diurnas:</label>
+                  <input
+                    type="number"
+                    autocomplete="off"
+                    name="horas_extra_diurnas"
+                  /><br />
+                </div>
+                <div>
+                  <label>Horas Extra Nocturnas:</label>
+                  <input
+                    type="number"
+                    autocomplete="off"
+                    name="horas_extra_nocturnas"
+                  /><br />
+                </div>
+                <div>
+                  <label>Horas Dominicales:</label>
+                  <input
+                    type="number"
+                    autocomplete="off"
+                    name="horas_dominicales"
+                  /><br />
+                </div>
+                <div>
+                  <label>Horas Extra Dominicales:</label>
+                  <input
+                    type="number"
+                    autocomplete="off"
+                    name="horas_extra_dominicales"
+                  /><br />
+                </div>
+                <div>
+                  <label>Horas Extra Dominicales Nocturnas:</label>
+                  <input
+                    type="number"
+                    autocomplete="off"
+                    name="horas_extra_dom_nocturnas"
+                  /><br />
+                </div>
+                <div>
+                  <label>Comisiones:</label>
+                  <input
+                    type="number"
+                    autocomplete="off"
+                    name="Comisiones"
+                  /><br />
+                </div>
+                <div>
+                  <label>Otros (Prestamos, bonos, etc.):</label>
+                  <input
+                    type="number"
+                    autocomplete="off"
+                    name="Otros"
+                  /><br />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="botones">
+            <button type="submit" class="editar" id="liquidarBtn">Liquidar empleado</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
+    <footer>
+      <div class="footer">
+        <div>
+          GroupNomimane &#169;<br />Copyright 2023. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='Recources/Js/generales.js') }}"></script>
+
+    {% if error %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No hay empleados para liquidar',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false
+                }).then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                        window.location.href = "{{ url_for('index') }}"; // Redirige a la página index
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('liquidarBtn').addEventListener('click', function (event) {
+          event.preventDefault(); // Evita el envío del formulario por defecto
+    
+          // Obtén los valores del formulario
+          const Nombres = document.getElementById('Nombres').value;
+          const Apellido_Paterno = document.getElementById('Apellido_Paterno').value;
+          const Apellido_Materno = document.getElementById('Apellido_Materno').value;
+          const fecha = document.getElementsByName('fecha')[0].value;
+          const dias = document.getElementsByName('dias')[0].value;
+          const Sueldo_base = document.getElementsByName('Sueldo')[0].value;
+          const Sueldo = (Sueldo_base/26)*dias
+          const horasDiurnas = parseFloat(document.getElementsByName('horas_extra_diurnas')[0].value);
+          const horasNocturnas = parseFloat(document.getElementsByName('horas_extra_nocturnas')[0].value);
+          const horasDominicales = parseFloat(document.getElementsByName('horas_extra_dominicales')[0].value);
+          const horasDomNocturnas = parseFloat(document.getElementsByName('horas_extra_dom_nocturnas')[0].value);
+
+          const comisionesInput = document.getElementsByName('Comisiones')[0];
+          const comisionesValue = comisionesInput.value.trim();
+          const Comisiones = comisionesValue !== '' ? parseFloat(comisionesValue) : 0;
+
+          const otrosInput = document.getElementsByName('Otros')[0];
+          const otrosValue = otrosInput.value.trim();
+          const Otros = otrosValue !== '' ? parseFloat(otrosValue) : 0;
+            
+          // Constantes para los valores de multiplicación
+          const valorDiurno = 1.25 / 120;
+          const valorNocturno = 1.75 / 120;
+          const valorDominical = 1.75 / 120;
+          const valorDomNocturno = 2 / 120;
+          
+          // Verificación de las variables antes de realizar los cálculos
+          const horasDiurnasNumeric = !isNaN(horasDiurnas) ? horasDiurnas : 0;
+          const horasNocturnasNumeric = !isNaN(horasNocturnas) ? horasNocturnas : 0;
+          const horasDominicalesNumeric = !isNaN(horasDominicales) ? horasDominicales : 0;
+          const horasDomNocturnasNumeric = !isNaN(horasDomNocturnas) ? horasDomNocturnas : 0;
+
+          // Cálculo de las horas totales asegurando valores numéricos
+          const horasDiurnasTotal = ((Sueldo_base * valorDiurno) * horasDiurnasNumeric).toFixed(2);
+          const horasNocturnasTotal = ((Sueldo_base * valorNocturno) * horasNocturnasNumeric).toFixed(2);
+          const horasDominicalesTotal = ((Sueldo_base * valorDominical) * horasDominicalesNumeric).toFixed(2);
+          const horasDomNocturnasTotal = ((Sueldo_base * valorDomNocturno) * horasDomNocturnasNumeric).toFixed(2);
+
+          const totalHorasExtra = parseFloat(horasDiurnasTotal) +
+                        parseFloat(horasNocturnasTotal) +
+                        parseFloat(horasDominicalesTotal) +
+                        parseFloat(horasDomNocturnasTotal);
+
+          const Salud = parseFloat((Sueldo+totalHorasExtra*Comisiones)*0.4)
+          const Pension = parseFloat((Sueldo+totalHorasExtra*Comisiones)*0.4)
+
+          let Total_devengado = 0;
+
+          if (Sueldo > Sueldo * 2) {
+            Total_devengado = parseFloat(Sueldo) + parseFloat(totalHorasExtra) + parseFloat(Comisiones);
+          } else {
+            Total_devengado = parseFloat(Sueldo) + parseFloat(totalHorasExtra) + parseFloat(Comisiones) + 140606;
+          }
+
+    
+          // Crea el mensaje de confirmación con los datos
+          const confirmationMessage = `
+            <p>Empleado: ${Nombres} ${Apellido_Paterno} ${Apellido_Materno}</p>
+            <p>Salario del mes realizado: ${Sueldo.toLocaleString()}</p>
+            <p>Días laborados: ${dias}</p>
+            <p>Pago por horas extra: ${totalHorasExtra.toLocaleString()}</p>
+            <p>Gasto por salud: ${Salud.toLocaleString()}</p>
+            <p>Gasto por pensión: ${Pension.toLocaleString()}</p>
+            <p>Comisiones: ${Comisiones.toLocaleString()}</p>
+            <p>Otros datos: ${Otros.toLocaleString()}</p>
+            <p>Totales:</p>
+            <p>Totales Devengado: ${Total_devengado.toLocaleString()}</p>
+          `;
+
+          // Muestra el modal de confirmación usando SweetAlert2
+          Swal.fire({
+            title: 'Confirmar liquidación',
+            html: confirmationMessage,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, liquidar empleado',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Si se confirma, envía el formulario
+              document.getElementById('liquidarForm').submit();
+            }
+          });
+        });
+      });
+    </script>
+    {% if sucess %}
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'sucess',
+                    title: 'Sucess',
+                    text: '¡Liquidación completada!',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false
+                }).then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                        window.location.href = "{{ url_for('index') }}";
+                    }
+                });
+            });
+      </script>
+    {% endif %}
+
+    <script>
+      $(document).ready(function() {
+        $('#filtroID').on('input', function() {
+          const filtroID = $(this).val().toLowerCase();
+          filtrarEmpleados(filtroID);
+        });
+
+        $('#filtroNombres').on('input', function() {
+          const filtroNombres = $(this).val().toLowerCase();
+          filtrarEmpleados(filtroNombres);
+        });
+
+        $('#filtroSueldo').on('input', function() {
+          const filtroSueldo = $(this).val().toLowerCase();
+          filtrarEmpleados(filtroSueldo);
+        });
+
+        function filtrarEmpleados(filtro) {
+          $('#empleado option').each(function() {
+            const textoEmpleado = $(this).text().toLowerCase();
+            const esconder = !textoEmpleado.includes(filtro);
+            $(this).toggle(!esconder);
+          });
+        }
+      });
+
+      var typed = new Typed(".auto-title", {
+        strings: ["Poceso de liquidacion", "Rellena la informacion necesaria"],
+        typeSpeed: 80,
+        backSpeed: 50,
+        looped: true,
+      });
+    </script>
+    <script>
+      function confirmLogout(event) {
+        event.preventDefault();
+
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel",
+          },
+          buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "¿Estás seguro?",
+            text: "¿Deseas cerrar sesión?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, Cerrar sesión",
+            cancelButtonText: "Cancelar",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "{{ url_for('logout') }}";
+            }
+          });
+      }
+    </script>
   </body>
 </html>

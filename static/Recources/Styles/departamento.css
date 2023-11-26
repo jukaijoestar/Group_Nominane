@@ -1,0 +1,364 @@
+/* Estilos para el cuerpo de la página */
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;700;900&family=Poppins:ital,wght@0,100;0,200;0,400;0,500;1,300;1,600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: "Outfit", sans-serif;
+  
+}
+
+body{
+  background-color: rgba(255, 255, 255, 0.42);
+}
+
+.barra-opciones{
+  display: flex;
+  margin: 10px 40px;
+}
+
+.contenedor-filtro {
+  position: relative;
+  max-width: 200px;
+  width: 100%;
+  margin: 5px;
+}
+
+.btn-filtro {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/*boton flotante*/
+/* Estilos para el botón flotante */
+.btn-agregar {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  color:#7a7a7a;
+  text-decoration: none;
+  margin: 5px;
+}
+
+.btn-agregar i {
+  margin-left: 10px;
+}
+
+.search-container {
+  position: relative;
+  margin: 5px;
+}
+
+.search-input {
+  padding-right: 40px;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 13px;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  color:#7a7a7a;
+  border: none;
+  outline: none;
+  width: 200px;
+  box-sizing: border-box;
+}
+
+.search-input::placeholder{
+  color:#7a7a7a;
+}
+.search-icon {
+  position: absolute;
+  right: 10px; /* Posiciona el icono a la derecha */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.btn-filtro .texto-btn {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+}
+
+.btn-filtro .flecha-abajo {
+  display: flex;
+  height: 21px;
+  width: 21px;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 0.5rem;
+  background: #7a7a7a;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.flecha-abajo i.girado {
+  transform: rotate(-180deg);
+  transition: transform 0.3s;
+}
+
+.opciones-filtro {
+  width: 200px;
+  margin-top: 10px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  max-height: 300px;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 1;
+  overflow-y: scroll;
+}
+
+.contenedor-filtro.abierto .opciones-filtro {
+  display: block;
+}
+
+.opciones-filtro .opcion {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  height: 40px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 0 10px;
+  border-radius: 8px;
+}
+
+.opciones-filtro .opcion:hover {
+  background-color: #5c5c5e42;
+}
+
+.opcion .texto-opcion {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+}
+
+.opcion .casilla {
+  margin-right: 12px;
+}
+
+
+.table-container h1 {
+  background-color: rgba(210, 210, 210, 0.201);
+  color: gray;
+  padding: 20px;
+  text-align: center;
+}
+
+.table-container {
+  margin: 20px auto;
+  width: 95%;
+  background: #fff;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2dfdf;
+  border-radius: 1rem;
+  overflow-x:auto
+}
+.table {
+  width: 100%;
+  table-layout: fixed;
+  min-width: 1000px;
+  border-collapse: collapse;
+  
+}
+thead th{
+  background-color: #b8b8b8;
+  font-weight: 600;
+  color: #f5f5f5;
+}
+  
+  th, td {
+    padding: 15px 5px 15px 5px; /* Mantén el padding superior e inferior, y quita el derecho y el izquierdo */
+    text-align: center;
+    border-bottom: 2px solid #f2f2f2;
+    word-break: break-all;
+    font-size: 17px;
+  }
+  
+  tr:hover td{
+    background-color: #bbb9b91e;
+  }
+  
+  
+  /*botones de la tabla*/
+/* Estilos para el botón "Editar" */
+.editar {
+  background-color: #28a745;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 7px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Estilos para el botón "Desactivar" */
+.desactivar {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 3px 5px; 
+  border-radius: 7px;
+  display: inline-block; 
+  margin-left: 4px;
+  text-decoration: none;
+}
+
+.activar {
+  background-color: #28a745;
+  color: #fff;
+  padding: 3px 7px;
+  border-radius: 7px;
+  display: inline-block; 
+  margin-left: 4px; 
+  text-decoration: none; 
+}
+
+
+  /* Estilos para el modal */
+/* Estilo para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Estilo para el contenido del modal */
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Puedes ajustar el ancho del modal según tus preferencias */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    border-radius: 1.5rem;
+  }
+  
+  /* Estilo para el título del modal */
+  .modal-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para el formulario dentro del modal */
+  .modal-content form {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para las etiquetas y campos de entrada del formulario */
+  .modal-content label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+  
+  .modal-content input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Estilo para el botón de "Agregar" dentro del modal */
+  .modal-content input[type="submit"] {
+    background-color: #4b4b4c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 1rem;
+  }
+  .modal-content input[type="submit"] :hover{
+    background-color: #bcbcbd;
+  }
+  
+  /* Estilo para el botón "Cancelar proceso" específicamente */
+  #cancelModalButton {
+    background-color: #f44336; /* Cambia el color de fondo a rojo si lo deseas */
+    border-radius: 1rem;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  #cancelModalButton :hover {
+    background-color: #e6e6e600;
+    border-radius: 1rem;
+    border: 1px solid #f44336;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: end;
+    padding-bottom: 10px;
+  }
+  
+  footer .footer {
+    width: 95%;
+  }
+  
+  footer .footer div {
+    border-top: 1px solid #dadada;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    font-size: 0.75rem;
+  }
+/*  barra de desplazamiento */
+::-webkit-scrollbar{
+    height: 5px;
+    width: 5px;
+  }
+  
+  ::-webkit-scrollbar-track{
+   box-shadow: inset 0 0 6px rgb(0,0, 0, 0.3); 
+   border-radius: 8px;
+  }
+  
+  
+  ::-webkit-scrollbar-thumb{
+   box-shadow: inset 0 0 6px rgb(0,0, 0, 0.3); 
+    border-radius: 8px;
+  }

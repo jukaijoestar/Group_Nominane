@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;700;900&family=Poppins:ital,wght@0,100;0,200;0,400;0,500;1,300;1,600&display=swap");
 
 * {
   margin: 0;
@@ -8,7 +8,7 @@
 
 body,
 input {
-  font-family: "Poppins", sans-serif;
+  font-family: "Outfit", sans-serif;
 }
 
 .container {
@@ -97,7 +97,51 @@ form.sign-in-form {
   color: #333;
 }
 
+.input-field #toggleBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.input-field #toggleBtn::before {
+  content: "\f06e";
+  font-family: fontAwesome;
+}
+
+.input-field #toggleBtn.hide::before {
+  content: "\f070";
+}
+
+.input-field #eyesbtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-field #eyesbtn::before {
+  content: "\f06e";
+  font-family: fontAwesome;
+}
+
+.input-field #eyesbtn.hide::before {
+  content: "\f070";
+}
 
 
 .input-field input::placeholder {

@@ -4,216 +4,191 @@
     <title>Agregar Empleado | GROUPNOMIMANE</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='Recources/Styles/Estiloagr.css') }}"
+      href="{{ url_for('static', filename='Recources/Styles/agregar-trab.css') }}"
     />
     <link
       rel="icon"
       href="{{url_for('static', filename='Recources/logo.png')}}"
     />
   </head>
-  <body style="background-color: #f2f2f2">
+  <body>
     <div class="container">
-      <header class="header">
-        <h3 class="text-center">Agregar Nuevo Empleado A La Lista</h3>
-      </header>
-      <div class="mensaje">
-        <label
-          >Por favor, diligencie los siguientes datos para finalizar su
-          registro</label
-        >
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="form-register">
-            <form class="formulario" method="post">
-              <div class="form-group">
+      <div class="container-agregar">
+        <h3 class="tab-title">
+          GroupNomimane| <span class="auto-type"></span>
+        </h3>
+        <form method="POST">
+          <div class="content-box">
+            <div class="content">
+              <div>
                 <label>N° Documento:</label>
-                <input
-                  type="number"
-                  class="controls"
-                  name="nro_documento"
-                  placeholder="N° Documento"
-                  required
-                />
+                <input type="number" name="nro_documento" required />
               </div>
-              <div class="form-group">
+              <div>
                 <label>Nombres:</label>
-                <input
-                  type="text"
-                  class="controls"
-                  name="nombres"
-                  autocomplete="off"
-                  placeholder="Nombres"
-                  required
-                />
+                <input type="text" name="nombres" autocomplete="off" required />
               </div>
-              <div class="form-group">
+              <div>
                 <label>Apellido Paterno:</label>
                 <input
                   type="text"
-                  class="controls"
                   name="apellido_paterno"
                   autocomplete="off"
-                  placeholder="Apellido Paterno"
                   required
                 />
               </div>
-              <div class="form-group">
+              <div>
                 <label>Apellido Materno:</label>
                 <input
                   type="text"
-                  class="controls"
                   name="apellido_materno"
                   autocomplete="off"
-                  placeholder="Apellido Materno"
                   required
                 />
               </div>
-              <div class="form-group">
+              <div>
                 <label>Fecha Nacimiento:</label>
                 <label for="fecha_nacimiento"></label>
                 <input
                   type="date"
-                  class="controls"
                   autocomplete="off"
                   name="fecha_nacimiento"
                   required
                 /><br />
               </div>
-              <div class="form-group">
+              <div>
                 <label>Dirección:</label>
                 <input
                   type="text"
-                  class="controls"
                   autocomplete="off"
                   name="direccion"
-                  placeholder="Dirección"
                   required
                 />
               </div>
-              <div class="form-group">
+              <div>
                 <label>Barrio:</label>
-                <input
-                  type="text"
-                  class="controls"
-                  autocomplete="off"
-                  name="barrio"
-                  placeholder="Barrio"
-                  required
-                />
+                <input type="text" autocomplete="off" name="barrio" required />
               </div>
-              <div class="form-group">
+              <div>
                 <label>Teléfono:</label>
                 <input
                   type="text"
-                  class="controls"
                   autocomplete="off"
                   name="telefono"
-                  placeholder="Teléfono"
                   required
                 />
               </div>
-              <div class="form-group">
+              <div>
                 <label>Email:</label>
-                <input
-                  type="email"
-                  class="controls"
-                  name="email"
-                  autocomplete="off"
-                  placeholder="Email"
-                  required
-                />
-                <div class="form-group">
-                  <label for="Tipo_Sangre">Tipo de sangre:</label>
-                  <select class="controls" name="Tipo_Sangre" id="Tipo_Sangre" required>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                  </select>
-                </div>
+                <input type="email" name="email" autocomplete="off" required />
               </div>
-              <div class="form-group">
+
+              <div>
+                <label for="Tipo_Sangre">Tipo de sangre:</label>
+                <select name="Tipo_Sangre" id="Tipo_Sangre" required>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </div>
+
+              <div>
                 <label for="departamento">Área en la que desempeña:</label>
-                <select class="controls" name="departamento" id="departamento" required>
-                    {% for departamento in departamentos %}
-                    <option value="{{ departamento['ID'] }}">{{ departamento['Nombre'] }}</option>
-                    {% endfor %}
-                </select><br />
+                <select name="departamento" id="departamento" required>
+                  {% for departamento in departamentos %}
+                  <option value="{{ departamento['ID'] }}">
+                    {{ departamento['Nombre'] }}
+                  </option>
+                  {% endfor %}</select
+                ><br />
               </div>
-              
-              <div class="form-group">
-                  <label for="cargo">Cargo:</label>
-                  <select class="controls" name="cargo" id="cargo" required>
-                      <!--El javascript se encarga de rellenar este campo-->
-                  </select><br />
+
+              <div>
+                <label for="cargo">Cargo:</label>
+                <select name="cargo" id="cargo" required>
+                  <!--El javascript se encarga de rellenar este campo--></select
+                ><br />
               </div>
-              
-              <div class="form-group">
-                  <label for="sueldo">Sueldo:</label>
-                  <input type="number" class="controls" name="sueldo" id="sueldo" required>
+
+              <div>
+                <label for="sueldo">Sueldo:</label>
+                <input type="number" name="sueldo" id="sueldo" required />
               </div>
-              <div class="bnt-agregar">
-                <button type="submit" class="botons">Agregar Empleado</button>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
+          <div class="botones">
+            <button type="submit" class="agregar">Agregar empleado</button>
+            <a href="{{url_for('trabajadores')}}" class="cancelar">Cancelar</a>
+          </div>
+        </form>
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+      var typed = new Typed(".auto-type", {
+        strings: [
+          "Agregar nuevo empleado a la lista",
+          "Por favor, diligencie los siguientes datos para finalizar su registro",
+        ],
+        typeSpeed: 80,
+        backSpeed: 50,
+        looped: true,
+      });
+    </script>
     <script>
       // Obtener el combobox de departamentos y cargos
-      const departamentoSelect = document.getElementById('departamento');
-      const cargoSelect = document.getElementById('cargo');
-      const sueldoInput = document.getElementById('sueldo');
-  
+      const departamentoSelect = document.getElementById("departamento");
+      const cargoSelect = document.getElementById("cargo");
+      const sueldoInput = document.getElementById("sueldo");
+
       // Cargando inicial de los cargos al cargar la página
       cargarCargos();
-  
+
       // Agregar un evento de cambio al combobox de departamentos
-      departamentoSelect.addEventListener('change', cargarCargos);
-      cargoSelect.addEventListener('change', actualizarSueldo);
-  
+      departamentoSelect.addEventListener("change", cargarCargos);
+      cargoSelect.addEventListener("change", actualizarSueldo);
+
       // Función para cargar los cargos basados en el departamento seleccionado
       function cargarCargos() {
-          // Obtener el ID del departamento seleccionado
-          const departamentoID = departamentoSelect.value;
-  
-          // Limpia las opciones actuales
-          cargoSelect.innerHTML = '';
-  
-          // Si se ha seleccionado un departamento, cargar los cargos
-          if (departamentoID) {
-              fetch(`/cargos/${departamentoID}`)
-                  .then(response => response.json())
-                  .then(cargos => {
-                      // Agregar las opciones al combobox de cargos
-                      cargos.forEach(cargo => {
-                          const option = document.createElement('option');
-                          option.value = cargo['ID'];
-                          option.text = `${cargo['Nombre']} - ${cargo['Salario_Base']}`;
-                          cargoSelect.appendChild(option);
-                      });
-                      
-                      // Actualizar el campo de sueldo cuando se cargan los cargos
-                      actualizarSueldo();
-                  });
-          }
+        // Obtener el ID del departamento seleccionado
+        const departamentoID = departamentoSelect.value;
+
+        // Limpia las opciones actuales
+        cargoSelect.innerHTML = "";
+
+        // Si se ha seleccionado un departamento, cargar los cargos
+        if (departamentoID) {
+          fetch(`/cargos/${departamentoID}`)
+            .then((response) => response.json())
+            .then((cargos) => {
+              // Agregar las opciones al combobox de cargos
+              cargos.forEach((cargo) => {
+                const option = document.createElement("option");
+                option.value = cargo["ID"];
+                option.text = `${cargo["Nombre"]} - ${cargo["Salario_Base"]}`;
+                cargoSelect.appendChild(option);
+              });
+
+              // Actualizar el campo de sueldo cuando se cargan los cargos
+              actualizarSueldo();
+            });
+        }
       }
-  
+
       // Función para actualizar el campo de sueldo cuando se selecciona un cargo
       function actualizarSueldo() {
-          const selectedCargo = cargoSelect.options[cargoSelect.selectedIndex];
-          const salarioBase = selectedCargo.text.split('-')[1].trim();
-          
-          // Asignar el salario base al campo de sueldo
-          sueldoInput.value = salarioBase;
+        const selectedCargo = cargoSelect.options[cargoSelect.selectedIndex];
+        const salarioBase = selectedCargo.text.split("-")[1].trim();
+
+        // Asignar el salario base al campo de sueldo
+        sueldoInput.value = salarioBase;
       }
-  </script>  
+    </script>
   </body>
 </html>

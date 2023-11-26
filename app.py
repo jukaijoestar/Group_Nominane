@@ -10,24 +10,26 @@ import re
 from reportlab.pdfgen import canvas
 from flask import Response
 import os
-#Todo lo de arriba se instala
+# Todo lo de arriba se instala
 import locale
 
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 db = mysql.connector.connect(
-    host="localhost", user="root", database="nominadb"
+    host="localhost", user="root", database="gnominane"
 )
 cursor = db.cursor()
 
-#Pagina principal
+# Pagina principal
+
+
 @app.route("/")
 def layout():
     return render_template('layout.html')
 
 
-#Pagina de inicio de sesión
+# Pagina de inicio de sesión
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
@@ -48,7 +50,7 @@ def login():
     return render_template('login.html', error=error if 'error' in locals() else None)
 
 
-#Función de registro
+# Función de registro
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     error_password = None
@@ -88,7 +90,6 @@ def registro():
     return render_template('login.html', error_password=error_password, error_correo=error_correo, sucefull=sucefull)
 
 
-
 # Lista de trabajadores
 @app.route("/trabajadores")
 def trabajadores():
@@ -103,14 +104,14 @@ def trabajadores():
         JOIN cargos c ON e.Cargo_ID = c.ID
         WHERE e.Estado = 'Activo'
     """)
-    
+
     empleados_activos = cursor.fetchall()
     cursor.close()
 
     return render_template("trabajadores.html", empleados=empleados_activos)
 
 
-#lista de cargos
+# lista de cargos
 @app.route("/cargos", methods=['GET', 'POST'])
 def cargos():
     if "username" not in session:
@@ -148,7 +149,7 @@ def cargos():
     return render_template("cargos.html", departamentos=lista_departamentos, cargos=[])
 
 
-#Pagina principal de Nomina
+# Pagina principal de Nomina
 @app.route("/index")
 def index():
     if "username" not in session:
@@ -156,7 +157,14 @@ def index():
     return render_template("index.html")
 
 
-#Lista de departamentos
+@app.route("/usuarios")
+def usuarios():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    return render_template("usuarios.html")
+
+
+# Lista de departamentos
 @app.route("/departamentos", methods=["GET", "POST"])
 def listar_departamentos():
     if "username" not in session:
@@ -170,7 +178,7 @@ def listar_departamentos():
     return render_template("departamentos.html", departamentos=departamentos)
 
 
-#Lista de departamentos inactivos
+# Lista de departamentos inactivos
 @app.route("/departamentos_Inactivos", methods=["GET", "POST"])
 def departamentos_Inactivos():
     if "username" not in session:
@@ -184,7 +192,7 @@ def departamentos_Inactivos():
     return render_template("departamentos_Inactivos.html", departamentos=departamentos)
 
 
-#Función de desactivar departamento
+# Función de desactivar departamento
 @app.route("/desactivar_departamento/<int:id_departamento>")
 def desactivar_departamento(id_departamento):
     if "username" not in session:
@@ -201,7 +209,7 @@ def desactivar_departamento(id_departamento):
     return redirect(url_for("listar_departamentos"))
 
 
-#Función de reactivar departamento
+# Función de reactivar departamento
 @app.route("/reactivar_departamento/<int:id_departamento>")
 def reactivar_departamento(id_departamento):
     if "username" not in session:
@@ -223,19 +231,36 @@ def agregar_departamento():
     if "username" not in session:
         return redirect(url_for("login"))
 
+    departamentos = []  # Inicializar la variable departamentos
+
     if request.method == "POST":
         nombre_departamento = request.form["nombre"]
-        Fecha = request.form["Fecha"]
+        Fecha_Creacion = request.form["Fecha"]
+
+        cursor = db.cursor()
+        cursor.execute(
+            "SELECT ID FROM departamento WHERE Nombre = %s", (nombre_departamento,))
+        existing_department = cursor.fetchone()
+
+        if existing_department:
+            cursor.close()
+            # Obtener la lista de departamentos antes del error
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM departamento WHERE estado='Activo'")
+            departamentos = cursor.fetchall()
+            cursor.close()
+
+            # Ya existe un departamento con el mismo nombre, mostrar alerta
+            return render_template("Departamentos.html", error="Ya hay un departamento con este nombre.", departamentos=departamentos)
 
         if nombre_departamento:
-            cursor = db.cursor()
             cursor.execute(
-                "INSERT INTO departamento (Nombre, Fecha_Creacion) VALUES (%s, %s)", (nombre_departamento, Fecha))
+                "INSERT INTO departamento (Nombre, Fecha_Creacion) VALUES (%s, %s)", (nombre_departamento, Fecha_Creacion))
             db.commit()
             cursor.execute("SELECT LAST_INSERT_ID() as id")
             departamento_id = cursor.fetchone()[0]
 
-            #Solución a bugg
+            # Solución a bugg
             cursor.execute(
                 "INSERT INTO cargos (Nombre, Salario_Base, Departamento_ID, Riesgo_LV) VALUES (%s, %s, %s, %s)",
                 ("Administrador", 120000, departamento_id, "III")
@@ -243,56 +268,11 @@ def agregar_departamento():
             db.commit()
 
             cursor.close()
-            return redirect(url_for("listar_departamentos"))
 
-    return redirect(url_for("listar_departamentos"))
+        # Redirige a la función listar_departamentos después de agregar (incluso si hay un error)
+        return redirect(url_for("listar_departamentos"))
 
-
-
-@app.route("/agregar_cargos", methods=["GET", "POST"])
-def agregar_cargos():
-
-    if "username" not in session:
-        return redirect(url_for("login"))
-
-    if request.method == "POST":
-        
-        nombre_cargo = request.form["nombre_cargo"]
-        salario_base = request.form["salario_base"]
-        Departamento_ID = request.form["Departamento_id"]
-        nivel_riesgo = request.form["nivel_riesgo"]
-        cursor = db.cursor()
-        cursor.execute("INSERT INTO Cargos (Nombre, Departamento_id, Salario_Base, Riesgo_LV) VALUES (%s, %s, %s, %s)",
-                           (nombre_cargo, Departamento_ID, salario_base, nivel_riesgo))
-        db.commit()
-        cursor.close()
-        return redirect(url_for("cargos"))
-
-    return render_template("cargos.html")
-
-@app.route("/editar_cargo", methods=["POST"])
-def editar_cargo():
-    if "username" not in session:
-        return redirect(url_for("login"))
-
-    if request.method == "POST":
-        cargo_id = request.form["cargo_id_edit"]
-        nombre_cargo = request.form["nombre_cargo_edit"]
-        salario_base = request.form["salario_base_edit"]
-        nivel_riesgo = request.form["nivel_riesgo_edit"]
-
-        if nombre_cargo and salario_base and nivel_riesgo:
-            cursor = db.cursor()
-            update_query = (
-                "UPDATE cargos SET Nombre = %s, Salario_Base = %s, Riesgo_LV = %s WHERE ID = %s"
-            )
-            cursor.execute(update_query, (nombre_cargo, salario_base, nivel_riesgo, cargo_id))
-            db.commit()
-            cursor.close()
-
-            return redirect(url_for("cargos"))
-        else:
-            return redirect(url_for("cargos"))
+    return render_template("Departamentos.html", departamentos=departamentos)
 
 
 @app.route("/Editar_departamento/<int:id_departamento>", methods=["GET", "POST"])
@@ -308,9 +288,27 @@ def Editar_departamento(id_departamento):
     if departamento is None:
         return "Departamento no encontrado."
 
+    departamentos = []  # Inicializar la variable departamentos
+
     if request.method == "POST":
-        nuevo_nombre = request.form["nombre"]
-        nueva_fecha = request.form["FechaEditar"]  # Obtiene la nueva fecha del formulario
+        nuevo_nombre = request.form["nombreEditar"]
+        nueva_fecha = request.form["FechaEditar"]
+
+        cursor = db.cursor()
+        cursor.execute("SELECT ID FROM departamento WHERE Nombre = %s AND ID != %s",
+                       (nuevo_nombre, id_departamento,))
+        existing_department = cursor.fetchone()
+
+        if existing_department:
+            cursor.close()
+            # Obtener la lista de departamentos antes del error
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM departamento WHERE estado='Activo'")
+            departamentos = cursor.fetchall()
+            cursor.close()
+
+            # Ya existe un departamento con el mismo nombre, mostrar alerta
+            return render_template("Departamentos.html", error="Ya hay un departamento con este nombre.", departamentos=departamentos)
 
         if nuevo_nombre:
             cursor.execute("UPDATE departamento SET Nombre = %s, Fecha_Creacion = %s WHERE ID = %s",
@@ -320,7 +318,7 @@ def Editar_departamento(id_departamento):
 
             return redirect(url_for("listar_departamentos"))
 
-    return redirect(url_for("listar_departamentos"), departamentos=departamentos)
+    return render_template("Departamentos.html", departamento=departamento, departamentos=departamentos)
 
 
 @app.route("/cargos/<int:departamento_id>")
@@ -338,6 +336,54 @@ def obtener_cargos(departamento_id):
     except Exception as e:
         print(f"Error al convertir a JSON: {e}")
         return jsonify({"error": "Error al convertir a JSON"}), 500
+
+
+@app.route("/agregar_cargos", methods=["GET", "POST"])
+def agregar_cargos():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+
+        nombre_cargo = request.form["nombre_cargo"]
+        salario_base = request.form["salario_base"]
+        Departamento_ID = request.form["Departamento_id"]
+        nivel_riesgo = request.form["Riesgo_LV"]
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO Cargos (Nombre, Departamento_id, Salario_Base, Riesgo_LV) VALUES (%s, %s, %s, %s)",
+                       (nombre_cargo, Departamento_ID, salario_base, nivel_riesgo))
+        db.commit()
+        cursor.close()
+        return redirect(url_for("cargos"))
+
+    return render_template("cargos.html")
+
+
+@app.route("/editar_cargo", methods=["POST"])
+def editar_cargo():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        cargo_id = request.form["cargo_id_edit"]
+        nombre_cargo = request.form["nombre_cargo_edit"]
+        salario_base = request.form["salario_base_edit"]
+        nivel_riesgo = request.form["nivel_riesgo_edit"]
+
+        if nombre_cargo and salario_base and nivel_riesgo:
+            cursor = db.cursor()
+            update_query = (
+                "UPDATE cargos SET Nombre = %s, Salario_Base = %s, Riesgo_LV = %s WHERE ID = %s"
+            )
+            cursor.execute(update_query, (nombre_cargo,
+                           salario_base, nivel_riesgo, cargo_id))
+            db.commit()
+            cursor.close()
+
+            return redirect(url_for("cargos"))
+        else:
+            return redirect(url_for("cargos"))
 
 
 @app.route("/desactivar_cargo", methods=['POST'])
@@ -378,6 +424,7 @@ def reactivar_cargo():
         return jsonify({"error": "Error al reactivar el cargo"}), 500
     finally:
         cursor.close()
+
 
 @app.route("/agregar", methods=["GET", "POST"])
 def agregar():
@@ -510,8 +557,10 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
 
+
 # Configura la localización para formatear números con comas
 locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
+
 
 def format_number(number):
     return locale.format_string("%d", number, grouping=True)
@@ -519,61 +568,44 @@ def format_number(number):
 
 @app.route("/Horario", methods=["GET", "POST"])
 def Horario():
-    if "username" not in session:
-        return redirect(url_for("login"))
-    Seguro = 0.0
     cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM empleados WHERE Estado = 'activo'")
+    empleados = cursor.fetchall()
 
-    show_combobox = True
-    show_horario_form = False
-    empleado_id = None
-    empleado_nombre = None
-    empleado_apellidos = None
-    empleado_sueldo = None
+    if not empleados:
+         return render_template(
+            "Horario.html",
+            empleados=empleados,
+            error="true"
+        )
 
     if request.method == "POST":
-        empleado_id = int(request.form["empleado_id"])
-        tipo_liquidacion = request.form["tipo_liquidacion"]
 
-        # Obtener los valores de las variables del formulario
-        horas_diurnas = int(request.form["horas_diurnas"]) if request.form["horas_diurnas"] else 0
+        empleado_id = request.form["empleado"]
+        dias = int(request.form["dias"])
+        fecha_inicio = request.form["fecha"]
+        cursor.execute(
+            "SELECT Sueldo, Nombres, Apellido_Materno, Apellido_Paterno, Nro_documento FROM empleados WHERE ID = %s", (empleado_id,))
+        empleado = cursor.fetchone()
+        empleado_sueldo = empleado['Sueldo']
+        empleado_nombre_completo = f"{empleado['Nombres']} {empleado['Apellido_Paterno']} {empleado['Apellido_Materno']}"
+        empleado_Identificacion = empleado['Nro_documento']
         horas_extra_diurnas = int(request.form["horas_extra_diurnas"]) if request.form["horas_extra_diurnas"] else 0
-        horas_nocturnas = int(request.form["horas_nocturnas"]) if request.form["horas_nocturnas"] else 0
         horas_extra_nocturnas = int(request.form["horas_extra_nocturnas"]) if request.form["horas_extra_nocturnas"] else 0
         horas_dominicales = int(request.form["horas_dominicales"]) if request.form["horas_dominicales"] else 0
         horas_extra_dominicales = int(request.form["horas_extra_dominicales"]) if request.form["horas_extra_dominicales"] else 0
         horas_extra_dom_nocturnas = int(request.form["horas_extra_dom_nocturnas"]) if request.form["horas_extra_dom_nocturnas"] else 0
-
-        cursor = db.cursor()
-        
-        # Consulta para obtener datos del empleado
-        cursor.execute(
-            """
-            SELECT e.*, CONCAT(e.Nombres, ' ', e.Apellido_Paterno, ' ', e.Apellido_Materno) AS empleado_nombre_completo, d.Nombre AS Nombre_Departamento, c.Nombre AS Nombre_Cargo
-            FROM empleados e
-            LEFT JOIN departamento d ON e.Departamento = d.ID
-            LEFT JOIN cargos c ON e.Cargo_ID = c.ID
-            WHERE e.ID = %s
-            """, (empleado_id,))
-        empleado_data = cursor.fetchone()
-
-        if empleado_data:
-            empleado_sueldo = int(empleado_data[0])
-            empleado_nombre_completo = empleado_data[2]+" "+empleado_data[3]+" "+empleado_data[4]  # O el índice adecuado para el campo deseado
-            empleado_Identificacion = empleado_data[1]
+        Comisiones = int(request.form["Comisiones"]) if request.form["Comisiones"] else 0
+        Otros = int(request.form["Otros"]) if request.form["Otros"] else 0
 
         fecha_actual = datetime.now()
-        if tipo_liquidacion == "mensual":
-            empleado_sueldo = empleado_sueldo
-        elif tipo_liquidacion == "quincenal":
-            empleado_sueldo = empleado_sueldo/2
+        empleado_sueldo = empleado_sueldo
+        salario_base_diario = empleado_sueldo / 26
 
-        # Realizar cálculos
-        horas_diurnas_total = ((empleado_sueldo / 120) * horas_diurnas)
+        empleado_sueldo = salario_base_diario * dias
+
         horas_extra_diurnas_total = (
             ((empleado_sueldo * 1.25) / 120) * horas_extra_diurnas)
-        horas_nocturnas_total = (
-            ((empleado_sueldo * 1.35) / 240) * horas_nocturnas)
         horas_extra_nocturnas_total = (
             ((empleado_sueldo * 1.75) / 120) * horas_extra_nocturnas)
         horas_dominicales_total = (
@@ -595,140 +627,31 @@ def Horario():
         else:
             total_devengado = empleado_sueldo + 140606 + horas_extra_total
 
-        total_deducido = salud + pension + (Seguro * 0.0975)
+        total_deducido = salud + pension
         neto_pagado = total_devengado - total_deducido
 
         total_deducido = salud + pension
+        fecha_actual = datetime.now()
+
+        cursor.execute("INSERT INTO deduccion (Empleado_ID, Comisiones, Salud, Pension, Fecha, Otros) VALUES (%s, %s, %s, %s, %s, %s)",
+                   (empleado_id, Comisiones, salud, pension, fecha_actual, Otros))
+        cursor.execute("INSERT INTO sueldo (Empleado_ID, Total_Dev, Total_Ded, Salario_Neto, Fecha, Fecha_Inicio) VALUES (%s, %s, %s, %s, %s, %s)",
+                   (empleado_id, total_devengado, total_deducido, neto_pagado, fecha_actual, fecha_inicio))
+        cursor.execute("INSERT INTO horario (HorExtDiurna, HorExtNocturna, HorExtDominical, HorExtDomNoct, empleado_ID, Fecha) VALUES (%s, %s, %s, %s, %s, %s)",
+                   (horas_extra_diurnas_total, horas_extra_nocturnas_total, horas_extra_dominicales_total, horas_extra_dom_nocturnas_total, empleado_id, fecha_actual))
+
         db.commit()
         cursor.close()
 
         return render_template(
-            "liquidacion.html",
-            empleado_id=empleado_id,
-            format_number=format_number,
-            empleado_nombre_completo=empleado_nombre_completo,
-            empleado_Identificacion= empleado_Identificacion,
-            horas_extra_total=horas_extra_total,
-            salud=salud,
-            pension=pension,
-            total_devengado=total_devengado,
-            total_deducido=total_deducido,
-            neto_pagado=neto_pagado,
-            tipo_liquidacion=tipo_liquidacion,
-
-            horas_diurnas_total=horas_diurnas_total,
-            horas_extra_diurnas_total=horas_extra_diurnas_total,
-            horas_nocturnas_total=horas_nocturnas_total,
-            horas_extra_nocturnas_total=horas_extra_nocturnas_total,
-            horas_dominicales_total=horas_dominicales_total,
-            horas_extra_dominicales_total=horas_extra_dominicales_total,
-            horas_extra_dom_nocturnas_total=horas_extra_dom_nocturnas_total,
+            "Horario.html",
+            empleados=empleados,
+            sucess="true"
         )
-
-    empleado_id = request.args.get("empleado_id")
-    if empleado_id is not None:
-        empleado_id = int(empleado_id)
-    else:
-        # Redirige de nuevo a la lista de empleados si no se proporciona el empleado_id en la URL
-        return redirect(url_for("trabajadores"))
-
-    cursor.execute("SELECT * FROM empleados WHERE Estado = 'Activo'")
-    empleados = cursor.fetchall()
-    cursor.close()
 
     return render_template(
         "Horario.html",
-        empleados=empleados,
-        empleado_id=empleado_id  # Pasa el empleado_id a la plantilla
-    )
-
-
-@app.route("/realizar_pago", methods=["POST"])
-def realizar_pago():
-    Riesgo_LV = 0
-    tarifa_riesgo = 0
-    # Guardar las variables en la base de datos
-    cursor = db.cursor()
-
-    empleado_id = int(request.form["empleado_id"])
-    horas_extra_total = float(request.form["horas_extra_total"])
-    salud = float(request.form["salud"])
-    pension = float(request.form["pension"])
-    total_devengado = float(request.form["total_devengado"])
-    total_deducido = float(request.form["total_deducido"])
-    neto_pagado = float(request.form["neto_pagado"])
-    horas_diurnas_total = float(request.form["horas_diurnas_total"])
-    horas_extra_diurnas_total = float(
-        request.form["horas_extra_diurnas_total"])
-    horas_nocturnas_total = float(request.form["horas_nocturnas_total"])
-    horas_extra_nocturnas_total = float(
-        request.form["horas_extra_nocturnas_total"])
-    horas_dominicales_total = float(request.form["horas_dominicales_total"])
-    horas_extra_dominicales_total = float(
-        request.form["horas_extra_dominicales_total"])
-    horas_extra_dom_nocturnas_total = float(
-        request.form["horas_extra_dom_nocturnas_total"])
-    fecha_actual = datetime.now()
-
-    cursor.execute(
-        "SELECT Nombres, Apellido_Paterno, Apellido_Materno, Cargo_ID, Sueldo FROM empleados WHERE ID = %s", [empleado_id])
-    empleado_data = cursor.fetchone()
-    cursor.execute("SELECT Riesgo_LV FROM Cargos WHERE ID = %s",
-                   [empleado_data[3]])
-    cargo_data = cursor.fetchone()
-
-    empleado_nombre = empleado_data[0] + empleado_data[1] + empleado_data[2]
-    salario_base = empleado_data[4]
-    Riesgo_LV = cargo_data[0]
-    print(empleado_data)
-
-    if Riesgo_LV == 1:
-        tarifa_riesgo = 0.0522
-    elif Riesgo_LV == 2:
-        tarifa_riesgo = 0.1044
-    elif Riesgo_LV == 3:
-        tarifa_riesgo = 0.2436
-    elif Riesgo_LV == 4:
-        tarifa_riesgo = 0.4350
-
-    # Detalles de descuento por seguridad social
-    Aporte_Salud = (salario_base + horas_extra_total)*0.085
-    Aporte_Pension = (salario_base + horas_extra_total)*0.12
-    Total_DDSS = Aporte_Salud + Aporte_Pension
-
-    # apropiaciones
-    Cesantias = total_devengado * 0.0833
-    Interes_C = Cesantias * 0.12
-    Prima = total_devengado * 0.0833
-    Vacaciones = salario_base * 0.0417
-    Cajas_C = (salario_base + horas_extra_total) * 0.04
-    ICBF = (salario_base+horas_extra_total)*0.003
-    SENA = (salario_base+horas_extra_total)*0.002
-    Aporte_PF = Cajas_C+ICBF+SENA
-    #hola
-    ARL = (salario_base+horas_extra_total)*tarifa_riesgo
-    Total_Apropiado = Cesantias+Interes_C+Prima+Vacaciones+Aporte_PF+ARL
-    Gran_Total = total_devengado+Total_DDSS+Total_Apropiado
-
-    cursor.execute("INSERT INTO gran_total (ID_empleado, Total) VALUES (%s, %s)",
-                   (empleado_id, Gran_Total))
-    cursor.execute("INSERT INTO aporte_social (Aporte_Salud, Aporte_Pension, Total_Social, Fecha, ID_empleado) VALUES (%s, %s, %s, %s, %s)",
-                   (Aporte_Salud, Aporte_Pension, Total_DDSS, fecha_actual, empleado_id))
-    cursor.execute("INSERT INTO apropiaciones (Cesantia, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_Compensacion, ICBF, SENA, ARL, Total_Apropiado, Fecha, ID_Empleado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                   (Cesantias, Interes_C, Prima, Vacaciones, Aporte_PF, Cajas_C, ICBF, SENA, ARL, Total_Apropiado, fecha_actual, empleado_id))
-    cursor.execute("INSERT INTO deduccion (Empleado_ID, Salud, Pension, Fecha) VALUES (%s, %s, %s, %s)",
-                   (empleado_id, salud, pension, fecha_actual))
-    cursor.execute("INSERT INTO sueldo (Empleado_ID, Total_Dev, Total_Ded, Salario_Neto, Fecha) VALUES (%s, %s, %s, %s, %s)",
-                   (empleado_id, total_devengado, total_deducido, neto_pagado, fecha_actual))
-    cursor.execute("INSERT INTO horario (HorDiurna, HorExtDiurna, HorNocturna, HorExtNocturna, HorDominical, HorExtDominical, HorExtDomNoct, empleado_ID, Fecha) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                   (horas_diurnas_total, horas_extra_diurnas_total, horas_nocturnas_total, horas_extra_nocturnas_total, horas_dominicales_total, horas_extra_dominicales_total, horas_extra_dom_nocturnas_total, empleado_id, fecha_actual))
-    db.commit()
-    cursor.close()
-    generar_pdf(empleado_nombre, horas_extra_total, total_devengado,
-                total_deducido, neto_pagado, fecha_actual)
-
-    return render_template(
-        "ExitoPago.html",
+        empleados=empleados
     )
 
 
@@ -823,7 +746,6 @@ def reportes():
         df_ganancias,
         x='año',
         y='ganancia',
-        title='Ganancias Anuales de la Empresa',
         labels={'año': 'Año', 'ganancia': 'Ganancias'}
     )
 
@@ -833,7 +755,7 @@ def reportes():
     grafico_ganancias_html = fig_ganancias.to_html(full_html=False)
 
     # Texto que muestra el pago total a todos los empleados
-    texto_pago_total = f"Pago total a todos los empleados: ${pago_total}"
+    texto_pago_total = f"Pago total general correspondiente a todos los empleados: ${pago_total}"
 
     return render_template(
         'reportes.html',

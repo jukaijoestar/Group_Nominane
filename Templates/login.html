@@ -10,7 +10,7 @@
     <title>Iniciar Sesion | GROUPNOMIMANE</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='Recources/Styles/Estilolog.css') }}"
+      href="{{ url_for('static', filename='Recources/Styles/login.css') }}"
     />
     <link
       rel="stylesheet"
@@ -53,6 +53,7 @@
                 name="password"
                 required
               />
+              <span id="toggleBtn"></span>
             </div>
             <input type="submit" value="Iniciar Sesión" class="btn solid" />
             <p class="social-text">O inicie sesión en plataformas sociales</p>
@@ -103,6 +104,7 @@
                 id="Contraseña"
                 name="Contraseña"
               />
+              <span id="eyesbtn"></span>
             </div>
             <input type="submit" class="btn" value="Registrarse" />
             <p class="social-text">O inicie sesión en plataformas sociales</p>
@@ -160,24 +162,40 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{ url_for('static', filename='Recources/Js/login.js') }}"></script>
     {% if error %}
     <script>
-      alert("{{ error }}");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "{{ error }}",
+      });
     </script>
     {% endif %} {% if error_password %}
     <script>
-      alert("{{ error_password }}");
+      Swal.fire({
+        icon: "error",
+        title: "Error de contraseña",
+        text: "{{ error_password }}",
+      });
     </script>
     {% endif %} {% if error_correo %}
     <script>
-      alert("{{ error_correo }}");
+      Swal.fire({
+        icon: "error",
+        title: "Error de correo",
+        text: "{{ error_correo }}",
+      });
     </script>
     {% endif %} {% if sucefull %}
     <script>
-      alert("{{ sucefull }}");
+      Swal.fire({
+        icon: "success",
+        title: "Éxito",
+        text: "{{ sucefull }}",
+      });
     </script>
     {% endif %}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="{{ url_for('static', filename='Recources/Js/login.js') }}"></script>
   </body>
 </html>
